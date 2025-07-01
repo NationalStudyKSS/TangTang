@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Area
+  - Hero
   layers:
   - Default
   - TransparentFX

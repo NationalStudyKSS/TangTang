@@ -12,14 +12,9 @@ public class Hero : MonoBehaviour
 {
     [Header("----- 컴포넌트 참조 -----")]
     [SerializeField] HeroModel _model;
-    //[SerializeField] CharacterHud _hud;
     [SerializeField] Mover _mover;
     [SerializeField] Animator _animator;
     [SerializeField] Transform _spriteRoot;     // flip대신 쓸 예정. sprite들이 모인 부모 오브젝트 선택하면됨.
-
-    [Header("내가만든임시스킬")]
-    //[SerializeField] VoluspaSkill _skill;
-    Coroutine _spawnVoluspa;
 
     // event 변수를 프로퍼티처럼 쓰는 방법
     // 외부에서 Hero의 OnExpChanged 이벤트를 구독/해제하게 되면
@@ -42,29 +37,17 @@ public class Hero : MonoBehaviour
 
     public void Initialize(HeroStatData heroStatData)
     {
-        _model.Initialize(heroStatData);
-
         _mover.OnMoved += OnMoved;
-        //_model.OnHpChanged += _hud.SetHpBar;
         _model.OnSpeedChanged += _mover.SetSpeed;
 
-        _spawnVoluspa = StartCoroutine(SpawnVoluspa());
-    }
-
-    IEnumerator SpawnVoluspa()
-    {
-        while (true)
-        {
-            //_skill.Activate();
-            yield return new WaitForSeconds(3.0f);
-        }
+        _model.Initialize(heroStatData);
     }
 
     public void Move(Vector3 direction)
     {
         _mover.Move(direction);
     }
-
+    
     void OnMoved(Vector3 velocity)
     {
         if(velocity.x > 0)

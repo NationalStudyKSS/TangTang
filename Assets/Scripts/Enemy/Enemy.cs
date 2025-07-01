@@ -10,14 +10,37 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] Mover _mover;
 
-    public void FollowTarget()
-    {
+    [SerializeField] Transform _target;
 
+    public void Initialize()
+    {
+        Transform target = GameObject.FindGameObjectWithTag("Hero")?.transform;
+        _target = target;
     }
 
-    public void Move()
-    {
 
+    private void Update()
+    {
+        // 적 캐릭터가 타겟(주인공)을 추적하는 로직
+        if (_target != null)
+        {
+            FollowTarget();
+        }
+    }
+
+    /// <summary>
+    /// 추적 대상 방향으로 이동하는 함수
+    /// </summary>
+    void FollowTarget()
+    {
+        // 적 캐릭터에서 타겟(주인공) 위치로 향하는 방향 벡터 구하기
+        Vector3 dir = (_target.position - transform.position).normalized;
+        _mover.Move(dir);
+    }
+
+    public void Move(Vector3 direction)
+    {
+        _mover.Move(direction);
     }
 
     public void Attack()

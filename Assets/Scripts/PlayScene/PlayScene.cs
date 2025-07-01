@@ -8,6 +8,7 @@ public class PlayScene : MonoBehaviour
     [SerializeField] Hero _hero;
     [SerializeField] InputHandler _inputHandler;
     [SerializeField] HeroStatData _heroStatData;
+    [SerializeField] Enemy _enemy;
 
     private void Start()
     {
