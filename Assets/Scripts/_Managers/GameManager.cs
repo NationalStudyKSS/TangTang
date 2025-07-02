@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int _gold;
 
-    //DataManager _dataManager;
+    DataManager _dataManager;
 
     /// <summary>
     /// 게임 매니저 인스턴스에 접근하는 프로퍼티

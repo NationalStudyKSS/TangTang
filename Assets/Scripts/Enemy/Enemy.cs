@@ -48,6 +48,11 @@ public class Enemy : MonoBehaviour
 
         ChangeState(EnemyState.Idle);
     }
+
+    /// <summary>
+    /// 이건 매번 상태 객체를 생성하는 방식임
+    /// </summary>
+    /// <param name="newState"></param>
     void ChangeState(EnemyState newState)
     {
         if (_currentState != null)
