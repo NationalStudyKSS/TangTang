@@ -1,69 +1,71 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Àû Ä³¸¯ÅÍÀÇ µ¥ÀÌÅÍ ·ÎÁ÷À» ´ã´çÇÏ´Â ¿ªÇÒ
+/// ì  ìºë¦­í„°ì˜ 'ë°ì´í„° ë¡œì§'ì„ ë‹´ë‹¹í•˜ëŠ” ì—­í• 
+/// ê²‰ìœ¼ë¡œ ë³´ì´ëŠ” ìƒí˜¸ì‘ìš©ì´ ì•„ë‹Œ ìˆ˜ì¹˜ë¥¼ ê°–ê³  ë…¸ëŠ” ê³³
 /// </summary>
-public class EnemyModel : MonoBehaviour
+public class EnemyModel : MonoBehaviour, IDamageable
 {
-    [Header("----- È®ÀÎ¿ë ½ºÅÈ -----")]
-    // °ø°İ·Â
+    [Header("----- í™•ì¸ìš© ìŠ¤íƒ¯ -----")]
+    // ê³µê²©ë ¥
     [SerializeField] float _damage;
-    // ÀÌµ¿¼Óµµ
+    // ì´ë™ì†ë„
     [SerializeField] float _moveSpeed;
-    // º¸»ó °æÇèÄ¡
-    [SerializeField] float _expReward;
-    // º¸»ó °ñµå
-    [SerializeField] int _goldReward;
-    // ÃÖ´ë Ã¼·Â
+    // ìµœëŒ€ ì²´ë ¥
     [SerializeField] float _maxHp;
-    // ÇöÀç Ã¼·Â
+    // í˜„ì¬ ì²´ë ¥
     [SerializeField] float _currentHp;
 
     EnemyStatData _enemyStatData;
 
-    // ÀÌµ¿¼Óµµ º¯°æ ÀÌº¥Æ®
+    // ì´ë™ì†ë„ ë³€ê²½ ì´ë²¤íŠ¸
     public event Action<float> OnSpeedChanged;
-    // Ã¼·Â º¯°æ ÀÌº¥Æ®
+    // ì²´ë ¥ ë³€ê²½ ì´ë²¤íŠ¸
     public event UnityAction<float, float> OnHpChanged;
-    // °ñµå º¯°æ ÀÌº¥Æ®
-    public event Action<int> OnGoldChanged;
-    // »ç¸Á ÀÌº¥Æ®
+    // ì‚¬ë§ ì´ë²¤íŠ¸
     public event Action OnDeath;
 
     public float Damage => _damage;
     public float MoveSpeed => _moveSpeed;
     public float MaxHp => _maxHp;
     public float CurrentHp => _currentHp;
-    public float ExpReward => _expReward;
-    public float GoldReward => _goldReward;
-
-    public void Initialize(EnemyStatData enemyStatData)
+    
+    public void Initialize()
     {
-        _enemyStatData = enemyStatData;
-
+        // ì  ìŠ¤íƒ¯ ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
+        _enemyStatData = DataManager.Instance.EnemyStatData;
+        // ê°€ì ¸ì˜¨ ë°ì´í„°ì— ìˆëŠ” ê°’ë“¤ ë§¤ì¹­í•´ì„œ ì´ˆê¸°í™”
+        _damage = _enemyStatData.Damage;
+        _moveSpeed = _enemyStatData.Speed;
+        _maxHp = _enemyStatData.MaxHp;
+        
+        // ì´ˆê¸°í™” í•„ìš”í•œ ë³€ìˆ˜ë“¤
         _currentHp = _maxHp;
     }
 
+    /// <summary>
+    /// ê³µê²©ë‹¹í–ˆì„ ë•Œ ë°ë¯¸ì§€ë§Œí¼ ì²´ë ¥ì„ ê¹ëŠ” í•¨ìˆ˜
+    /// ì£½ìœ¼ë©´ ì‚¬ë§ ì´ë²¤íŠ¸ë„ ë°œí–‰
+    /// </summary>
+    /// <param name="amount">ê³µê²©ë°›ì€ ë°ë¯¸ì§€ ì–‘</param>
     public void TakeDamage(float amount)
     {
         if (_currentHp <= 0) return;
 
         _currentHp = Mathf.Min(_currentHp - amount, _maxHp);
 
-        // Ã¼·Â º¯°æ ÀÌº¥Æ® ¹ßÇà
+        // ì²´ë ¥ ë³€ê²½ ì´ë²¤íŠ¸ ë°œí–‰
         OnHpChanged?.Invoke(_currentHp, _maxHp);
 
+        // í˜„ì¬ ì²´ë ¥ì´ 0 ì´í•˜ê°€ ë˜ë©´ ì‚¬ë§ ì²˜ë¦¬
         if (_currentHp <= 0)
         {
-            OnGoldChanged?.Invoke(_goldReward);
-            // »ç¸Á ÀÌº¥Æ® ¹ßÇà
+            // ì‚¬ë§ ì´ë²¤íŠ¸ ë°œí–‰
             OnDeath?.Invoke();
-
         }
     }
-
 }

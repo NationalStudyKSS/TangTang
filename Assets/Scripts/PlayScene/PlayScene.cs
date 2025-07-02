@@ -5,16 +5,19 @@ using UnityEngine;
 public class PlayScene : MonoBehaviour
 {
     [Header("----- 컴포넌트 참조 -----")]
+    // Hero와 Enemy 는 둘다 스폰 되는 조건이 있으므로 임시
     [SerializeField] Hero _hero;
     [SerializeField] InputHandler _inputHandler;
-    [SerializeField] HeroStatData _heroStatData;
-    [SerializeField] Enemy _enemy;
+    [SerializeField] EnemySpawner _enemySpawner;
 
     private void Start()
     {
-        _hero.Initialize(_heroStatData);
-
         _inputHandler.OnMoveInput += OnMoveInput;
+
+        // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
+        _hero.Initialize();
+        // Spawner 초기화
+        _enemySpawner.Initialize(_hero.transform);
     }
 
     /// <summary>

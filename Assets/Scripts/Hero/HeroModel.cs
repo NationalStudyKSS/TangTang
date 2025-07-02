@@ -42,17 +42,25 @@ public class HeroModel : MonoBehaviour
     public int Level => _level;
 
     // 초기화
-    public void Initialize(HeroStatData heroStatData)
+    public void Initialize()
     {
-        // 임시) 데이터 연결
-        _heroStatData = heroStatData;
+        if (DataManager.Instance == null)
+            Debug.LogError("DataManager.Instance is null!");
 
-        _level = 1;
-        _currentExp = 0f;
+        if (DataManager.Instance.HeroStatData == null)
+            Debug.LogError("HeroStatData is null!");
+        // HeroStatData를 DataManager에서 가져옴
+        _heroStatData = DataManager.Instance.HeroStatData;
+
+        // HeroStatData에 있는 값들로 초기화
         _maxHp = _heroStatData.MaxHp(_level);
         _damage = _heroStatData.Damage(_level);
         _speed = _heroStatData.Speed(_level);
         _maxExp = _heroStatData.GetExp(_level);
+
+        // 나머지 변수 초기화
+        _level = 1;
+        _currentExp = 0f;
         _currentHp = _maxHp;
 
         // 초기화용 이벤트 발행
@@ -64,6 +72,10 @@ public class HeroModel : MonoBehaviour
         OnLevelChanged?.Invoke(_level, _level);
     }
 
+    /// <summary>
+    /// 공격당했을 때 데미지만큼 체력을 깎는 함수
+    /// </summary>
+    /// <param name="amount"></param>
     public void TakeDamage(float amount)
     {
         // 현재 체력이 0 이하인 경우, 더 이상 데미지를 받지 않음

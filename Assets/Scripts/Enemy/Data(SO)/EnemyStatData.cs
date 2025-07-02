@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Àû ±âº» ´É·ÂÄ¡¸¦ Æ÷ÇÔÇÏ´Â ¼³Á¤ µ¥ÀÌÅÍ Å¬·¡½º
+/// ì  ê¸°ë³¸ ëŠ¥ë ¥ì¹˜ë¥¼ í¬í•¨í•˜ëŠ” ì„¤ì • ë°ì´í„° í´ë˜ìŠ¤
 /// </summary>
 [CreateAssetMenu(fileName = "EnemyStatData", menuName = "GameSettings/Enemy/EnemyStatData")]
 public class EnemyStatData : ScriptableObject
 {
-    [SerializeField] float _maxHp;      // ±âº» ÃÖ´ë Ã¼·Â
-    [SerializeField] float _damage;     // ±âº» °ø°İ·Â
-    [SerializeField] float _speed;      // ±âº» ÀÌµ¿ ¼Ó·Â
+    [SerializeField] float _maxHp;      // ê¸°ë³¸ ìµœëŒ€ ì²´ë ¥
+    [SerializeField] float _damage;     // ê¸°ë³¸ ê³µê²©ë ¥
+    [SerializeField] float _speed;      // ê¸°ë³¸ ì´ë™ ì†ë ¥
 
     public float MaxHp => _maxHp;
     public float Damage => _damage;

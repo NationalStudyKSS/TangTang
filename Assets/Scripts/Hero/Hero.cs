@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class Hero : MonoBehaviour
     [SerializeField] Mover _mover;
     [SerializeField] Animator _animator;
     [SerializeField] Transform _spriteRoot;     // flip대신 쓸 예정. sprite들이 모인 부모 오브젝트 선택하면됨.
+
+    public event Action<Vector3> OnPositionChanged; // Hero가 이동했을 때 호출되는 이벤트
 
     // event 변수를 프로퍼티처럼 쓰는 방법
     // 외부에서 Hero의 OnExpChanged 이벤트를 구독/해제하게 되면
@@ -35,19 +38,29 @@ public class Hero : MonoBehaviour
     }
 
 
-    public void Initialize(HeroStatData heroStatData)
+    public void Initialize()
     {
         _mover.OnMoved += OnMoved;
         _model.OnSpeedChanged += _mover.SetSpeed;
 
-        _model.Initialize(heroStatData);
+        _model.Initialize();
+        OnPositionChanged?.Invoke(transform.position);
     }
 
+    /// <summary>
+    /// 주인공 캐릭터를 지정된 방향으로 이동시키는 함수
+    /// </summary>
+    /// <param name="direction"></param>
     public void Move(Vector3 direction)
     {
         _mover.Move(direction);
+        OnPositionChanged?.Invoke(transform.position); // 이동했을 때 이벤트 호출
     }
-    
+
+    /// <summary>
+    /// 주인공 캐릭터가 이동했을 때 호출되는 함수
+    /// </summary>
+    /// <param name="velocity"></param>
     void OnMoved(Vector3 velocity)
     {
         if(velocity.x > 0)
@@ -61,9 +74,13 @@ public class Hero : MonoBehaviour
         _animator.SetFloat(AnimatorParameters.MoveSpeed,velocity.magnitude);
     }
 
-    public void TakeHit(float damage)
+    /// <summary>
+    /// 주인공 캐릭터가 공격을 받았을 때 호출되는 함수
+    /// </summary>
+    /// <param name="damage">받은 데미지 양</param>
+    public void TakeHit(float amount)
     {
-        _model.TakeDamage(damage);
+        _model.TakeDamage(amount);
     }
 
     /// <summary>
