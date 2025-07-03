@@ -205,7 +205,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 적 캐릭터가 죽었을 때 실행할 함수
     /// </summary>
-    public void OnDeath()
+    public void OnDeath(Vector3 _)
     {
         // 현재 상태를 Death로 변경
         ChangeState(EnemyState.Death);

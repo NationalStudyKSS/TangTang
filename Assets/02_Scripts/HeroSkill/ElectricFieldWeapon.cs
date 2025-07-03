@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricFieldWeapon : MonoBehaviour
+public class ElectricFieldWeapon : MonoBehaviour, IAttackable
 {
     public float radius = 5f;
     public float damagePerSecond = 10f;
@@ -10,8 +10,6 @@ public class ElectricFieldWeapon : MonoBehaviour
     private CircleCollider2D _collider;
     private List<Enemy> _enemiesInRange = new List<Enemy>();
     private float _timer;
-
-    IDamageable _damageable;
 
     public Transform hero; // 영웅 위치 추적용
 
@@ -33,7 +31,7 @@ public class ElectricFieldWeapon : MonoBehaviour
         if (_timer >= damageInterval)
         {
             _timer = 0f;
-            Attack(_damageable);
+            Attack();
         }
     }
 
@@ -55,7 +53,7 @@ public class ElectricFieldWeapon : MonoBehaviour
         }
     }
 
-    private void Attack(IDamageable damageable)
+    public void Attack()
     {
         foreach (Enemy enemy in _enemiesInRange.ToArray())
         {

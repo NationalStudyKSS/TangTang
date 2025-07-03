@@ -1,66 +1,66 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÀûÇÁ¸®ÆéÀ» ÀúÀåÇØ³õ°í »ı¼ºÇÏ´Â ¿ªÇÒ
+/// ì í”„ë¦¬í©ì„ ì €ì¥í•´ë†“ê³  ìƒì„±í•˜ëŠ” ì—­í• 
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("----- ÄÄÆ÷³ÍÆ® ÂüÁ¶ -----")]
-    [SerializeField] Enemy _enemyPrefab;    // »ı¼ºÇÒ Àû ÇÁ¸®ÆÕ
+    [Header("----- ì»´í¬ë„ŒíŠ¸ ì°¸ì¡° -----")]
+    [SerializeField] Enemy _enemyPrefab;    // ìƒì„±í•  ì  í”„ë¦¬íŒ¹
 
-    [Header("----- ½ºÆù µ¥ÀÌÅÍ -----")]
-    [SerializeField] float _spawnSpan = 2f; // Àû »ı¼º °£°İ
-    [SerializeField] float _minSpawnRange = 15f; // ÃÖ¼Ò ½ºÆù ¹üÀ§
-    [SerializeField] float _maxSpawnRange = 20f; // ÃÖ´ë ½ºÆù ¹üÀ§
+    [Header("----- ìŠ¤í° ë°ì´í„° -----")]
+    [SerializeField] float _spawnSpan = 2f; // ì  ìƒì„± ê°„ê²©
+    [SerializeField] float _minSpawnRange = 15f; // ìµœì†Œ ìŠ¤í° ë²”ìœ„
+    [SerializeField] float _maxSpawnRange = 20f; // ìµœëŒ€ ìŠ¤í° ë²”ìœ„
 
-    Transform _heroTransform; // ¿µ¿õÀÇ Transform ÄÄÆ÷³ÍÆ® º¯¼ö
-    Coroutine _spawnRoutine;  // »ı¼º ·çÆ¾
+    Transform _heroTransform; // ì˜ì›…ì˜ Transform ì»´í¬ë„ŒíŠ¸ ë³€ìˆ˜
+    Coroutine _spawnRoutine;  // ìƒì„± ë£¨í‹´
 
     public void Initialize(Transform target)
     {
-        // ¿µ¿õÀÇ Transform ÄÄÆ÷³ÍÆ®¸¦ ¹Ş¾Æ¿Í¼­ _heroTransform¿¡ ÀúÀå
+        // ì˜ì›…ì˜ Transform ì»´í¬ë„ŒíŠ¸ë¥¼ ë°›ì•„ì™€ì„œ _heroTransformì— ì €ì¥
         _heroTransform = target;
-        // Àû »ı¼º ·çÆ¾ ½ÃÀÛ
+        // ì  ìƒì„± ë£¨í‹´ ì‹œì‘
         _spawnRoutine = StartCoroutine(SpawnEnemyRoutine());
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Initialize()¿¡¼­ _heroTransformÀ» ¹Ş¾Æ¿À°í ÀÖÀ¸¹Ç·Î
-        // PlayÇÏ±â Àü¿¡´Â _heroTransformÀÌ nullÀÌ´Ï±î return½ÃÅ´
+        // Initialize()ì—ì„œ _heroTransformì„ ë°›ì•„ì˜¤ê³  ìˆìœ¼ë¯€ë¡œ
+        // Playí•˜ê¸° ì „ì—ëŠ” _heroTransformì´ nullì´ë‹ˆê¹Œ returnì‹œí‚´
         if (_heroTransform == null) return;
 
-        // Gizmos¸¦ »ç¿ëÇÏ¿© ½ºÆù ¹üÀ§¸¦ ½Ã°¢ÀûÀ¸·Î Ç¥½Ã
+        // Gizmosë¥¼ ì‚¬ìš©í•˜ì—¬ ìŠ¤í° ë²”ìœ„ë¥¼ ì‹œê°ì ìœ¼ë¡œ í‘œì‹œ
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_heroTransform.position, _minSpawnRange);
         Gizmos.DrawWireSphere(_heroTransform.position, _maxSpawnRange);
     }
 
     /// <summary>
-    /// ÀûÀ» »ı¼ºÇÏ´Â ÄÚ·çÆ¾
+    /// ì ì„ ìƒì„±í•˜ëŠ” ì½”ë£¨í‹´
     /// </summary>
     /// <returns></returns>
     IEnumerator SpawnEnemyRoutine()
     {
-        // ¹º°¡ ¿¡·¯°¡ ÀÖ¾î¼­ 1ÃÊ ´ë±â
+        // ë­”ê°€ ì—ëŸ¬ê°€ ìˆì–´ì„œ 1ì´ˆ ëŒ€ê¸°
         yield return new WaitForSeconds(1f);
 
-        // ¹«ÇÑ ·çÇÁ¸¦ µ¹¸é¼­ ÀûÀ» °è¼Ó »ı¼º
+        // ë¬´í•œ ë£¨í”„ë¥¼ ëŒë©´ì„œ ì ì„ ê³„ì† ìƒì„±
         while (true)
         {
-            // ¿µ¿õÀÇ À§Ä¡¸¦ ±âÁØÀ¸·Î ·£´ıÇÑ À§Ä¡¸¦ °è»ê
+            // ì˜ì›…ì˜ ìœ„ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ëœë¤í•œ ìœ„ì¹˜ë¥¼ ê³„ì‚°
             Vector3 randomPos = _heroTransform.position + Random.insideUnitSphere.normalized * Random.Range(_minSpawnRange, _maxSpawnRange);
-            // Àû »ı¼º ÈÄ enemy Áö¿ªº¯¼ö¿¡ ÇÒ´ç
+            // ì  ìƒì„± í›„ enemy ì§€ì—­ë³€ìˆ˜ì— í• ë‹¹
             Enemy enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
-            // »ı¼ºµÈ ÀûÀ» EnemySpawnerÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
+            // ìƒì„±ëœ ì ì„ EnemySpawnerì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
             enemy.transform.position = randomPos;
 
-            // Àû ÃÊ±âÈ­
+            // ì  ì´ˆê¸°í™”
             enemy.Initialize();
          
-            // »ı¼º °£°İ¸¸Å­ ´ë±â
+            // ìƒì„± ê°„ê²©ë§Œí¼ ëŒ€ê¸°
             yield return new WaitForSeconds(_spawnSpan);
         }
     }

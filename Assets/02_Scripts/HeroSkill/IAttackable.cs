@@ -7,6 +7,5 @@ using UnityEngine;
 /// </summary>
 public interface IAttackable
 {
-
-    void Attack(IDamageable damageable);
+    public void Attack();
 }
