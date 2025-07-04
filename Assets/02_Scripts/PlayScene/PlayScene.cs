@@ -34,7 +34,7 @@ public class PlayScene : MonoBehaviour
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
         // Spawner 초기화
-        _enemySpawner.Initialize(_hero.transform, _itemDropper);
+        _enemySpawner.Initialize(_hero.transform);
         // PlaySceneView 초기화
         _playSceneView.Initialize();
     }

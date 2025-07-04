@@ -38,10 +38,10 @@ public class PlayerInputHandler : InputHandler
         // 등록된 장치 목록 출력
         foreach (var device in playerInput.devices)
         {
-            //Debug.Log($"Device: {device.displayName} (Layout: {device.layout})");
+            Debug.Log($"Device: {device.displayName} (Layout: {device.layout})");
         }
 
-        //Debug.Log($"MoveInput: {_moveInput} | ControlScheme: {controlScheme}");
+        Debug.Log($"MoveInput: {_moveInput} | ControlScheme: {controlScheme}");
 
         OnMoveInput?.Invoke(_moveInput);
     }

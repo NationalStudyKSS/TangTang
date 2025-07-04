@@ -229,6 +229,12 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //IEnumerator RemoveRoutine()
+    //{
+
+
+    //}
+
     // 적 캐릭터의 상태 종류 enum
     public enum EnemyState
     {
