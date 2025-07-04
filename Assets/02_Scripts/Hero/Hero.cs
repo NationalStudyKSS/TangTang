@@ -15,6 +15,7 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroModel _model;
     [SerializeField] Mover _mover;
     [SerializeField] Animator _animator;
+    [SerializeField] HeroHudView _hudView; // 주인공 캐릭터의 HUD(Heads-Up Display) 뷰를 관리하는 컴포넌트
     [SerializeField] Transform _spriteRoot;     // flip대신 쓸 예정. sprite들이 모인 부모 오브젝트 선택하면됨.
 
     public event Action<Vector3> OnPositionChanged; // Hero가 이동했을 때 호출되는 이벤트
@@ -42,6 +43,7 @@ public class Hero : MonoBehaviour
     {
         _mover.OnMoved += OnMoved;
         _model.OnSpeedChanged += _mover.SetSpeed;
+        _model.OnHpChanged += _hudView.ChangeHpBar;
 
         _model.Initialize();
         OnPositionChanged?.Invoke(transform.position);

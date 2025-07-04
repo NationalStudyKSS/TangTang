@@ -34,6 +34,16 @@ public class Enemy : MonoBehaviour
     // 추적 대상
     Transform _target;
 
+    // event 변수를 프로퍼티처럼 쓰는 방법
+    // 중개해주는 역할임
+    public event Action<Vector3> OnDeath
+    {
+        // 구독 동작 설정
+        add => _model.OnDeath += value;
+        // 구독 해제 동작 설정
+        remove => _model.OnDeath -= value;
+    }
+
     //임시
     public void Initialize()
     {
@@ -42,7 +52,7 @@ public class Enemy : MonoBehaviour
         _target = target;
 
         _mover.OnMoved += OnMoved;
-        _model.OnDeath += OnDeath;
+        _model.OnDeath += OnDead;
 
         _model.Initialize();
 
@@ -205,7 +215,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 적 캐릭터가 죽었을 때 실행할 함수
     /// </summary>
-    public void OnDeath(Vector3 _)
+    public void OnDead(Vector3 _)
     {
         // 현재 상태를 Death로 변경
         ChangeState(EnemyState.Death);

@@ -37,7 +37,7 @@ public class EnemyModel : MonoBehaviour, IDamageable
     public void Initialize()
     {
         // 적 스탯 데이터 가져오기
-        _enemyStatData = DataManager.Instance.EnemyStatData;
+        _enemyStatData = GameManager.Instance.DataManager.EnemyStatData;
         // 가져온 데이터에 있는 값들 매칭해서 초기화
         _damage = _enemyStatData.Damage;
         _moveSpeed = _enemyStatData.Speed;

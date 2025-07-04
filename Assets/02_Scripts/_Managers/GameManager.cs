@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 /// <summary>
@@ -9,9 +11,15 @@ public class GameManager : MonoBehaviour
 {
     static GameManager _Instance;
 
-    [SerializeField] int _gold;
+    [Header("----- 각종 매니저들 (ReadOnly) -----")]
+    [SerializeField] ResourceManager _resourceManager; // 리소스 매니저
+    [SerializeField] PoolManager _poolManager; // 오브젝트 풀 매니저
+    [SerializeField] DataManager _dataManager; // 데이터 매니저
 
-    DataManager _dataManager;
+    public ResourceManager ResourceManager => _resourceManager; // 리소스 매니저 접근 프로퍼티
+    public PoolManager PoolManager => _poolManager; // 오브젝트 풀 매니저 접근 프로퍼티
+    public DataManager DataManager => _dataManager; // 데이터 매니저 접근 프로퍼티
+
 
     /// <summary>
     /// 게임 매니저 인스턴스에 접근하는 프로퍼티
@@ -32,15 +40,6 @@ public class GameManager : MonoBehaviour
                     GameObject go = new GameObject("GameManager");
                     // GameManager 컴포넌트를 추가하여 인스턴스를 생성
                     _Instance = go.AddComponent<GameManager>();
-
-                    //// 기타 매니저들 자식으로 추가
-                    //_Instance._dataManager = FindObjectOfType<DataManager>();
-                    //if(_Instance._dataManager == null)
-                    //{
-                    //    GameObject dm = new GameObject("DataManager");
-                    //    _Instance._dataManager = dm.AddComponent<DataManager>();
-                    //    _Instance._dataManager.setparent
-                    //}
                 }
             }
             // 인스턴스 반환
@@ -64,6 +63,39 @@ public class GameManager : MonoBehaviour
             // 중복된 인스턴스는 파괴
             Destroy(gameObject);
         }
+
+        // ResourceManager 컴포넌트 가져오기
+        _resourceManager = GetComponent<ResourceManager>();
+        // ResourceManager 컴포넌트가 없으면
+        if (_resourceManager == null)
+        {
+            // ResourceManager 추가
+            _resourceManager = gameObject.AddComponent<ResourceManager>();
+        }
+
+        // PoolManager 컴포넌트 가져오기
+        _poolManager = GetComponent<PoolManager>();
+        // PoolManager 컴포넌트가 없으면
+        if (_poolManager == null)
+        {
+            // PoolManager 추가
+            _poolManager = gameObject.AddComponent<PoolManager>();
+        }
+        // ResourceManager 초기화
+        _resourceManager.Initialize();
+        // PoolManager 초기화
+        _poolManager.Initialize(_resourceManager);
+
+        // DataManager 컴포넌트 가져오기
+        _dataManager = GetComponent<DataManager>();
+        // DataManager 컴포넌트가 없으면
+        if (_dataManager == null)
+        {
+            // DataManager 추가
+            _dataManager = gameObject.AddComponent<DataManager>();
+        }
+        // DataManager 초기화
+        _dataManager.Initialize(_resourceManager);
     }
 
     private void Start()

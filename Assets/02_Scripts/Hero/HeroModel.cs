@@ -44,13 +44,13 @@ public class HeroModel : MonoBehaviour
     // 초기화
     public void Initialize()
     {
-        if (DataManager.Instance == null)
+        if (GameManager.Instance.DataManager == null)
             Debug.LogError("DataManager.Instance is null!");
 
-        if (DataManager.Instance.HeroStatData == null)
+        if (GameManager.Instance.DataManager.HeroStatData == null)
             Debug.LogError("HeroStatData is null!");
         // HeroStatData를 DataManager에서 가져옴
-        _heroStatData = DataManager.Instance.HeroStatData;
+        _heroStatData = GameManager.Instance.DataManager.HeroStatData;
 
         // HeroStatData에 있는 값들로 초기화
         _maxHp = _heroStatData.MaxHp(_level);

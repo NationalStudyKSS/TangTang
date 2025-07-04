@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d8a9f115514c046a0ae2c4bad46007, type: 3}
+  m_Name: DropItemPoolData
+  m_EditorClassIdentifier: 
+  _normalItems:
+  - {fileID: 11400000, guid: 32591ec6405cb904eb92bceac09cea1e, type: 2}
+  - {fileID: 11400000, guid: f77c0b846ae9be440915bfd41cca12b8, type: 2}
+  - {fileID: 11400000, guid: 017d7cb893bd13446abaf035139ff4f6, type: 2}
+  - {fileID: 11400000, guid: 055b32cc7a0702746bc8cc029fd4745c, type: 2}
+  - {fileID: 11400000, guid: 5e46276def98ecb4aabb0cdd90c9a584, type: 2}
+  - {fileID: 11400000, guid: 6b227a57ae4625e43a9a8adca9f47088, type: 2}
+  _eliteItems: []
+  _bossItems: []
