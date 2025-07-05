@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e678e5727ffbbb54aa0508d844db3b5a, type: 3}
-  m_Name: Coin
+  m_Script: {fileID: 11500000, guid: 37ce7a9168cc68c4c97b025f40f00bae, type: 3}
+  m_Name: CarrotData
   m_EditorClassIdentifier: 
-  _itemId: 4
-  _chance: 100
-  _name: 3
-  _dropItemPrefabPath: DropItem/Coin
+  _itemId: 3
+  _chance: 1
+  _name: 2
+  _dropItemPrefabPath: DropItem/Carrot
+  _carrotAmount: 1

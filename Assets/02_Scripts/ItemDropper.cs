@@ -18,11 +18,16 @@ public class ItemDropper : MonoBehaviour
 
     Coroutine _spawnEnemyRoutine;       // 적 생성 코루틴 변수
 
+    public void Initialize()
+    {
+
+    }
+
     /// <summary>
     /// 적이 죽었을 때 아이템을 드롭하는 함수
     /// </summary>
     /// <param name="position"></param>
-    public void DropItem(Vector3 position)
+    public void DropItem(Enemy enemy)
     {
         // 게임매니저에서 적 타입에 따라 dropItemId를 가져온다.
         // 다만 지금 일반적'만' '랜덤'한 아이템을 '한 개' 가져오므로
@@ -41,7 +46,7 @@ public class ItemDropper : MonoBehaviour
         }
 
         // 위치 설정 및 초기화
-        itemGo.transform.position = position;
+        itemGo.transform.position = enemy.transform.position;
 
         // 드롭 아이템 초기화 (필요하다면)
         DropItem dropItem = itemGo.GetComponent<DropItem>();

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e678e5727ffbbb54aa0508d844db3b5a, type: 3}
-  m_Name: AtkUp
+  m_Script: {fileID: 11500000, guid: 65a50a5e497ae3344a4b59a75307aecf, type: 3}
+  m_Name: BombData
   m_EditorClassIdentifier: 
-  _itemId: 1
+  _itemId: 2
   _chance: 1
-  _name: 0
-  _dropItemPrefabPath: DropItem/AtkUp
+  _name: 1
+  _dropItemPrefabPath: DropItem/Bomb

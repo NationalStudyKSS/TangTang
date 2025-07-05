@@ -18,8 +18,6 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroHudView _hudView; // 주인공 캐릭터의 HUD(Heads-Up Display) 뷰를 관리하는 컴포넌트
     [SerializeField] Transform _spriteRoot;     // flip대신 쓸 예정. sprite들이 모인 부모 오브젝트 선택하면됨.
 
-    public event Action<Vector3> OnPositionChanged; // Hero가 이동했을 때 호출되는 이벤트
-
     // event 변수를 프로퍼티처럼 쓰는 방법
     // 외부에서 Hero의 OnExpChanged 이벤트를 구독/해제하게 되면
     // 사실은 _model(HeroModel)의 OnExpChanged 이벤트를 구독/해제하게 되는 것과 같음
@@ -38,6 +36,29 @@ public class Hero : MonoBehaviour
         remove => _model.OnLevelChanged -= value;
     }
 
+    public event UnityAction<float, float> OnHpChanged
+    {
+        add => _model.OnHpChanged += value;
+        remove => _model.OnHpChanged -= value;
+    }
+
+    public event UnityAction<float> OnDamageChanged
+    {
+        add => _model.OnDamageChanged += value;
+        remove => _model.OnDamageChanged -= value;
+    }
+
+    public event UnityAction<float> OnSpeedChanged
+    {
+        add => _model.OnSpeedChanged += value;
+        remove => _model.OnSpeedChanged -= value;
+    }
+
+    public event UnityAction OnDeath
+    {
+        add => _model.OnDeath += value;
+        remove => _model.OnDeath -= value;
+    }
 
     public void Initialize()
     {
@@ -46,7 +67,6 @@ public class Hero : MonoBehaviour
         _model.OnHpChanged += _hudView.ChangeHpBar;
 
         _model.Initialize();
-        OnPositionChanged?.Invoke(transform.position);
     }
 
     /// <summary>
@@ -56,7 +76,6 @@ public class Hero : MonoBehaviour
     public void Move(Vector3 direction)
     {
         _mover.Move(direction);
-        OnPositionChanged?.Invoke(transform.position); // 이동했을 때 이벤트 호출
     }
 
     /// <summary>
@@ -88,9 +107,9 @@ public class Hero : MonoBehaviour
     /// <summary>
     /// 경험치를 획득하는 함수
     /// </summary>
-    /// <param name="amount"></param>
-    public void AddExp(float amount)
+    public void AddExp()
     {
+        float amount = 0;
         _model.AddExp(amount);
     }
 }

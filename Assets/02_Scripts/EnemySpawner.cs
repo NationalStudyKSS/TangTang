@@ -4,14 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 적프리펩을 저장해놓고 생성하는 역할
+/// 적을 단순히'스폰'하는 역할
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("----- 컴포넌트 참조 -----")]
-    [SerializeField] Enemy _enemyPrefab;    // 생성할 적 프리팹
-    
-    [Header("----- 스폰 데이터 -----")]
+    [Header("----- 스폰 데이터(나중에 데이터로 정리) -----")]
     [SerializeField] float _spawnSpan = 2f; // 적 생성 간격
     [SerializeField] float _minSpawnRange = 15f; // 최소 스폰 범위
     [SerializeField] float _maxSpawnRange = 20f; // 최대 스폰 범위
@@ -19,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
     Transform _heroTransform; // 영웅의 Transform 컴포넌트 변수
     Coroutine _spawnRoutine;  // 생성 루틴
 
-    public event Action<Enemy> OnEnemySpawned;
+    public event Action<Enemy> OnEnemySpawned; // 적이 생성되었을 때 발생하는 이벤트
 
     public void Initialize(Transform target)
     {
@@ -59,24 +56,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    ///// <summary>
-    ///// 적을 Instantiate로 생성하는 함수
-    ///// </summary>
-    //public void SpawnEnemy()
-    //{
-    //    // 영웅의 위치를 기준으로 랜덤한 위치를 계산
-    //    Vector3 randomPos = _heroTransform.position + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(_minSpawnRange, _maxSpawnRange);
-    //    // 적 생성 후 enemy 지역변수에 할당
-    //    Enemy enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
-    //    // 생성된 적을 EnemySpawner의 자식으로 설정
-    //    enemy.transform.position = randomPos;
-
-    //    // 적 초기화
-    //    enemy.Initialize();
-
-    //    OnEnemySpawned?.Invoke(enemy);
-    //}
-
     /// <summary>
     /// 적을 Object Pooling을 이용해 생성하는 함수
     /// </summary>
@@ -105,6 +84,7 @@ public class EnemySpawner : MonoBehaviour
         // 적 초기화
         enemy.Initialize();
 
+        // 적이 생성되었을 때 이벤트를 발생시킴
         OnEnemySpawned?.Invoke(enemy);
     }
 }

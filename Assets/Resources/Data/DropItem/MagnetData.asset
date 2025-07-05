@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e678e5727ffbbb54aa0508d844db3b5a, type: 3}
-  m_Name: Exp
+  m_Script: {fileID: 11500000, guid: 82bf0682f5f6d6645a6a131ac99ae38b, type: 3}
+  m_Name: MagnetData
   m_EditorClassIdentifier: 
-  _itemId: 5
-  _chance: 100
-  _name: 4
-  _dropItemPrefabPath: DropItem/Exp
+  _itemId: 7
+  _chance: 1
+  _name: 6
+  _dropItemPrefabPath: DropItem/Magnet

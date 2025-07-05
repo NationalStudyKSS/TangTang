@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: DropItemPoolData
   m_EditorClassIdentifier: 
   _normalItems:
-  - {fileID: 11400000, guid: 32591ec6405cb904eb92bceac09cea1e, type: 2}
-  - {fileID: 11400000, guid: f77c0b846ae9be440915bfd41cca12b8, type: 2}
-  - {fileID: 11400000, guid: 017d7cb893bd13446abaf035139ff4f6, type: 2}
-  - {fileID: 11400000, guid: 055b32cc7a0702746bc8cc029fd4745c, type: 2}
-  - {fileID: 11400000, guid: 5e46276def98ecb4aabb0cdd90c9a584, type: 2}
-  - {fileID: 11400000, guid: 6b227a57ae4625e43a9a8adca9f47088, type: 2}
+  - {fileID: 11400000, guid: 69a543ebf6885144399bbc7d850da721, type: 2}
+  - {fileID: 11400000, guid: a1126f6edee35a642809c9e87711d2b0, type: 2}
+  - {fileID: 11400000, guid: 6feb358aaf854f94eb839426079f3882, type: 2}
+  - {fileID: 11400000, guid: 9572548a4fbaf5943999768327ec6d66, type: 2}
+  - {fileID: 11400000, guid: 58eadc75a56864d4ab9d6501367306d5, type: 2}
+  - {fileID: 11400000, guid: 24ea44e809e0e0d4fa781c01f45d28e8, type: 2}
   _eliteItems: []
   _bossItems: []

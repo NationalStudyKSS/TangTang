@@ -11,8 +11,10 @@ public class EnemyStatData : ScriptableObject
     [SerializeField] float _maxHp;      // 기본 최대 체력
     [SerializeField] float _damage;     // 기본 공격력
     [SerializeField] float _speed;      // 기본 이동 속력
+    [SerializeField] float _attackSpan; // 기본 공격 간격
 
     public float MaxHp => _maxHp;
     public float Damage => _damage;
     public float Speed => _speed;
+    public float AttackSpan => _attackSpan;
 }

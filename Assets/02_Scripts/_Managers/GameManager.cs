@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public PoolManager PoolManager => _poolManager; // 오브젝트 풀 매니저 접근 프로퍼티
     public DataManager DataManager => _dataManager; // 데이터 매니저 접근 프로퍼티
 
-
     /// <summary>
     /// 게임 매니저 인스턴스에 접근하는 프로퍼티
     /// </summary>
@@ -72,6 +71,8 @@ public class GameManager : MonoBehaviour
             // ResourceManager 추가
             _resourceManager = gameObject.AddComponent<ResourceManager>();
         }
+        // ResourceManager 초기화
+        _resourceManager.Initialize();
 
         // PoolManager 컴포넌트 가져오기
         _poolManager = GetComponent<PoolManager>();
@@ -81,8 +82,6 @@ public class GameManager : MonoBehaviour
             // PoolManager 추가
             _poolManager = gameObject.AddComponent<PoolManager>();
         }
-        // ResourceManager 초기화
-        _resourceManager.Initialize();
         // PoolManager 초기화
         _poolManager.Initialize(_resourceManager);
 

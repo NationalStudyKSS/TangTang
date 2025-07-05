@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e678e5727ffbbb54aa0508d844db3b5a, type: 3}
-  m_Name: HpPotion
+  m_Script: {fileID: 11500000, guid: aee4653c1f9f7744c9901e7b5a5441aa, type: 3}
+  m_Name: AtkUpData
   m_EditorClassIdentifier: 
-  _itemId: 6
+  _itemId: 1
   _chance: 1
-  _name: 5
-  _dropItemPrefabPath: DropItem/HpPotion
+  _name: 0
+  _dropItemPrefabPath: DropItem/AtkUp
+  _atkUpRate: 0.2
+  _duration: 10

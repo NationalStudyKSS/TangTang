@@ -34,28 +34,40 @@ public class Enemy : MonoBehaviour
     // 추적 대상
     Transform _target;
 
-    // event 변수를 프로퍼티처럼 쓰는 방법
-    // 중개해주는 역할임
-    public event Action<Vector3> OnDeath
-    {
-        // 구독 동작 설정
-        add => _model.OnDeath += value;
-        // 구독 해제 동작 설정
-        remove => _model.OnDeath -= value;
-    }
+    public event Action<Enemy> OnDeath;
 
     //임시
     public void Initialize()
     {
-        // Hero태그를 가진 게임 오브젝트를 찾아서 타겟으로 설정
-        Transform target = GameObject.FindGameObjectWithTag("Hero")?.transform;
-        _target = target;
+        // 물리와 충돌 다시 켜기
+        _collider.enabled = true;
+        _rigid.simulated = true;
 
-        _mover.OnMoved += OnMoved;
+        // 공격 코루틴 정리
+        if (_attackRoutine != null)
+        {
+            StopCoroutine(_attackRoutine);
+            _attackRoutine = null;
+        }
+
+        // 상태 초기화
+        _currentState = null;
+
+        // 구독 초기화 (중복 방지)
+        _model.OnDeath -= OnDead;
         _model.OnDeath += OnDead;
 
+        // 모델 초기화
         _model.Initialize();
 
+        // 타겟 설정
+        _target = GameObject.FindGameObjectWithTag("Hero")?.transform;
+
+        // Mover 이벤트 중복 방지
+        _mover.OnMoved -= OnMoved;
+        _mover.OnMoved += OnMoved;
+
+        // 상태 초기 진입
         ChangeState(EnemyState.Idle);
     }
 
@@ -162,7 +174,10 @@ public class Enemy : MonoBehaviour
             if (hero != null)
             {
                 // 3. 주인공 캐릭터 공격
-                _attackRoutine = StartCoroutine(AttackRoutine(hero));
+                if (_attackRoutine == null)
+                {
+                    _attackRoutine = StartCoroutine(AttackRoutine(hero));
+                }
             }
         }
     }
@@ -195,7 +210,10 @@ public class Enemy : MonoBehaviour
             {
                 // 코루틴 종료
                 if (_attackRoutine != null)
+                {
                     StopCoroutine(_attackRoutine);
+                }
+                _attackRoutine = null;
             }
         }
     }
@@ -215,10 +233,13 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 적 캐릭터가 죽었을 때 실행할 함수
     /// </summary>
-    public void OnDead(Vector3 _)
+    public void OnDead()
     {
         // 현재 상태를 Death로 변경
         ChangeState(EnemyState.Death);
+
+        // 사망 이벤트 발행
+        OnDeath?.Invoke(this);
     }
 
     /// <summary>
@@ -226,7 +247,17 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Remove()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+
+        Poolable poolable = GetComponent<Poolable>();
+        if (poolable != null)
+        {
+            poolable.ReturnToPool();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     //IEnumerator RemoveRoutine()
@@ -316,8 +347,8 @@ public class Enemy : MonoBehaviour
             _timer = 0;
             // 애니메이터에 피격 애니메이션 트리거 설정
             _enemy._animator.SetTrigger(AnimatorParameters.OnHit);
-            // 적 캐릭터의 상태를 Stagger로 변경
-            _enemy.ChangeState(EnemyState.Stagger);
+            //// 적 캐릭터의 상태를 Stagger로 변경
+            //_enemy.ChangeState(EnemyState.Stagger);
         }
 
         public void Exit()

@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e678e5727ffbbb54aa0508d844db3b5a, type: 3}
-  m_Name: Magnet
+  m_Script: {fileID: 11500000, guid: 9c2d8d734c3947646804217916d42ffb, type: 3}
+  m_Name: HpPotionData
   m_EditorClassIdentifier: 
-  _itemId: 7
+  _itemId: 6
   _chance: 1
-  _name: 6
-  _dropItemPrefabPath: DropItem/Magnet
+  _name: 5
+  _dropItemPrefabPath: DropItem/HpPotion
+  _hpHealRate: 0.2

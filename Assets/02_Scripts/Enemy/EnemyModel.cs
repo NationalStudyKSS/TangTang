@@ -27,7 +27,7 @@ public class EnemyModel : MonoBehaviour, IDamageable
     // 체력 변경 이벤트
     public event UnityAction<float, float> OnHpChanged;
     // 사망 이벤트
-    public event Action<Vector3> OnDeath;
+    public event Action OnDeath;
 
     public float Damage => _damage;
     public float MoveSpeed => _moveSpeed;
@@ -65,7 +65,7 @@ public class EnemyModel : MonoBehaviour, IDamageable
         if (_currentHp <= 0)
         {
             // 사망 이벤트 발행
-            OnDeath?.Invoke(transform.position);
+            OnDeath?.Invoke();
         }
     }
 }

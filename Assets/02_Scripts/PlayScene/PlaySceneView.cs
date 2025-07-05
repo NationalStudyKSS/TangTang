@@ -33,14 +33,51 @@ public class PlaySceneView : MonoBehaviour
 
     public void SetEnemyKillCount(int enemyKillCount)
     {
+        // 아이콘 받아오기
         _enemyKillCountText.text = enemyKillCount.ToString();
     }
 
     public void SetPlayTime(int playTimeInt)
     {
+        // 아이콘 받아오기
         // 시간을 분:초 형식으로 변환하여 표시
         int minutes = Mathf.FloorToInt(playTimeInt / 60);
         int seconds = Mathf.FloorToInt(playTimeInt % 60);
         _playTimeText.text = $"{minutes:D2}:{seconds:D2}";
+    }
+
+    public void SetGold(int gold)
+    {
+        // 아이콘 받아오기
+        _goldText.text = gold.ToString();
+    }
+
+    public void SetCarrot(int carrot)
+    {
+        // 아이콘 받아오기
+        _carrotText.text = carrot.ToString();
+    }
+
+    public void SetHp(float currentHp, float maxHp)
+    {
+        // 아이콘 받아오기
+        _hpText.text = $"{currentHp}/{maxHp}";
+    }
+
+    public void SetDamage(float currentDamage)
+    {
+        // 아이콘 받아오기
+        _damageText.text = $"{currentDamage}";
+    }
+
+    public void SetLevel(int currentLevel, int _)
+    {
+        // 아이콘 받아오기
+        _heroLvText.text = $"Lv. {currentLevel}";
+    }
+
+    public void SetExp(float currentExp, float maxExp)
+    {
+        _expBar.fillAmount = currentExp / maxExp; // fillAmount를 사용하여 경험치 바를 채움
     }
 }

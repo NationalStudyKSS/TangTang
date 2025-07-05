@@ -15,7 +15,7 @@ public enum DropPoolType
 [CreateAssetMenu(fileName = "DropItemPoolData", menuName = "GameSettings/DropItem/DropItemPoolData")]
 public class DropItemPoolData : ScriptableObject
 {
-    [Header("----- 드롭 아이템 풀 데이터(ReadOnly) -----")]
+    [Header("----- 드롭 아이템 풀 데이터(직접 할당 해줘야함) -----")]
     [SerializeField] List<DropItemData> _normalItems = new List<DropItemData>();    // 일반 적 드롭 아이템 풀
     [SerializeField] List<DropItemData> _eliteItems = new List<DropItemData>();     // 정예 적 드롭 아이템 풀
     [SerializeField] List<DropItemData> _bossItems = new List<DropItemData>();      // 보스 적 드롭 아이템 풀
