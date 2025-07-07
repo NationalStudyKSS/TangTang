@@ -24,26 +24,27 @@ public class EnemyManager : MonoBehaviour
     {
         // 적 스폰 이벤트 연결
         _enemySpawner.OnEnemySpawned += RegisterEnemy;
+
+        // 폭탄 아이템 연결
+        DropItemManager.OnBombItemUsed += KillAllEnemies;
+
         // 리스트 한번 비워주기
         _currentEnemies.Clear();
 
         _enemySpawner.Initialize(hero); // 적 스폰러 초기화
-        _itemDropper.Initialize(); // 아이템 드롭퍼 초기화
+        _itemDropper.Initialize(hero); // 아이템 드롭퍼 초기화
     }
 
     public void KillAllEnemies()
     {
-        // 현재 살아있는 적들을 모두 죽인다.
-        foreach (Enemy enemy in _currentEnemies)
+        // 복사본으로 안전하게 순회
+        foreach (Enemy enemy in new List<Enemy>(_currentEnemies))
         {
             if (enemy != null)
             {
                 enemy.TakeHit(9999f);
             }
         }
-
-        // 현재 살아있는 적들을 비운다.
-        _currentEnemies.Clear();
     }
 
     /// <summary>

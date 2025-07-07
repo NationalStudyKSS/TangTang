@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2be93746b80dd4fbf7e8835896ca83, type: 3}
   m_Name: HeroStatData
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _damage: 20
-  _speed: 5
-  _baseExp: 100
-  _maxLevel: 10
+  _baseMaxHp: 200
+  _baseDamage: 20
+  _baseSpeed: 5
+  _baseExpRequired: 100
+  _baseMaxLevel: 1000
+  _baseExpIncrementRate: 1
   _hpIncrementRate: 1.1
   _damageIncrementRate: 1.1
   _speedIncrementRate: 1
-  _expIncrementRate: 1.1
+  _expRequiredIncrementRate: 1.1

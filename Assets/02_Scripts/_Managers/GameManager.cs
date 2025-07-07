@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] ResourceManager _resourceManager; // 리소스 매니저
     [SerializeField] PoolManager _poolManager; // 오브젝트 풀 매니저
     [SerializeField] DataManager _dataManager; // 데이터 매니저
+    [SerializeField] CurrencyManager _currencyManager; // 재화 매니저
 
     public ResourceManager ResourceManager => _resourceManager; // 리소스 매니저 접근 프로퍼티
     public PoolManager PoolManager => _poolManager; // 오브젝트 풀 매니저 접근 프로퍼티
     public DataManager DataManager => _dataManager; // 데이터 매니저 접근 프로퍼티
+    public CurrencyManager CurrencyManager => _currencyManager; // 재화 매니저 접근 프로퍼티
 
     /// <summary>
     /// 게임 매니저 인스턴스에 접근하는 프로퍼티
@@ -95,6 +97,17 @@ public class GameManager : MonoBehaviour
         }
         // DataManager 초기화
         _dataManager.Initialize(_resourceManager);
+
+        // CurrencyManager 컴포넌트 가져오기
+        _currencyManager = GetComponent<CurrencyManager>();
+        // CurrencyManager 컴포넌트가 없으면
+        if (_currencyManager == null)
+        {
+            // CurrencyManager 추가
+            _currencyManager = gameObject.AddComponent<CurrencyManager>();
+        }
+        // CurrencyManager 초기화
+        _currencyManager.Initialize();
     }
 
     private void Start()

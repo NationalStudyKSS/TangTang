@@ -30,21 +30,20 @@ public class PlayScene : MonoBehaviour
         _hero.OnHpChanged += _playSceneView.SetHp; // 영웅의 체력 변경 이벤트를 UI에 연결
         _hero.OnExpChanged += _playSceneView.SetExp; // 영웅의 경험치 변경 이벤트를 UI에 연결
         _hero.OnLevelChanged += _playSceneView.SetLevel; // 영웅의 레벨 변경 이벤트를 UI에 연결
+        _enemyManager.OnDeath += UpdateEnemyKillCount; // 적이 죽었을 때 적 처치 수를 업데이트하는 이벤트를 연결
 
         // 게임 상태 초기화
         _enmeyKillCount = 0;
         _playTime = 0f;
         _playTimeInt = 0;
 
+        // PlaySceneView 초기화(순서 중요함)
+        _playSceneView.Initialize();
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
         // Spawner 초기화
         _enemyManager.Initialize(_hero.transform);
-        // PlaySceneView 초기화
-        _playSceneView.Initialize();
     }
-
-    
 
     private void Update()
     {
@@ -79,8 +78,9 @@ public class PlayScene : MonoBehaviour
         }
     }
 
-    private void UpdateEnemyKillCount()
+    private void UpdateEnemyKillCount(Enemy _)
     {
-
+        _enmeyKillCount++;
+        _playSceneView.SetEnemyKillCount(_enmeyKillCount);
     }
 }

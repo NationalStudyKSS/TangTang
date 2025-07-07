@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TreasureBoxData
   m_EditorClassIdentifier: 
   _itemId: 8
-  _chance: 1
+  _chance: 100
   _name: 7
   _dropItemPrefabPath: DropItem/TreasureBox

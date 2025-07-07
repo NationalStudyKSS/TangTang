@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CarrotData
   m_EditorClassIdentifier: 
   _itemId: 3
-  _chance: 1
+  _chance: 100
   _name: 2
   _dropItemPrefabPath: DropItem/Carrot
   _carrotAmount: 1

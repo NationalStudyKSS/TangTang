@@ -61,8 +61,17 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     public void SpawnEnemy()
     {
-        // 영웅의 위치를 기준으로 랜덤한 위치를 계산
-        Vector3 randomPos = _heroTransform.position + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(_minSpawnRange, _maxSpawnRange);
+        // 이거보다 더 확실하게 Vector2로 구하는게 나음
+
+        //// 영웅의 위치를 기준으로 랜덤한 위치를 계산
+        //Vector3 randomPos = _heroTransform.position + UnityEngine.Random.insideUnitSphere.normalized * UnityEngine.Random.Range(_minSpawnRange, _maxSpawnRange);
+        //// 이거 안해서 적이 z가 이상해져서 안보이는 적이 생겼음...
+        //randomPos.z = 0f; // 2D 게임이므로 z축은 0으로 설정
+
+        Vector2 dir = UnityEngine.Random.insideUnitCircle.normalized;
+        float dist = UnityEngine.Random.Range(_minSpawnRange, _maxSpawnRange);
+        Vector3 randomPos = _heroTransform.position + new Vector3(dir.x * dist, dir.y * dist, 0f);
+
         // 적 생성 후 enemy 지역변수에 할당
         GameObject go = GameManager.Instance.PoolManager.GetFromPool("Enemy/Enemy");
         if (go == null)

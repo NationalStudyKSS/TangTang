@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,5 +9,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BombData", menuName = "GameSettings/DropItem/BombData")]
 public class BombData : DropItemData
 {
-
+    public override void ApplyEffect()
+    {
+        // 폭탄 아이템 사용 이벤트 발생
+        DropItemManager.RaiseBombItemUsed();
+    }
 }

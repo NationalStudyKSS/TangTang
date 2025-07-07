@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MagnetData
   m_EditorClassIdentifier: 
   _itemId: 7
-  _chance: 1
+  _chance: 100
   _name: 6
   _dropItemPrefabPath: DropItem/Magnet

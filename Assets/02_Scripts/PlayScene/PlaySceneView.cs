@@ -18,7 +18,7 @@ public class PlaySceneView : MonoBehaviour
     [SerializeField] Image _carrotIcon;                   // 당근 아이콘
     [SerializeField] TextMeshProUGUI _carrotText;         // 획득한 당근 수를 표시하는 텍스트
     [SerializeField] Image _hpIcon;                       // 영웅 Hp 아이콘
-    [SerializeField] TextMeshProUGUI _hpText;             // Current Hp를 표시하는 텍스트
+    [SerializeField] TextMeshProUGUI _hpText;             // Current Hp/Max Hp를 표시하는 텍스트
     [SerializeField] Image _damageIcon;                   // 영웅 Damage 아이콘
     [SerializeField] TextMeshProUGUI _damageText;         // Current Damage를 표시하는 텍스트
     [SerializeField] Image _pauseIcon;                    // 일시정지 아이콘
@@ -27,6 +27,17 @@ public class PlaySceneView : MonoBehaviour
 
     public void Initialize()
     {
+        // 골드 변경 이벤트 구독
+        GameManager.Instance.CurrencyManager.OnGoldChanged += SetGold;
+        // 당근 변경 이벤트 구독
+        GameManager.Instance.CurrencyManager.OnCarrotChanged += SetCarrot;
+
+        // 골드 초기화
+        SetGold(GameManager.Instance.CurrencyManager.Gold);
+        // 당근 초기화
+        SetCarrot(GameManager.Instance.CurrencyManager.Carrot);
+
+        // 적 처치 수 초기화
         SetEnemyKillCount(0);
         SetPlayTime(0);
     }
@@ -61,23 +72,23 @@ public class PlaySceneView : MonoBehaviour
     public void SetHp(float currentHp, float maxHp)
     {
         // 아이콘 받아오기
-        _hpText.text = $"{currentHp}/{maxHp}";
+        _hpText.text = $"{currentHp:F0}/{maxHp:F0}";
     }
 
     public void SetDamage(float currentDamage)
     {
         // 아이콘 받아오기
-        _damageText.text = $"{currentDamage}";
+        _damageText.text = $"{currentDamage:F0}";
     }
 
-    public void SetLevel(int currentLevel, int _)
+    public void SetLevel(int preLevel, int currentLevel)
     {
         // 아이콘 받아오기
         _heroLvText.text = $"Lv. {currentLevel}";
     }
 
-    public void SetExp(float currentExp, float maxExp)
+    public void SetExp(float currentExp, float expRequired)
     {
-        _expBar.fillAmount = currentExp / maxExp; // fillAmount를 사용하여 경험치 바를 채움
+        _expBar.fillAmount = currentExp / expRequired; // fillAmount를 사용하여 경험치 바를 채움
     }
 }

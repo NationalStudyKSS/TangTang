@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,4 +12,11 @@ using UnityEngine;
 public class ExpData : DropItemData
 {
     [SerializeField] int _expAmount; // 경험치 아이템의 지급량
+    public int ExpAmount => _expAmount; // 경험치 아이템의 지급량을 반환
+    
+    public override void ApplyEffect()
+    {
+        // 경험치 아이템 사용 이벤트 발생
+        DropItemManager.RaiseExpItemUsed(_expAmount);
+    }
 }

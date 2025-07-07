@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HpPotionData
   m_EditorClassIdentifier: 
   _itemId: 6
-  _chance: 1
+  _chance: 0
   _name: 5
   _dropItemPrefabPath: DropItem/HpPotion
   _hpHealRate: 0.2

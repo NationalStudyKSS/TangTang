@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricFieldWeapon : MonoBehaviour, IAttackable
+public class ElectricFieldSkill : MonoBehaviour, IAttackable
 {
     public float radius = 5f;
     public float damagePerSecond = 10f;

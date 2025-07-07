@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,4 +15,9 @@ public class AtkUpData : DropItemData
     public float AtkUpRate => _atkUpRate; // 공격력 증가량 비율을 반환
     public float Duration => _duration; // 효과 지속 시간을 반환
 
+    public override void ApplyEffect()
+    {
+        // 공격력 증가 아이템 사용 이벤트 발생
+        DropItemManager.RaiseAtkUpItemUsed(_atkUpRate, _duration);
+    }
 }

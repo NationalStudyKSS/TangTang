@@ -9,18 +9,22 @@ using UnityEngine;
 /// </summary>
 public class ItemDropper : MonoBehaviour
 {
-    //[Header("----- 드롭아이템 경로(읽기 전용) -----")]
-    //[SerializeField] string[] _dropItemPrefabPath; // 드롭 아이템 데이터에 적어놔야함
-
     //[Header("----- 드롭아이템 목록(읽기 전용) -----")]
-    //[SerializeField] List<GameObject> _dropItems = new(); // 드롭 아이템 목록
-    //[SerializeField] Dictionary<int, GameObject> _dropItemMap = new(); // 드롭 아이템 ID와 게임 오브젝트 매핑 딕셔너리
+    //[SerializeField]
+    List<DropItem> _currentDropItems = new(); // 드롭 아이템 목록
 
     Coroutine _spawnEnemyRoutine;       // 적 생성 코루틴 변수
+    DropItem _dropItem; // 드롭 아이템 변수
+    Transform _hero; // 영웅의 Transform 컴포넌트 변수
 
-    public void Initialize()
+    public List<DropItem> CurrentDropItems => _currentDropItems;
+
+    public void Initialize(Transform hero)
     {
+        _hero = hero;
 
+        // 자석 아이템 사용 이벤트 연결
+        DropItemManager.OnMagnetItemUsed += UseMagnetItem;
     }
 
     /// <summary>
@@ -51,8 +55,46 @@ public class ItemDropper : MonoBehaviour
         // 드롭 아이템 초기화 (필요하다면)
         DropItem dropItem = itemGo.GetComponent<DropItem>();
 
+        // 드롭 아이템 리스트에 등록
+        RegisterDropItem(dropItem);
+
         // 드롭 아이템 초기화
         dropItem.Initialize(itemData.ItemId);
     }
-    
+
+    public void UseMagnetItem()
+    {
+        StartCoroutine(MagnetEffectRoutine());
+    }
+
+    IEnumerator MagnetEffectRoutine()
+    {
+        float moveSpeed = 10f; // 자석 아이템의 이동 속도(임시)
+        while (_currentDropItems.Count > 0)
+        {
+            foreach (var dropItem in _currentDropItems)
+            {
+                // 드롭 아이템이 영웅에게 가까워지도록 이동
+                Vector3 dir = (_hero.position - dropItem.transform.position).normalized;
+                dropItem.transform.position += dir * moveSpeed * Time.deltaTime;
+            }
+            yield return null; // 다음 프레임까지 대기
+        }
+    }
+
+    void RegisterDropItem(DropItem dropItem)
+    {
+        _currentDropItems.Add(dropItem);
+        dropItem.OnDropItemUsed += HandleDropItemUsed;
+    }
+
+    void HandleDropItemUsed(DropItem dropItem)
+    {
+        // 아이템 사용 이벤트 핸들러
+        if (_currentDropItems.Contains(dropItem))
+        {
+            _currentDropItems.Remove(dropItem);
+            dropItem.OnDropItemUsed -= HandleDropItemUsed; // 이벤트 구독 해제
+        }
+    }
 }

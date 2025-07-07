@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 623d83e5f1c0a7840a5fc02ed64df760, type: 3}
-  m_Name: CoinData
+  m_Name: Gold
   m_EditorClassIdentifier: 
   _itemId: 4
   _chance: 100
   _name: 3
-  _dropItemPrefabPath: DropItem/Coin
-  _coinAmount: 5
+  _dropItemPrefabPath: DropItem/Gold
+  _goldAmount: 5
