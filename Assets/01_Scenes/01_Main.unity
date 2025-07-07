@@ -32843,9 +32843,13 @@ MonoBehaviour:
   _startScale: {x: 0, y: 0, z: 0}
   _endPos: {x: 0, y: 0, z: 0}
   _endScale: {x: 0, y: 0, z: 0}
+  _detectingLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _punchNum: 0
   _punchDistance: 0
   _punchDuration: 0
+  _punchCoolTime: 0
 --- !u!1 &1691294059
 GameObject:
   m_ObjectHideFlags: 0
