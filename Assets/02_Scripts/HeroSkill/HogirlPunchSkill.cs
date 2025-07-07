@@ -1,30 +1,97 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// È£°É ÆİÄ¡ ½ºÅ³À» ±¸ÇöÇÏ´Â Å¬·¡½º
+/// í˜¸ê±¸ í€ì¹˜ ìŠ¤í‚¬ì„ êµ¬í˜„í•˜ëŠ” í´ë˜ìŠ¤
 /// </summary>
 public class HogirlPunchSkill : MonoBehaviour
 {
-    [Header("----- È£°É ÆİÄ¡ ½ºÅ³ µ¥ÀÌÅÍ -----")]
-    [SerializeField] Transform _fist;             // ÁÖ¸ÔÀÇ Å©±â¸¦ Á¶ÀıÇÒ ¿ÀºêÁ§Æ®(Renderer ´Ş¸°°Å)
-    [SerializeField] Vector3 _startPos;           // Ã³À½ ½ÃÀÛÇßÀ» ¶§ÀÇ ÁÖ¸Ô À§Ä¡
-    [SerializeField] Vector3 _startScale;         // Ã³À½ ½ÃÀÛÇßÀ» ¶§ÀÇ ÁÖ¸Ô Å©±â
-    [SerializeField] Vector3 _endPos;             // ³¡¿¡ µµ´ŞÇßÀ» ¶§ÀÇ ÁÖ¸Ô À§Ä¡
-    [SerializeField] Vector3 _endScale;           // ³¡¿¡ µµ´ŞÇßÀ» ¶§ÀÇ ÁÖ¸Ô Å©±â
-    [SerializeField] int _punchNum;               // ÁÖ¸ÔÀÌ ³ª°¥ °³¼ö
-    [SerializeField] float _punchDistance;        // ÁÖ¸ÔÀÌ ³ª°¡´Â °Å¸® = Àû °¨Áö ¹üÀ§
-    [SerializeField] float _punchDuration;        // ÁÖ¸ÔÀÌ ³ª°¡´Â ½Ã°£
+    [Header("----- í˜¸ê±¸ í€ì¹˜ ìŠ¤í‚¬ ë°ì´í„°(ë‚˜ì¤‘ì— ë°›ì•„ì˜¬ê±°ì„) -----")]
+    [SerializeField] Transform _fist;             // ì£¼ë¨¹ì˜ í¬ê¸°ë¥¼ ì¡°ì ˆí•  ì˜¤ë¸Œì íŠ¸(Renderer ë‹¬ë¦°ê±°)
+    [SerializeField] Vector3 _startPos;           // ì²˜ìŒ ì‹œì‘í–ˆì„ ë•Œì˜ ì£¼ë¨¹ ìœ„ì¹˜
+    [SerializeField] Vector3 _startScale;         // ì²˜ìŒ ì‹œì‘í–ˆì„ ë•Œì˜ ì£¼ë¨¹ í¬ê¸°
+    [SerializeField] Vector3 _endPos;             // ëì— ë„ë‹¬í–ˆì„ ë•Œì˜ ì£¼ë¨¹ ìœ„ì¹˜
+    [SerializeField] Vector3 _endScale;           // ëì— ë„ë‹¬í–ˆì„ ë•Œì˜ ì£¼ë¨¹ í¬ê¸°
+    [SerializeField] LayerMask _detectingLayer;   // ê°ì§€í•  ë ˆì´ì–´ ë§ˆìŠ¤í¬
+    [SerializeField] int _punchNum;               // ì£¼ë¨¹ì´ ë‚˜ê°ˆ ê°œìˆ˜
+    [SerializeField] float _punchDistance;        // ì£¼ë¨¹ì´ ë‚˜ê°€ëŠ” ê±°ë¦¬ = ì  ê°ì§€ ë²”ìœ„
+    [SerializeField] float _punchDuration;        // ì£¼ë¨¹ì´ ë‚˜ê°€ëŠ” ì‹œê°„
+    [SerializeField] float _punchCoolTime;        // ì£¼ë¨¹ ìŠ¤í‚¬ ì¿¨íƒ€ì„
+
+    float _timer;
+    Coroutine _attackRoutine;
 
     public void Initialize()
     {
 
     }
 
-    void DetectEnemy()
+    public void Attack()
     {
-        //Physics2D.OverlapCircleAll()
+        for (int i = 0; i < _punchNum; i++)
+        {
+            // ì£¼ë¨¹ì„ ì´ë™ì‹œí‚¤ëŠ” ì½”ë£¨í‹´ ì‹œì‘
+            _attackRoutine = StartCoroutine(AttackRoutine());
+        }
+    }
 
+    IEnumerator AttackRoutine()
+    {
+        while (true)
+        {
+            _fist.transform.position = _startPos; // ì£¼ë¨¹ì˜ ìœ„ì¹˜ë¥¼ ì‹œì‘ ìœ„ì¹˜ë¡œ ì´ˆê¸°í™”
+            _fist.transform.localScale = _startScale; // ì£¼ë¨¹ì˜ í¬ê¸°ë¥¼ ì‹œì‘ í¬ê¸°ë¡œ ì´ˆê¸°í™”
+
+            _timer = 0f;
+            if (_timer < _punchDuration)
+            {
+                _timer = 0f; // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
+                // ì£¼ë¨¹ì˜ ìœ„ì¹˜ì™€ í¬ê¸°ë¥¼ ë³´ê°„í•˜ì—¬ ì´ë™
+            }
+
+            yield return new WaitForSeconds(_punchCoolTime); // ì ì‹œ ëŒ€ê¸°
+        }
+        
+
+    }
+
+    /// <summary>
+    /// ê°€ì¥ ê°€ê¹Œìš´ ì ë“¤ì„ ê°ì§€í•˜ëŠ” í•¨ìˆ˜
+    /// </summary>
+    /// <returns></returns>
+    Enemy[] DetectNearestEnemies(int punchNum)
+    {
+        // ìµœëŒ€ 20ê°œì˜ ì ì„ ê°ì§€í•  ìˆ˜ ìˆëŠ” ë°°ì—´
+        Collider2D[] colliders = new Collider2D[20];    
+        // ê°ì§€ë²”ìœ„ ë‚´ì— ìˆëŠ” ì ë“¤ì˜ ìˆ˜ë¥¼ ì €ì¥
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, _punchDistance, colliders, _detectingLayer);
+        
+        // ì ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸ ìƒì„±
+        List<Enemy> enemies = new List<Enemy>();
+
+        // ê°ì§€ëœ ì  ìˆ˜ë§Œí¼ ëŒë©´ì„œ
+        for (int i = 0; i < count; i++)
+        {
+            // ì ì´ ìˆëŠ”ì§€ í™•ì¸
+            if (colliders[i] != null)
+            {
+                // Enemy ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì™€ì„œ
+                Enemy enemy = colliders[i].GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+                    enemies.Add(enemy);
+                }
+            }
+        }
+
+        // ê±°ë¦¬ê°€ ê°€ê¹Œìš´ ìˆœì„œëŒ€ë¡œ ì •ë ¬
+        enemies.Sort((a, b) =>
+        Vector2.Distance(transform.position, a.transform.position)
+        .CompareTo(Vector2.Distance(transform.position, b.transform.position)));
+
+        return enemies.Take(punchNum).ToArray();
     }
 }
