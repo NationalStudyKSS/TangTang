@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b2be93746b80dd4fbf7e8835896ca83, type: 3}
-  m_Name: HeroStatData
+  m_Name: _hero_bunnyTiger
   m_EditorClassIdentifier: 
   _baseMaxHp: 200
-  _baseDamage: 20
-  _baseSpeed: 5
-  _baseExpRequired: 100
-  _baseMaxLevel: 1000
-  _baseExpIncrementRate: 1
-  _hpIncrementRate: 1.1
-  _damageIncrementRate: 1.1
-  _speedIncrementRate: 1
-  _expRequiredIncrementRate: 1.1
+  _baseDamage: 50
+  _baseMoveSpeed: 5
+  _baseItemGetRange: 3
+  _baseExpToLevelUp: 100
+  _maxLevel: 99
+  _baseExpGainRate: 1
+  _hpGrowthRate: 1.1
+  _damageGrowthRate: 1.05
+  _moveSpeedGrowthRate: 1
+  _itemGetRangeGrowthRate: 1
+  _expRequiredGrowthRate: 1.2

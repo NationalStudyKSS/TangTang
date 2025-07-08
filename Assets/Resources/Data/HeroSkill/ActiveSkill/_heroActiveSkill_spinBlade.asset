@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4392445ec8f06854e9341a32eecaed08, type: 3}
+  m_Name: _heroActiveSkill_spinBlade
+  m_EditorClassIdentifier: 
+  _id: 3
+  _activeSkillName: "\uD68C\uC804 \uCE7C\uB0A0"
+  _levelStats:
+  - _statType: 0
+    _levelValues:
+    - 0.7
+    - 0.9
+    - 1.1
+    - 1.3
+    - 1.5
+  - _statType: 1
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 2
+    _levelValues:
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+  - _statType: 3
+    _levelValues:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  - _statType: 4
+    _levelValues:
+    - 3
+    - 3.25
+    - 3.5
+    - 3.75
+    - 4
+  - _statType: 5
+    _levelValues:
+    - 5
+    - 5
+    - 5
+    - 5
+    - 5
+  - _statType: 6
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 7
+    _levelValues:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  - _statType: 8
+    _levelValues:
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+  - _statType: 9
+    _levelValues:
+    - 90
+    - 90
+    - 90
+    - 90
+    - 90
+  - _statType: 10
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  _description: "\uC601\uC6C5\uC744 \uC911\uC2EC\uC73C\uB85C \uD68C\uC804\uD558\uBA70
+    \uC801\uC744 \uACF5\uACA9"
+  _iconSprite: {fileID: 0}
+  _prefabPath: 

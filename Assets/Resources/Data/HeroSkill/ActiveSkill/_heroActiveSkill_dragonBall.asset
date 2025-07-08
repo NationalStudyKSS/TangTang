@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4392445ec8f06854e9341a32eecaed08, type: 3}
+  m_Name: _heroActiveSkill_dragonBall
+  m_EditorClassIdentifier: 
+  _id: 2
+  _activeSkillName: "\uC6A9\uC758 \uACF5"
+  _levelStats:
+  - _statType: 0
+    _levelValues:
+    - 1
+    - 1.2
+    - 1.4
+    - 1.6
+    - 1.8
+  - _statType: 1
+    _levelValues:
+    - 10
+    - 12
+    - 14
+    - 16
+    - 18
+  - _statType: 2
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 3
+    _levelValues:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  - _statType: 4
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 5
+    _levelValues:
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+  - _statType: 6
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 7
+    _levelValues:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  - _statType: 8
+    _levelValues:
+    - 5
+    - 5
+    - 5
+    - 5
+    - 5
+  - _statType: 9
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - _statType: 10
+    _levelValues:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  _description: "\uC601\uC6C5\uC73C\uB85C\uBD80\uD130 \uC801\uC744 \uAD00\uD1B5\uD558\uBA70
+    \uC9C1\uC120\uC73C\uB85C \uB0A0\uC544\uAC00\uB294 \uACF5\uC744 \uBC1C\uC0AC"
+  _iconSprite: {fileID: 0}
+  _prefabPath: 

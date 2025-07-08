@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricFieldSkill : MonoBehaviour, IAttackable
+[RequireComponent(typeof(CircleCollider2D))]
+public class ElectricFieldSkill : ActiveSkill
 {
     public float radius = 5f;
     public float damagePerSecond = 10f;
@@ -12,6 +13,8 @@ public class ElectricFieldSkill : MonoBehaviour, IAttackable
     private float _timer;
 
     public Transform hero; // 영웅 위치 추적용
+
+    public override ActiveSkillType ActiveSkillType => ActiveSkillType.ElectricField;
 
     private void Start()
     {
