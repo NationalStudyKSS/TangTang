@@ -23,11 +23,6 @@ public class GunSkill : FiringActiveSkill
 
     public override ActiveSkillType ActiveSkillType => ActiveSkillType.Gun;
 
-    public void Start()
-    {
-        Upgrade();
-    }
-
     protected override void CalculateStats()
     {
         // 일단 부모 클래스의 스텟들은 계산하고

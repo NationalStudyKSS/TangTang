@@ -43,6 +43,10 @@ public class HeroModel : MonoBehaviour
     HeroStatData _heroStatData;
     Coroutine _attackBuffCoroutine;
 
+    // 임시
+    [SerializeField] float _invincibleTime = 1f; // 맞은 후 무적 시간
+    [SerializeField] float _lastHitTime = -999f;   // 마지막으로 맞은 시간
+
     // 이벤트 선언
     public event UnityAction<float, float> OnHpChanged;
     public event UnityAction<float> OnDamageChanged;
@@ -127,6 +131,12 @@ public class HeroModel : MonoBehaviour
     public void TakeDamage(float amount)
     {
         if (_currentHp <= 0) return;
+        if (Time.time - _lastHitTime < _invincibleTime)
+        {
+            // 아직 무적시간이 남아있으면 무시
+            return;
+        }
+        _lastHitTime = Time.time;
 
         _currentHp = Mathf.Min(_currentHp - amount, _maxHp);
         _currentHp = Mathf.Max(_currentHp, 0f);

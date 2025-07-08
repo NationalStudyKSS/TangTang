@@ -59,18 +59,18 @@ MonoBehaviour:
     - 0
   - _statType: 6
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 2
+    - 0.45
+    - 0.4
+    - 0.35
+    - 0.3
   - _statType: 7
     _levelValues:
     - 1
     - 1
     - 1
     - 1
-    - 1
+    - 2
   - _statType: 8
     _levelValues:
     - 3

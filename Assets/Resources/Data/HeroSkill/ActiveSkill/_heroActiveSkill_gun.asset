@@ -24,46 +24,46 @@ MonoBehaviour:
     - 2
   - _statType: 1
     _levelValues:
-    - 20
-    - 22
-    - 25
-    - 28
-    - 30
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
   - _statType: 2
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 5
+    - 5
+    - 5
+    - 5
+    - 5
   - _statType: 3
     _levelValues:
-    - 1
-    - 2
     - 3
-    - 4
-    - 5
+    - 3
+    - 3
+    - 3
+    - 3
   - _statType: 4
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
   - _statType: 5
     _levelValues:
     - 1
-    - 1.8
-    - 1.6
-    - 1.4
-    - 1.2
+    - 0.9
+    - 0.8
+    - 0.7
+    - 0.6
   - _statType: 6
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 0.1
+    - 0.9
+    - 0.8
+    - 0.7
+    - 0.6
   - _statType: 7
     _levelValues:
     - 1

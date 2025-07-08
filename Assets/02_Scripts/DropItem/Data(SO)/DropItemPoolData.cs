@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,20 +10,20 @@ public enum DropPoolType
 }
 
 /// <summary>
-/// µå·Ó ¾ÆÀÌÅÛ Ç® µ¥ÀÌÅÍ
+/// ë“œë¡­ ì•„ì´í…œ í’€ ë°ì´í„°
 /// </summary>
 [CreateAssetMenu(fileName = "DropItemPoolData", menuName = "GameSettings/DropItem/DropItemPoolData")]
 public class DropItemPoolData : ScriptableObject
 {
-    [Header("----- µå·Ó ¾ÆÀÌÅÛ Ç® µ¥ÀÌÅÍ(Á÷Á¢ ÇÒ´ç ÇØÁà¾ßÇÔ) -----")]
-    [SerializeField] List<DropItemData> _normalItems = new List<DropItemData>();    // ÀÏ¹İ Àû µå·Ó ¾ÆÀÌÅÛ Ç®
-    [SerializeField] List<DropItemData> _eliteItems = new List<DropItemData>();     // Á¤¿¹ Àû µå·Ó ¾ÆÀÌÅÛ Ç®
-    [SerializeField] List<DropItemData> _bossItems = new List<DropItemData>();      // º¸½º Àû µå·Ó ¾ÆÀÌÅÛ Ç®
+    [Header("----- ë“œë¡­ ì•„ì´í…œ í’€ ë°ì´í„°(ì§ì ‘ í• ë‹¹ í•´ì¤˜ì•¼í•¨) -----")]
+    [SerializeField] List<DropItemData> _normalItems = new List<DropItemData>();    // ì¼ë°˜ ì  ë“œë¡­ ì•„ì´í…œ í’€
+    [SerializeField] List<DropItemData> _eliteItems = new List<DropItemData>();     // ì •ì˜ˆ ì  ë“œë¡­ ì•„ì´í…œ í’€
+    [SerializeField] List<DropItemData> _bossItems = new List<DropItemData>();      // ë³´ìŠ¤ ì  ë“œë¡­ ì•„ì´í…œ í’€
 
     /// <summary>
-    /// µå·Ó ¾ÆÀÌÅÛ Ç®À» Å¸ÀÔ¿¡ µû¶ó ¹İÈ¯ÇÕ´Ï´Ù.
+    /// ë“œë¡­ ì•„ì´í…œ í’€ì„ íƒ€ì…ì— ë”°ë¼ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="type">µå·Ó ¾ÆÀÌÅÛ Ç® Å¸ÀÔ(Àû Å¸ÀÔ)</param>
+    /// <param name="type">ë“œë¡­ ì•„ì´í…œ í’€ íƒ€ì…(ì  íƒ€ì…)</param>
     /// <returns></returns>
     public List<DropItemData> GetPoolByType(DropPoolType type)
     {
@@ -37,53 +37,53 @@ public class DropItemPoolData : ScriptableObject
     }
 
     /// <summary>
-    /// µå·Ó ¾ÆÀÌÅÛ Ç®¿¡¼­ È®·ü¿¡ µû¶ó ·£´ıÀ¸·Î ¾ÆÀÌÅÛ ID ÇÏ³ª¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
-    /// ±Ùµ¥ ÀÏ¹İ, Á¤¿¹, º¸½º¸¶´Ù µå·Ó ¸ŞÄ¿´ÏÁòÀÌ ´Ş¶ó¼­ ÀÇ¹Ì°¡¾ø¾îÁ³´Ù...
+    /// ë“œë¡­ ì•„ì´í…œ í’€ì—ì„œ í™•ë¥ ì— ë”°ë¼ ëœë¤ìœ¼ë¡œ ì•„ì´í…œ ID í•˜ë‚˜ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+    /// ê·¼ë° ì¼ë°˜, ì •ì˜ˆ, ë³´ìŠ¤ë§ˆë‹¤ ë“œë¡­ ë©”ì»¤ë‹ˆì¦˜ì´ ë‹¬ë¼ì„œ ì˜ë¯¸ê°€ì—†ì–´ì¡Œë‹¤...
     /// </summary>
-    /// <param name="type">µå·Ó ¾ÆÀÌÅÛ Ç® Å¸ÀÔ(Àû Å¸ÀÔ)</param>
+    /// <param name="type">ë“œë¡­ ì•„ì´í…œ í’€ íƒ€ì…(ì  íƒ€ì…)</param>
     /// <returns></returns>
     public int GetRandomItemId(DropPoolType type)
     {
         float total = 0;
 
-        // µå·Ó ¾ÆÀÌÅÛ Ç®À» Å¸ÀÔ¿¡ µû¶ó °¡Á®¿À±â
+        // ë“œë¡­ ì•„ì´í…œ í’€ì„ íƒ€ì…ì— ë”°ë¼ ê°€ì ¸ì˜¤ê¸°
         List<DropItemData> dropItemList = GetPoolByType(type);
 
-        // µå·Ó ¾ÆÀÌÅÛ ¸®½ºÆ®°¡ ºñ¾îÀÖ°Å³ª nullÀÎ °æ¿ì
+        // ë“œë¡­ ì•„ì´í…œ ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìˆê±°ë‚˜ nullì¸ ê²½ìš°
         if (dropItemList == null || dropItemList.Count == 0)
-            return -1; // ¿¡·¯ Ã³¸®
+            return -1; // ì—ëŸ¬ ì²˜ë¦¬
 
-        // È®·ü ÇÕ°è °è»ê
+        // í™•ë¥  í•©ê³„ ê³„ì‚°
         for (int i = 0; i < dropItemList.Count; i++)
         {
             total += dropItemList[i].Chance;
         }
 
-        // µå·Ó ¾ÆÀÌÅÛ ¸®½ºÆ®ÀÇ È®·ü ÇÕ°è °è»êÀÌ 0º¸´Ù ÀÛ°Å³ª °°À¸¸é
+        // ë“œë¡­ ì•„ì´í…œ ë¦¬ìŠ¤íŠ¸ì˜ í™•ë¥  í•©ê³„ ê³„ì‚°ì´ 0ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ìœ¼ë©´
         if (total <= 0f)
-            return -1; // ¿¡·¯ Ã³¸®
+            return -1; // ì—ëŸ¬ ì²˜ë¦¬
 
-        // ·£´ıÇÑ È®·ü °ª »ı¼º
+        // ëœë¤í•œ í™•ë¥  ê°’ ìƒì„±
         float randomPoint = Random.value * total;
 
-        // À¯´ÏÆ¼ ·£´ı °ÔÀÓÇÃ·¹ÀÌ ¿ä¼Ò Âü°í
+        // ìœ ë‹ˆí‹° ëœë¤ ê²Œì„í”Œë ˆì´ ìš”ì†Œ ì°¸ê³ 
         // https://docs.unity3d.com/kr/2019.3/Manual/RandomNumbers.html
         for (int i = 0; i < dropItemList.Count; i++)
         {
-            // ·£´ıÀ¸·Î »ÌÀº °ªÀÌ ÇöÀç ¾ÆÀÌÅÛÀÇ È®·üº¸´Ù ÀÛÀ¸¸é
+            // ëœë¤ìœ¼ë¡œ ë½‘ì€ ê°’ì´ í˜„ì¬ ì•„ì´í…œì˜ í™•ë¥ ë³´ë‹¤ ì‘ìœ¼ë©´
             if (randomPoint < dropItemList[i].Chance)
             {
-                // ÇØ´ç ¾ÆÀÌÅÛ ID ¹İÈ¯
+                // í•´ë‹¹ ì•„ì´í…œ ID ë°˜í™˜
                 return dropItemList[i].ItemId;
             }
-            // ·£´ıÀ¸·Î »ÌÀº °ªÀÌ ÇöÀç ¾ÆÀÌÅÛÀÇ È®·üº¸´Ù Å©¸é
+            // ëœë¤ìœ¼ë¡œ ë½‘ì€ ê°’ì´ í˜„ì¬ ì•„ì´í…œì˜ í™•ë¥ ë³´ë‹¤ í¬ë©´
             else
             {
-                // ·£´ı °ª¿¡¼­ ÇöÀç ¾ÆÀÌÅÛÀÇ È®·üÀ» »©±â(ÀÌ¹Ì ÀÌ¹ø ¾ÆÀÌÅÛ È®·üÀº Áö³ª°¬À½)
+                // ëœë¤ ê°’ì—ì„œ í˜„ì¬ ì•„ì´í…œì˜ í™•ë¥ ì„ ë¹¼ê¸°(ì´ë¯¸ ì´ë²ˆ ì•„ì´í…œ í™•ë¥ ì€ ì§€ë‚˜ê°”ìŒ)
                 randomPoint -= dropItemList[i].Chance;
             }
         }
-        // ¸ğµç ¾ÆÀÌÅÛÀÇ È®·üÀ» ´Ù Áö³ª°¬À¸¸é ¸¶Áö¸· ¾ÆÀÌÅÛ ID ¹İÈ¯
+        // ëª¨ë“  ì•„ì´í…œì˜ í™•ë¥ ì„ ë‹¤ ì§€ë‚˜ê°”ìœ¼ë©´ ë§ˆì§€ë§‰ ì•„ì´í…œ ID ë°˜í™˜
         return dropItemList[dropItemList.Count - 1].ItemId;
     }
 }

@@ -1,41 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class ElectricFieldSkill : ActiveSkill
 {
-    public float radius = 5f;
-    public float damagePerSecond = 10f;
-    public float damageInterval = 1f;
+    [SerializeField] float _radius; // 전기장 범위
+    [SerializeField] float _damageInterval;
 
-    private CircleCollider2D _collider;
     private List<Enemy> _enemiesInRange = new List<Enemy>();
     private float _timer;
-
-    public Transform hero; // 영웅 위치 추적용
+    Coroutine _attackRoutine;
 
     public override ActiveSkillType ActiveSkillType => ActiveSkillType.ElectricField;
 
-    private void Start()
+    protected override void CalculateStats()
     {
-        _collider = GetComponent<CircleCollider2D>();
-        _collider.isTrigger = true;
-        _collider.radius = radius;
-    }
+        base.CalculateStats();
 
-    private void Update()
-    {
-        // 영웅 위치 따라가기
-        if (hero != null)
-            transform.position = hero.position;
-
-        // 지속 피해 주기용 타이머
-        _timer += Time.deltaTime;
-        if (_timer >= damageInterval)
-        {
-            _timer = 0f;
-            Attack();
-        }
+        _radius = _data.GetStat(ActiveSkillStatType.BulletRange, _level);
+        _damageInterval = _data.GetStat(ActiveSkillStatType.FireDelay, _level);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,12 +40,27 @@ public class ElectricFieldSkill : ActiveSkill
         }
     }
 
-    public void Attack()
+    IEnumerator AttackRoutine()
     {
-        foreach (Enemy enemy in _enemiesInRange.ToArray())
+        while (true)
         {
-            if (enemy != null)
-                enemy.TakeHit(damagePerSecond);
+            foreach (Enemy enemy in _enemiesInRange.ToArray())
+            {
+                if (enemy != null)
+                    enemy.TakeHit(_damage);
+            }
+            yield return new WaitForSeconds(_damageInterval);
+        }
+    }
+
+    public override void Upgrade()
+    {
+        base.Upgrade();
+
+        // AttackRoutine() 코루틴이 실행 중이 아니면
+        if (_attackRoutine == null)
+        {
+            _attackRoutine = StartCoroutine(AttackRoutine());
         }
     }
 }

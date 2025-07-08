@@ -37,9 +37,13 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     // 현재 액티브스킬 레벨
     [SerializeField] protected int _level;
 
-    // 데미지
+    // 데미지 배율
+    [SerializeField] protected float _damageRate;
+
+    // 스킬 실제 데미지
     [SerializeField] protected float _damage;
-    
+    // 영웅의 현재 공격력
+    protected float _heroCurrentDamage;
 
     // 액티브스킬 타입을 받을 변수
     [SerializeField] protected ActiveSkillType _ActiveSkillType;
@@ -52,12 +56,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public Sprite IconSprite => _data.IconSprite;
     public int Level => _level;
     public bool IsMaxLevel => _level >= _data.MaxLevel;
-    public float Damage => _damage;
-
-    private void Awake()
-    {
-        _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)_ActiveSkillType];
-    }
+    public float DamageRate => _damageRate;
 
     /// <summary>
     /// 레벨에 따른 액티브스킬 스텟을 계산하는 함수
@@ -65,11 +64,14 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     protected virtual void CalculateStats()
     {
         // 액티브스킬 레벨에 따른 데미지 계산
-        _damage = _data.GetStat(ActiveSkillStatType.DamageRate, _level);
+        _damageRate = _data.GetStat(ActiveSkillStatType.DamageRate, _level);
     }
 
     public virtual void Upgrade()
     {
+        // 스킬데이터를 데이터매니저에서 가져옴
+        _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)_ActiveSkillType];
+
         _level++;  // 액티브스킬 레벨을 하나 올리고
         CalculateStats();  // 스텟을 다시 계산한다.
     }
@@ -79,8 +81,8 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     /// 혹시 감소될 수도 있을까봐 Set이라고 했음
     /// </summary>
     /// <param name="additionalDamage">증가 혹은 감소될 데미지퍼센트</param>
-    public void SetDamage(float additionalDamage)
+    public void SetDamage(float heroCurrendDamage)
     {
-        _damage *= (1 + additionalDamage);
+        _damage = _damageRate * heroCurrendDamage;
     }
 }

@@ -16,6 +16,8 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroHudView _hudView;  // HUD 관리 컴포넌트
     [SerializeField] Transform _spriteRoot; // 캐릭터 스프라이트 부모 오브젝트 (좌우 반전 용)
 
+    public float CurrentDamage => _model.CurrentDamage; // 현재 공격력 전달용(임시)
+
     // 이벤트 중개 - 외부에서 Hero의 이벤트를 구독하면 내부 _model의 이벤트 구독과 동일하게 처리
     public event UnityAction<float, float> OnExpChanged
     {

@@ -9,7 +9,7 @@ public class PlayScene : MonoBehaviour
     // Hero와 Enemy 는 둘다 스폰 되는 조건이 있으므로 임시
     [SerializeField] Hero _hero;
     [SerializeField] EnemyManager _enemyManager; // 현재 살아있는 적들을 관리하는 매니저
-
+    [SerializeField] Upgrader _upgrader; // 업그레이드 선택 시스템을 관리하는 컴포넌트
     [SerializeField] InputHandler _inputHandler;
     [SerializeField] PlaySceneView _playSceneView; // 게임 진행 중인 UI를 관리하는 컴포넌트
 
@@ -41,6 +41,15 @@ public class PlayScene : MonoBehaviour
         _playSceneView.Initialize();
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
+        // 업그레이드 시스템 초기화
+        _upgrader.SetHero(_hero.gameObject);
+        _upgrader.Initialize();
+
+        // 구독 시점이 _hero.Initialize() 이후여야 하는데
+        // 문제는 hero가 초기화할때 데미지를 한번 발행해서 스킬에 전달하려면 이걸 추가해야함..
+        _hero.OnDamageChanged += _upgrader.GiveHeroCurrentDamage;
+        _upgrader.GiveHeroCurrentDamage(_hero.CurrentDamage);    
+        
         // Spawner 초기화
         _enemyManager.Initialize(_hero.transform);
     }

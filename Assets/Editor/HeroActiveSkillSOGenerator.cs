@@ -10,7 +10,7 @@ public class ActiveSkillSOGenerator
     private const string CSV_PATH = "Data/CSV/ActiveSkillData"; // Resources 폴더 기준 (확장자 제외)
     private const string SAVE_PATH = "Assets/Resources/Data/HeroSkill/ActiveSkill";
 
-    [MenuItem("Tools/Generate ActiveSkillData SOs (CSVReader)")]
+    [MenuItem("Tools/Generate ActiveSkillData SOs")]
     public static void GenerateActiveSkillSOs()
     {
         if (!Directory.Exists(SAVE_PATH))

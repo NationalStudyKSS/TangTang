@@ -45,7 +45,7 @@ public class DataManager : MonoBehaviour
         foreach (var data in activeSkillArray)
         {
             // 액티브 스킬 데이터의 ID를 키로 사용하여 딕셔너리에 추가
-            _activeSkillDataDict[data.Id] = data;
+            _activeSkillDataDict[data.Id-1] = data;
         }
 
         // 드롭 아이템 데이터 배열 로드 후 리스트로 변환
