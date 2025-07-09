@@ -14,6 +14,7 @@ public class Hero : MonoBehaviour
     [SerializeField] Mover _mover;
     [SerializeField] Animator _animator;
     [SerializeField] HeroHudView _hudView;  // HUD 관리 컴포넌트
+    [SerializeField] HeroItemCollector _itemCollector; // 아이템 수집 컴포넌트
     [SerializeField] Transform _spriteRoot; // 캐릭터 스프라이트 부모 오브젝트 (좌우 반전 용)
 
     public float CurrentDamage => _model.CurrentDamage; // 현재 공격력 전달용(임시)
@@ -49,6 +50,12 @@ public class Hero : MonoBehaviour
         remove => _model.OnMoveSpeedChanged -= value;
     }
 
+    public event UnityAction<float> OnItemGetRangeChanged
+    {
+        add => _model.OnItemGetRangeChanged += value;
+        remove => _model.OnItemGetRangeChanged -= value;
+    }
+
     public event UnityAction OnDeath
     {
         add => _model.OnDeath += value;
@@ -60,8 +67,10 @@ public class Hero : MonoBehaviour
         _mover.OnMoved += OnMoved;
         _model.OnMoveSpeedChanged += _mover.SetSpeed;  // 이벤트명 수정
         _model.OnHpChanged += _hudView.ChangeHpBar;
+        _model.OnItemGetRangeChanged += _itemCollector.SetRange; // 아이템 수집 범위 변경
 
         _model.Initialize();
+        _itemCollector.Initialize(transform); // 아이템 수집 컴포넌트 초기화
     }
 
     /// <summary>

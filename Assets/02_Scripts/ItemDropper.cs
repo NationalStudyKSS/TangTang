@@ -14,6 +14,7 @@ public class ItemDropper : MonoBehaviour
     List<DropItem> _currentDropItems = new(); // 드롭 아이템 목록
 
     Coroutine _spawnEnemyRoutine;       // 적 생성 코루틴 변수
+    Coroutine _magnetEffectRoutine; // 자석 아이템 효과 코루틴 변수
     DropItem _dropItem; // 드롭 아이템 변수
     Transform _hero; // 영웅의 Transform 컴포넌트 변수
 
@@ -64,7 +65,7 @@ public class ItemDropper : MonoBehaviour
 
     public void UseMagnetItem()
     {
-        StartCoroutine(MagnetEffectRoutine());
+        _magnetEffectRoutine = StartCoroutine(MagnetEffectRoutine());
     }
 
     IEnumerator MagnetEffectRoutine()

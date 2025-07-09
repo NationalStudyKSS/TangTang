@@ -15,7 +15,7 @@ MonoBehaviour:
   _baseMaxHp: 200
   _baseDamage: 50
   _baseMoveSpeed: 5
-  _baseItemGetRange: 3
+  _baseItemGetRange: 1
   _baseExpToLevelUp: 100
   _maxLevel: 99
   _baseExpGainRate: 1

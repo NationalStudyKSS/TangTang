@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AtkUpData
   m_EditorClassIdentifier: 
   _itemId: 1
-  _chance: 100
+  _chance: 1
   _name: 0
   _dropItemPrefabPath: DropItem/AtkUp
   _atkUpRate: 0.2

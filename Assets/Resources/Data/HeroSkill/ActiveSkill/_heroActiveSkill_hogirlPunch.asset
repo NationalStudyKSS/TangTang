@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4392445ec8f06854e9341a32eecaed08, type: 3}
-  m_Name: _heroActiveSkill_tigerPunch
+  m_Name: _heroActiveSkill_hogirlPunch
   m_EditorClassIdentifier: 
   _id: 1
   _activeSkillName: "\uD638\uAC78 \uD380\uCE58"
@@ -45,14 +45,14 @@ MonoBehaviour:
     - 3
   - _statType: 4
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
   - _statType: 5
     _levelValues:
-    - 1
+    - 2
     - 2
     - 2
     - 2
@@ -73,11 +73,11 @@ MonoBehaviour:
     - 1
   - _statType: 8
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 5
+    - 5
+    - 5
+    - 5
+    - 5
   - _statType: 9
     _levelValues:
     - 0

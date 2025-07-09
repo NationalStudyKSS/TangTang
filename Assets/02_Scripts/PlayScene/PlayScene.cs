@@ -32,6 +32,8 @@ public class PlayScene : MonoBehaviour
         _hero.OnLevelChanged += _playSceneView.SetLevel; // 영웅의 레벨 변경 이벤트를 UI에 연결
         _enemyManager.OnDeath += UpdateEnemyKillCount; // 적이 죽었을 때 적 처치 수를 업데이트하는 이벤트를 연결
 
+        _hero.OnLevelChanged += OnLevelUp;
+
         // 게임 상태 초기화
         _enmeyKillCount = 0;
         _playTime = 0f;
@@ -66,6 +68,11 @@ public class PlayScene : MonoBehaviour
     public void OnMoveInput(Vector2 inputVec)
     {
         _hero.Move(inputVec);
+    }
+
+    public void OnLevelUp(int preLevel, int CurLevel)
+    {
+        _upgrader.OnLevelUp(CurLevel - preLevel); // 업그레이드 선택을 시작
     }
 
     /// <summary>

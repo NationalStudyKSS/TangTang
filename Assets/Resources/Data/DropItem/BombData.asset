@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BombData
   m_EditorClassIdentifier: 
   _itemId: 2
-  _chance: 100
+  _chance: 1
   _name: 1
   _dropItemPrefabPath: DropItem/Bomb

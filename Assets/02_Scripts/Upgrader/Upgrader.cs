@@ -11,7 +11,8 @@ public class Upgrader : MonoBehaviour
     IUpgradable[] _upgradables;     // 전체 업그레이드 가능한 대상들
     List<IUpgradable> _shuffledUpgradables = new();
 
-    [Header("----- 기본 지급할 무기 -----")]
+    [Header("----- 테스트용 무기 숫자 -----")]
+    [SerializeField] int _testWeaponCount; // 테스트용 무기 숫자
 
 
     [SerializeField] GameObject _upgradePanel; // 업그레이드 패널
@@ -29,7 +30,16 @@ public class Upgrader : MonoBehaviour
         _upgradables = _hero.gameObject.GetComponentsInChildren<IUpgradable>();
 
         // 시작 시 무기 하나 지급
-        _upgradables[0].Upgrade();
+        //_upgradables[(int)ActiveSkillType.HogirlPunch].Upgrade();
+        //_upgradables[(int)ActiveSkillType.DragonBall].Upgrade();
+        //_upgradables[(int)ActiveSkillType.SpinBlade].Upgrade();
+        //_upgradables[(int)ActiveSkillType.ElectricField].Upgrade();
+        //_upgradables[(int)ActiveSkillType.Gun].Upgrade();
+        for (int i =0;i < _testWeaponCount; i++)
+        {
+            // 테스트용 무기 숫자만큼 무기를 지급
+            _upgradables[i].Upgrade();
+        }
         BasicWeaponSelected?.Invoke(2);
     }
 

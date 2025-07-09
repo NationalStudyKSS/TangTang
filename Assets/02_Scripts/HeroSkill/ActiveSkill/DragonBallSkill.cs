@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class DragonBallSkill : FiringActiveSkill
 {
-    [SerializeField] int _attackCount;      // 총알 공격 횟수(적 관통 얼마나 할지)
+    //[SerializeField] int _attackCount;      // 총알 공격 횟수(적 관통 얼마나 할지)
 
     [Header(" ----- 총알 프리펩 ----- ")]
     [SerializeField] ProjectileBullet _bulletPrefab; // 발사할 총알 프리팹
@@ -22,8 +22,8 @@ public class DragonBallSkill : FiringActiveSkill
         // 일단 부모 클래스의 스텟들은 계산하고
         base.CalculateStats();
 
-        // GunActiveSkill에 추가로 필요한 스텟들을 계산
-        _attackCount = Mathf.RoundToInt(_data.GetStat(ActiveSkillStatType.AttackCount, _level));
+        //// GunActiveSkill에 추가로 필요한 스텟들을 계산
+        //_attackCount = Mathf.RoundToInt(_data.GetStat(ActiveSkillStatType.AttackCount, _level));
     }
 
     // 부모 클래스의 SpawnBullet() 함수가 abstract로 선언되어 있으므로

@@ -176,6 +176,8 @@ public class HeroModel : MonoBehaviour
         _currentExp -= _expToLevelUp;
         _currentLevel++;
 
+        float preBaseMaxHp = _baseMaxHp;
+
         // Base 스탯 재계산
         _baseMaxHp = _heroStatData.GetMaxHp(_currentLevel);
         _baseDamage = _heroStatData.GetDamage(_currentLevel);
@@ -191,7 +193,7 @@ public class HeroModel : MonoBehaviour
         _expToLevelUp = _baseExpToLevelUp;
 
         // 현재 체력은 레벨업으로 증가한 체력만큼 더해줌
-        _currentHp += (_maxHp - _baseMaxHp);
+        _currentHp += (_maxHp - preBaseMaxHp);
 
         _currentDamage = _damage;
         _currentMoveSpeed = _moveSpeed;

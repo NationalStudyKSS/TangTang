@@ -24,11 +24,11 @@ MonoBehaviour:
     - 1.5
   - _statType: 1
     _levelValues:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 360
+    - 360
+    - 360
+    - 360
+    - 360
   - _statType: 2
     _levelValues:
     - 2
@@ -52,11 +52,11 @@ MonoBehaviour:
     - 4
   - _statType: 5
     _levelValues:
-    - 5
-    - 5
-    - 5
-    - 5
-    - 5
+    - 3
+    - 2.75
+    - 2.5
+    - 2.25
+    - 2
   - _statType: 6
     _levelValues:
     - 0

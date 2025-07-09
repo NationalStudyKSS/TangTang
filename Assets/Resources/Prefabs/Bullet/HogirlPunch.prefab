@@ -143,3 +143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa632b44078998542b1f6bfd1cc35acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
+  _targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _punchDistance: 3
+  _duration: 1
+  _hero: {fileID: 0}
+  _dir: {x: 0, y: 0, z: 0}
+  _startScale: {x: 0, y: 0, z: 0}
+  _endScale: {x: 0, y: 0, z: 0}
