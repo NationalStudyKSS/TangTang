@@ -30,6 +30,9 @@ public enum ActiveSkillType
 /// </summary>
 public abstract class ActiveSkill : MonoBehaviour, IUpgradable
 {
+    [Header("----- 대상 모델(인스펙터뷰 연결해아함) -----")]
+    [SerializeField] protected HeroModel _model;
+
     [Header("----- 스탯 데이터 -----")]
     // 액티브스킬 데이터
     [SerializeField] protected ActiveSkillData _data;
@@ -46,7 +49,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     protected float _heroCurrentDamage;
 
     // 액티브스킬 타입을 받을 변수
-    [SerializeField] protected ActiveSkillType _ActiveSkillType;
+    [SerializeField] protected ActiveSkillType _activeSkillType;
 
     // 자식들에게 너의 액티브스킬타입을 ActiveSkillType이라는 변수로 공개하라라고 명령
     public abstract ActiveSkillType ActiveSkillType { get; }
@@ -57,6 +60,20 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public int Level => _level;
     public bool IsMaxLevel => _level >= _data.MaxLevel;
     public float DamageRate => _damageRate;
+
+    public void Start()
+    {
+        if (_model == null)
+        {
+            _model = GetComponentInParent<HeroModel>();
+        }
+
+        _model.OnDamageChanged += SetDamage;
+        if (_data != null)
+        {
+            SetDamage(_model.Damage.Current);
+        }
+    }
 
     /// <summary>
     /// 레벨에 따른 액티브스킬 스텟을 계산하는 함수
@@ -70,7 +87,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public virtual void Upgrade()
     {
         // 스킬데이터를 데이터매니저에서 가져옴
-        _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)_ActiveSkillType];
+        _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)ActiveSkillType];
 
         _level++;  // 액티브스킬 레벨을 하나 올리고
         CalculateStats();  // 스텟을 다시 계산한다.
@@ -81,8 +98,8 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     /// 혹시 감소될 수도 있을까봐 Set이라고 했음
     /// </summary>
     /// <param name="additionalDamage">증가 혹은 감소될 데미지퍼센트</param>
-    public void SetDamage(float heroCurrendDamage)
+    public void SetDamage(float heroCurrentDamage)
     {
-        _damage = _damageRate * heroCurrendDamage;
+        _damage = _damageRate * heroCurrentDamage;
     }
 }

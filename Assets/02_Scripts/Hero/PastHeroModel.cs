@@ -13,7 +13,7 @@ public class HeroModel : MonoBehaviour
     [SerializeField] float _baseMoveSpeed;          // 기본 이동 속력
     [SerializeField] float _baseItemGetRange;       // 기본 아이템 획득 범위
     [SerializeField] float _baseExpToLevelUp;       // 기본 레벨업 필요 경험치
-    [SerializeField] int _maxLevel;                  // 최대 레벨
+    [SerializeField] int _maxLevel;                 // 최대 레벨
     [SerializeField] float _baseExpGainRate;        // 경험치 획득률
 
     [Header("----- 보너스 스탯(Bonus) -----")]
@@ -24,7 +24,7 @@ public class HeroModel : MonoBehaviour
     [SerializeField] float _bonusExpGainRate;        // 보너스 경험치 획득률
 
     [Header("----- 최종 스탯(Final) -----")]
-    [SerializeField] float _maxHp;                  // 최종 최대 체력
+    [SerializeField] float _maxHp;                   // 최종 최대 체력
     [SerializeField] float _damage;                  // 최종 공격력
     [SerializeField] float _moveSpeed;               // 최종 이동 속력
     [SerializeField] float _itemGetRange;            // 최종 아이템 획득 범위
@@ -236,4 +236,32 @@ public class HeroModel : MonoBehaviour
         _currentHp = Mathf.Min(_currentHp + (_maxHp * hpHealRate), _maxHp);
         OnHpChanged?.Invoke(_currentHp, _maxHp);
     }
+
+    public void SetBonusMaxHp(float maxHp)
+    {
+        _maxHp = maxHp;
+        _currentHp = Mathf.Min(_currentHp, _maxHp);
+        OnHpChanged?.Invoke(_currentHp, _maxHp);
+    }
+    public void SetDamage(float damage)
+    {
+        _currentDamage = damage;
+        OnDamageChanged?.Invoke(_currentDamage);
+    }
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        _currentMoveSpeed = moveSpeed;
+        OnMoveSpeedChanged?.Invoke(_currentMoveSpeed);
+    }
+    public void SetItemGetRange(float itemGetRange)
+    {
+        _currentItemGetRange = itemGetRange;
+        OnItemGetRangeChanged?.Invoke(_currentItemGetRange);
+    }
+    public void SetExpGainRate(float expGainRate)
+    {
+        _currentExpGainRate = expGainRate;
+        OnExpChanged?.Invoke(_currentExp, _expToLevelUp);
+    }
+    
 }

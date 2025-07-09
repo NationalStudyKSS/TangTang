@@ -16,4 +16,4 @@ MonoBehaviour:
   _chance: 100
   _name: 4
   _dropItemPrefabPath: DropItem/Exp
-  _expAmount: 10
+  _expAmount: 100

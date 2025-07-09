@@ -13,7 +13,7 @@ public class SelectionView : MonoBehaviour
     [SerializeField] Image _icon;                   // 업그레이드 아이콘 이미지
     [SerializeField] TextMeshProUGUI _nameText;     // 업그레이드 이름 텍스트
     [SerializeField] TextMeshProUGUI _descText;     // 업그레이드 설명 텍스트
-    [SerializeField] TextMeshProUGUI _levelText;    // 업그레이드 레벨 텍스트
+    [SerializeField] Image[] _levelStar;            // 업그레이드 레벨을 표시할 별 이미지 배열
 
     Upgrader _upgrader;             // 업그레이더(Upgrader) 참조 변수
     IUpgradable _upgradable;        // 연결된 업그레이드 대상 객체
@@ -26,7 +26,19 @@ public class SelectionView : MonoBehaviour
         _icon.sprite = _upgradable.IconSprite;
         _nameText.text = _upgradable.UpgradeName;
         _descText.text = _upgradable.Description;
-        _levelText.text = $"- Level {_upgradable.Level + 2}";
+        //_levelText.text = $"- Level {_upgradable.Level + 2}";
+        // 업그레이드 레벨에 따라 별 이미지 표시
+        for (int i = 0; i < _levelStar.Length; i++)
+        {
+            if (i-1 < _upgradable.Level)
+            {
+                _levelStar[i].gameObject.SetActive(true); // 레벨에 해당하는 별 활성화
+            }
+            else
+            {
+                _levelStar[i].gameObject.SetActive(false); // 나머지 별 비활성화
+            }
+        }
     }
 
     /// <summary>

@@ -132,8 +132,12 @@ public class SpinBladeSkill : ActiveSkill
     public override void Upgrade()
     {
         base.Upgrade();
+        if (_model != null)
+        {
+            SetDamage(_model.Damage.Current);
+        }
 
-        if(_attackRoutine != null)
+        if (_attackRoutine != null)
             StopCoroutine(_attackRoutine);
         _attackRoutine = StartCoroutine(AttackRoutine());
     }

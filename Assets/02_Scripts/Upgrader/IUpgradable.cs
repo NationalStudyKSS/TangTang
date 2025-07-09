@@ -38,6 +38,4 @@ public interface IUpgradable
     /// 업그레이드를 실행하는 함수
     /// </summary>
     void Upgrade();
-
-    void SetDamage(float heroCurrentDamage); // 영웅의 현재 공격력에 따라 데미지를 설정하는 함수
 }

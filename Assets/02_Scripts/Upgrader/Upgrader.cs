@@ -135,12 +135,4 @@ public class Upgrader : MonoBehaviour
     {
         _hero = hero;
     }
-
-    public void GiveHeroCurrentDamage(float heroCurrentDamage)
-    {
-        foreach (var upgradable in _upgradables)
-        {
-            upgradable.SetDamage(heroCurrentDamage);
-        }
-    }
 }

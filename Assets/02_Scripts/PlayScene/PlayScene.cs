@@ -46,11 +46,6 @@ public class PlayScene : MonoBehaviour
         // 업그레이드 시스템 초기화
         _upgrader.SetHero(_hero.gameObject);
         _upgrader.Initialize();
-
-        // 구독 시점이 _hero.Initialize() 이후여야 하는데
-        // 문제는 hero가 초기화할때 데미지를 한번 발행해서 스킬에 전달하려면 이걸 추가해야함..
-        _hero.OnDamageChanged += _upgrader.GiveHeroCurrentDamage;
-        _upgrader.GiveHeroCurrentDamage(_hero.CurrentDamage);    
         
         // Spawner 초기화
         _enemyManager.Initialize(_hero.transform);
