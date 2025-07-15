@@ -7179,7 +7179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5918726417436696390}
-  - component: {fileID: 2654897619695212565}
+  - component: {fileID: 6142439004085103563}
   - component: {fileID: 1316164085421149720}
   - component: {fileID: 5557854131827468643}
   - component: {fileID: 6120251073449819175}
@@ -7208,7 +7208,7 @@ Transform:
   - {fileID: 4103138818489015731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2654897619695212565
+--- !u!114 &6142439004085103563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7217,19 +7217,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7300509105655704977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c7ab7f7d6e1624db0ea56cfe968160, type: 3}
+  m_Script: {fileID: 11500000, guid: c61929d2fa342e64892d3daec0a026a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mover: {fileID: 6120251073449819175}
-  _model: {fileID: 1316164085421149720}
-  _animator: {fileID: 7823863445877322397}
-  _collider: {fileID: 539610099433811323}
-  _rigid: {fileID: 5557854131827468643}
-  _spriteRoot: {fileID: 4103138818489015731}
+  _mover: {fileID: 0}
+  _model: {fileID: 0}
+  _animator: {fileID: 0}
+  _collider: {fileID: 0}
+  _rigid: {fileID: 0}
+  _spriteRoot: {fileID: 0}
   _targetLayerMask:
     serializedVersion: 2
-    m_Bits: 64
-  _attackSpan: 0.5
+    m_Bits: 0
+  _attackSpan: 0
+  _staggerDuration: 0.3
+  _deathDuration: 0.7
 --- !u!114 &1316164085421149720
 MonoBehaviour:
   m_ObjectHideFlags: 0

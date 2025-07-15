@@ -16,35 +16,32 @@ public enum EnemyType
 /// 기본, 이동, 공격, 피격, 사망
 /// 애니메이션은 상태머신에서 처리할 예정
 /// </summary>
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header("----- 컴포넌트 참조 -----")]
-    [SerializeField] Mover _mover;            // 적 캐릭터의 이동을 담당하는 Mover 컴포넌트
-    [SerializeField] EnemyModel _model;       // 적 캐릭터의 모델(데이터) 클래스
-    [SerializeField] Animator _animator;      // 애니메이션을 담당하는 Animator 컴포넌트
-    [SerializeField] Collider2D _collider;    // 적 캐릭터의 충돌을 담당하는 Collider2D 컴포넌트
-    [SerializeField] Rigidbody2D _rigid;      // 적 캐릭터의 물리적 상호작용을 담당하는 Rigidbody2D 컴포넌트
-    [SerializeField] Transform _spriteRoot;   // 스프라이트의 부모 오브젝트로, 스프라이트를 뒤집을 때 사용
+    [SerializeField] protected Mover _mover;             // 적 캐릭터의 이동을 담당하는 Mover 컴포넌트
+    [SerializeField] protected EnemyModel _model;         // 적 캐릭터의 모델(데이터) 클래스
+    [SerializeField] protected Animator _animator;        // 애니메이션을 담당하는 Animator 컴포넌트
+    [SerializeField] protected Collider2D _collider;      // 적 캐릭터의 충돌을 담당하는 Collider2D 컴포넌트
+    [SerializeField] protected Rigidbody2D _rigid;        // 적 캐릭터의 물리적 상호작용을 담당하는 Rigidbody2D 컴포넌트
+    [SerializeField] protected Transform _spriteRoot;     // 스프라이트의 부모 오브젝트로, 스프라이트를 뒤집을 때 사용
 
     [Header("----- 공격 -----")]
-    // 공격 타겟 레이어 마스크
-    [SerializeField] LayerMask _targetLayerMask;
-    // 공격 간격(초)
-    [SerializeField] float _attackSpan;
+    [SerializeField] protected LayerMask _targetLayerMask;   // 공격 타겟 레이어 마스크
+    [SerializeField] protected float _attackSpan;            // 공격 간격(초)
 
-    // 현재 상태 객체를 가리키는 인터페이스 변수
-    IEnemyState _currentState;
+    [Header("----- 임시 수치 -----")]
+    [SerializeField] float _staggerDuration = 0.3f; // 피격 상태 지속시간
+    [SerializeField] float _deathDuration = 0.7f;    // 죽음 상태 지속시간
 
-    // 공격 코루틴 참조 변수
-    Coroutine _attackRoutine;
+    protected IEnemyState _currentState;      // 현재 상태 객체를 가리키는 인터페이스 변수
+    protected Coroutine _attackRoutine;       // 공격 코루틴 참조 변수
+    protected Transform _target;              // 추적 대상
 
-    // 추적 대상
-    Transform _target;
-
-    public event Action<Enemy> OnDeath;
+    public event Action<Enemy> OnDeath;       // 사망 이벤트
 
     //임시
-    public void Initialize()
+    public virtual void Initialize()
     {
         // 물리와 충돌 다시 켜기
         _collider.enabled = true;
@@ -100,11 +97,11 @@ public class Enemy : MonoBehaviour
         {
             case EnemyState.Stagger:
                 // 피격 상태로 전환
-                _currentState = new StaggerState(this, 0.5f); // 피격 상태 지속시간 0.5초
+                _currentState = new StaggerState(this, _staggerDuration); 
                 break;
             case EnemyState.Death:
                 // 죽음 상태로 전환
-                _currentState = new DeathState(this, 1.0f);   // 죽음 상태 지속시간 1초
+                _currentState = new DeathState(this, _deathDuration);   
                 break;
             default:
                 // 기본 상태로 전환
