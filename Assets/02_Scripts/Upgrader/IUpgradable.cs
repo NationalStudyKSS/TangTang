@@ -38,4 +38,6 @@ public interface IUpgradable
     /// 업그레이드를 실행하는 함수
     /// </summary>
     void Upgrade();
+
+    void Initialize();
 }

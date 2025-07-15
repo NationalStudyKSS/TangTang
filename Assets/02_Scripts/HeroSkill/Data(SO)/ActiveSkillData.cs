@@ -17,7 +17,7 @@ public class ActiveSkillData : ScriptableObject
     
     [TextArea(3, 5)][SerializeField] string _description; // 액티브스킬 설명
     [SerializeField] Sprite _iconSprite;  // 액티브스킬 아이콘 스프라이트
-    [SerializeField] string _prefabPath;  // Bullet Prefab 경로
+    [SerializeField] GameObject _bulletPrefab;  // Bullet Prefab 경로
 
     // 스텟 종류별로 빠르게 조회할 수 있도록 만든 딕셔너리
     Dictionary<ActiveSkillStatType, ActiveSkillLevelStat> _levelStatMap = new Dictionary<ActiveSkillStatType, ActiveSkillLevelStat>();
@@ -28,6 +28,7 @@ public class ActiveSkillData : ScriptableObject
     public string ActiveSkillName => _activeSkillName;
     public string Description => _description;
     public Sprite IconSprite => _iconSprite;
+    public GameObject BulletPrefab => _bulletPrefab; 
     public int MaxLevel => _maxLevel; // 최대 레벨은 _levelStats 배열 중 최대 레벨을 갖는 ActiveSkillLevelStat의 MaxLevel
 
     /// <summary>

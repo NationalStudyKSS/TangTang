@@ -5,7 +5,7 @@ using UnityEngine.Events;
 /// <summary>
 /// 주인공 캐릭터의 데이터 로직을 담당하는 클래스
 /// </summary>
-public class HeroModel : MonoBehaviour
+public class PastHeroModel : MonoBehaviour
 {
     [Header("----- 기본 스탯(Base) -----")]
     [SerializeField] float _baseMaxHp;              // 기본 최대 체력
@@ -89,7 +89,6 @@ public class HeroModel : MonoBehaviour
         _baseMoveSpeed = _heroStatData.GetMoveSpeed(_currentLevel);
         _baseItemGetRange = _heroStatData.GetItemGetRange(_currentLevel);
         _baseExpToLevelUp = _heroStatData.GetExpRequired(_currentLevel);
-        _maxLevel = _heroStatData.MaxLevel;
         _baseExpGainRate = _heroStatData.BaseExpGainRate;
 
         // 보너스 스탯 받아오기 (코드 추가 필요)

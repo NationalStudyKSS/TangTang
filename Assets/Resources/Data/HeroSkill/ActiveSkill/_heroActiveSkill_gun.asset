@@ -94,5 +94,5 @@ MonoBehaviour:
     - 0
   _description: "\uC601\uC6C5\uC744 \uC911\uC2EC\uC73C\uB85C \uCD1D\uC54C\uC744 \uC0DD\uC131\uD558\uC5EC
     \uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801\uC744 \uACF5\uACA9"
-  _iconSprite: {fileID: 0}
-  _prefabPath: 
+  _iconSprite: {fileID: 21300000, guid: 22548b671b4e5974d9ed16fd698326e0, type: 2}
+  _bulletPrefab: {fileID: 3548634953116089140, guid: 5fd779e31f14d144786f34ceb30ad55d, type: 3}

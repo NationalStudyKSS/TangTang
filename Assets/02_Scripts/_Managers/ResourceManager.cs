@@ -40,6 +40,4 @@ public class ResourceManager : MonoBehaviour
         // 예를 들어, "Prefabs/Enemy" 경로에 있는 모든 적 프리팹을 로드할 수 있다.
         // 이 부분은 필요에 따라 구현할 수 있다.
     }
-
-
 }

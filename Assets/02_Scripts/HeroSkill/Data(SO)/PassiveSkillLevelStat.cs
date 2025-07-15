@@ -2,31 +2,18 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// 어떤 스탯을 증가시킬 것인지 정의하는 enum
-/// </summary>
-public enum PassiveSkillStatType
-{
-    ItemGetRange,
-    MaxHp,
-    Damage,
-    MoveSpeed,
-    Count,
-}
-/// <summary>
 /// 패시브 스킬의 레벨별 스탯 정보를 담는 클래스
 /// 레벨 0부터 레벨 4까지의 보너스 스탯 값을 담고 있다.
 /// </summary>
 [Serializable]
 public class PassiveSkillLevelStat
 {
-    // 어떤 스탯을 증가시킬건지 
-    [SerializeField] PassiveSkillStatType _statType;
-    // 각 레벨별 수치 배열
+    [SerializeField] StatName _statName;
     [SerializeField] float[] _levelValues;
 
-    public PassiveSkillStatType StatType => _statType;
-    public int MaxLevel => _levelValues.Length - 1; // 최대 레벨은 배열 길이 - 1
+    public StatName StatName => _statName;
     public float[] LevelValues => _levelValues;
+    public int MaxLevel => _levelValues.Length - 1; // 최대 레벨은 배열 길이 - 1
 
     /// <summary>
     /// 특정 레벨에 해당하는 값을 반환하는 함수

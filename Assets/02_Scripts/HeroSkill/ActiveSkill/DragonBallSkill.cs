@@ -9,9 +9,6 @@ public class DragonBallSkill : FiringActiveSkill
 {
     //[SerializeField] int _attackCount;      // 총알 공격 횟수(적 관통 얼마나 할지)
 
-    [Header(" ----- 총알 프리펩 ----- ")]
-    [SerializeField] ProjectileBullet _bulletPrefab; // 발사할 총알 프리팹
-
     [Header(" ----- 타겟 감지 ----- ")]
     [SerializeField] LayerMask _targetLayerMask; // 감지할 타겟 설정
 
@@ -31,7 +28,19 @@ public class DragonBallSkill : FiringActiveSkill
     protected override void SpawnBullet()
     {
         // 일단 총알을 생성하고
-        ProjectileBullet bullet = Instantiate(_bulletPrefab);
+        GameObject go = GameManager.Instance.PoolManager.GetFromPool("Bullet/DragonBall");
+        if (go == null)
+        {
+            Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");
+            return;
+        }
+
+        ProjectileBullet bullet = go.GetComponent<ProjectileBullet>();
+        if (bullet == null)
+        {
+            Debug.LogError("Enemy 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
 
         // bullet의 위치를 이 게임오브젝트 위치로 설정
         bullet.transform.position = transform.position;

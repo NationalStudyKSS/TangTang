@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4485663143015516529}
   - component: {fileID: 4249102496617382740}
   - component: {fileID: -776223353345296285}
+  - component: {fileID: 9167577539555743568}
   m_Layer: 8
   m_Name: DragonBall
   m_TagString: Untagged
@@ -139,3 +140,15 @@ MonoBehaviour:
     m_Bits: 128
   _speed: 0
   _duration: 0
+--- !u!114 &9167577539555743568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079349766829841166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad87c0e1e00eb94ba4f0a4fd31b1f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

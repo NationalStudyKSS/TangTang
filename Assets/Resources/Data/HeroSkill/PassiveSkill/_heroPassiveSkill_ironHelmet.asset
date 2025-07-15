@@ -15,14 +15,14 @@ MonoBehaviour:
   _id: 2
   _passiveSkillName: "\uCCA0\uC81C\uD22C\uAD6C"
   _levelStats:
-  - _statType: 1
+  - _statName: 0
     _levelValues:
     - 0.2
     - 0.4
     - 0.6
     - 0.8
     - 1
+  _skillType: 1
   _description: "\uC601\uC6C5\uC758 \uC2A4\uD14C\uC774\uC9C0 \uC2DC\uC791 \uC2DC
     \uCD5C\uB300 \uCCB4\uB825\uC744 \uAE30\uC900\uC73C\uB85C \uC99D\uAC00"
-  _iconSprite: {fileID: 0}
-  _prefabPath: 
+  _iconSprite: {fileID: 21300000, guid: 76a16b369d548fb4eb9d9f2a9a56fcdb, type: 2}

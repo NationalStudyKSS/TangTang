@@ -11,7 +11,7 @@ public class DataManager : MonoBehaviour
     [Header("----- 게임 데이터 (ReadOnly) -----")]
     [SerializeField] HeroStatData _heroStatData; // 주인공 능력치 데이터
     [SerializeField] Dictionary<int, ActiveSkillData> _activeSkillDataDict; // 액티브 스킬 데이터를 Id로 관리하는 딕셔너리
-    [SerializeField] Dictionary<int, PassiveSkillData> _passiveSkillDataDict; // 패시브 스킬 데이터를 Id로 관리하는 딕셔너리
+    [SerializeField] Dictionary<PassiveSkillType, PassiveSkillData> _passiveSkillDataDict; // 패시브 스킬 데이터를 Id로 관리하는 딕셔너리
 
     [SerializeField] EnemyStatData _enemyStatData; // 적 능력치 데이터
     
@@ -23,7 +23,7 @@ public class DataManager : MonoBehaviour
 
     public HeroStatData HeroStatData => _heroStatData; // 주인공 능력치 데이터 접근 프로퍼티
     public Dictionary<int, ActiveSkillData> ActiveSkillDataDict => _activeSkillDataDict; // 액티브 스킬 데이터 딕셔너리 접근 프로퍼티
-    public Dictionary<int, PassiveSkillData> PassiveSkillDataDict => _passiveSkillDataDict; // 패시브 스킬 데이터 딕셔너리 접근 프로퍼티
+    public Dictionary<PassiveSkillType, PassiveSkillData> PassiveSkillDataDict => _passiveSkillDataDict; // 패시브 스킬 데이터 딕셔너리 접근 프로퍼티
     public EnemyStatData EnemyStatData => _enemyStatData; // 적 능력치 데이터 접근 프로퍼티
     public DropItemPoolData DropItemPool => _dropItemPool; // 드롭 아이템 풀 데이터 접근 프로퍼티
     public Dictionary<int, DropItemData> DropItemDataDict => _dropItemDataDict; // 드롭 아이템 데이터 딕셔너리 접근 프로퍼티
@@ -53,11 +53,11 @@ public class DataManager : MonoBehaviour
         // 패시브 스킬 데이터 배열 로드 후 딕셔너리로 변환
         PassiveSkillData[] passiveSkillArray = Resources.LoadAll<PassiveSkillData>("Data/HeroSkill/PassiveSkill");
         // 패시브 스킬 데이터 딕셔너리 초기화(리스트 순회하면서 매핑해줌)
-        _passiveSkillDataDict = new Dictionary<int, PassiveSkillData>();
+        _passiveSkillDataDict = new Dictionary<PassiveSkillType, PassiveSkillData>();
         foreach (var data in passiveSkillArray)
         {
             // 패시브 스킬 데이터의 ID를 키로 사용하여 딕셔너리에 추가
-            _passiveSkillDataDict[data.Id - 1] = data;
+            _passiveSkillDataDict[data.SkillType] = data;
         }
 
         // 드롭 아이템 데이터 배열 로드 후 리스트로 변환

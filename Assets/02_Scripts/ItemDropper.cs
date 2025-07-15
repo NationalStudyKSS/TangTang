@@ -71,15 +71,27 @@ public class ItemDropper : MonoBehaviour
     IEnumerator MagnetEffectRoutine()
     {
         float moveSpeed = 10f; // 자석 아이템의 이동 속도(임시)
-        while (_currentDropItems.Count > 0)
+
+        // 자석 아이템 효과가 시작되면 현재 드롭 아이템들을 대상으로 한다.
+        List<DropItem> magnetTargets = new List<DropItem>(_currentDropItems);
+
+        while (magnetTargets.Count > 0)
         {
-            foreach (var dropItem in _currentDropItems)
+            for (int i = magnetTargets.Count - 1; i >= 0; i--)
             {
-                // 드롭 아이템이 영웅에게 가까워지도록 이동
+                DropItem dropItem = magnetTargets[i];
+
+                if (dropItem == null || !dropItem.gameObject.activeSelf)
+                {
+                    magnetTargets.RemoveAt(i);
+                    continue;
+                }
+
                 Vector3 dir = (_hero.position - dropItem.transform.position).normalized;
                 dropItem.transform.position += dir * moveSpeed * Time.deltaTime;
             }
-            yield return null; // 다음 프레임까지 대기
+
+            yield return null;
         }
     }
 

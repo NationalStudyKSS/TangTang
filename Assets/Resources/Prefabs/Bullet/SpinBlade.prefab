@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 434564846538589593}
   - component: {fileID: 2506865913902484544}
   - component: {fileID: -1356662332288775152}
+  - component: {fileID: -2674099175281885373}
   m_Layer: 0
   m_Name: SpinBlade
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ae549fd74250142fc870969a8a26109c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8703593, g: 0.031372547, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,3 +102,15 @@ MonoBehaviour:
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &-2674099175281885373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944923040289731880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad87c0e1e00eb94ba4f0a4fd31b1f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

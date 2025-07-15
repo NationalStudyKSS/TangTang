@@ -16,7 +16,7 @@ public class ActiveSkillSOGenerator
         if (!Directory.Exists(SAVE_PATH))
             Directory.CreateDirectory(SAVE_PATH);
 
-        var rawDataList = ReadCSVWithCSVReader(CSV_PATH);
+        var rawDataList = ActiveSkillDataReader.ReadActiveSkillData(CSV_PATH);
 
         var groupedBySkill = rawDataList.GroupBy(d => d.ID);
 
@@ -42,6 +42,13 @@ public class ActiveSkillSOGenerator
             float[] bulletRanges = new float[maxLevel];
             float[] rotSpeeds = new float[maxLevel];
             float[] damageDelays = new float[maxLevel];
+            Sprite icon = null;
+            if (!string.IsNullOrEmpty(first.IconPath))
+                icon = ResourceLoader.LoadSprite(first.IconPath);
+
+            GameObject prefab = null;
+            if (!string.IsNullOrEmpty(first.PrefabPath))
+                prefab = ResourceLoader.LoadPrefab(first.PrefabPath);
 
             foreach (var d in group)
             {
@@ -81,6 +88,8 @@ public class ActiveSkillSOGenerator
             skillType.GetField("_id", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, id);
             skillType.GetField("_levelStats", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, levelStats.ToArray());
             skillType.GetField("_maxLevel", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, maxLevel);
+            skillType.GetField("_iconSprite", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, icon);
+            skillType.GetField("_bulletPrefab", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, prefab);
 
             skillData.Initialize();
 
@@ -101,56 +110,5 @@ public class ActiveSkillSOGenerator
         typeof(ActiveSkillLevelStat).GetField("_statType", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(stat, type);
         typeof(ActiveSkillLevelStat).GetField("_levelValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(stat, values);
         return stat;
-    }
-
-    private static List<ActiveSkillRaw> ReadCSVWithCSVReader(string path)
-    {
-        var result = new List<ActiveSkillRaw>();
-        List<Dictionary<string, object>> rawData = CSVReader.Read(path);
-
-        foreach (var row in rawData)
-        {
-            var data = new ActiveSkillRaw();
-
-            data.ID = GetInt(row, "ID");
-            data.LocalizationKey = GetString(row, "LocalizationKey");
-            data.SkillName = GetString(row, "SkillName");
-            data.Level = GetInt(row, "Level");
-
-            data.DamageRate = GetFloat(row, "DamageRate");
-            data.BulletSpeed = GetFloat(row, "BulletSpeed");
-            data.ShootingRange = GetFloat(row, "ShootingRange");
-            data.BulletCount = GetFloat(row, "BulletCount");
-            data.BulletDuration = GetFloat(row, "BulletDuration");
-            data.CoolTime = GetFloat(row, "CoolTime");
-            data.FireDelay = GetFloat(row, "FireDelay");
-            data.AttackCount = GetFloat(row, "AttackCount");
-            data.BulletRange = GetFloat(row, "BulletRange");
-            data.RotSpeed = GetFloat(row, "RotSpeed");
-            data.DamageDelay = GetFloat(row, "DamageDelay");
-
-            data.IsUnique = GetString(row, "IsUnique").ToLower() == "true";
-            data.SpawnPosition = GetString(row, "SpawnPosition");
-            data.Description = GetString(row, "Description");
-
-            result.Add(data);
-        }
-
-        return result;
-    }
-
-    private static int GetInt(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? System.Convert.ToInt32(row[key]) : 0;
-    }
-
-    private static float GetFloat(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? System.Convert.ToSingle(row[key]) : 0f;
-    }
-
-    private static string GetString(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? row[key].ToString() : string.Empty;
     }
 }

@@ -18,43 +18,43 @@ public class Hero : MonoBehaviour
     [SerializeField] Transform _spriteRoot; // 캐릭터 스프라이트 부모 오브젝트 (좌우 반전 용)
 
     // 이벤트 중개 - 외부에서 Hero의 이벤트를 구독하면 내부 _model의 이벤트 구독과 동일하게 처리
-    public event UnityAction<float, float> OnExpChanged
+    public event Action<float, float> OnExpChanged
     {
         add => _model.OnExpChanged += value;
         remove => _model.OnExpChanged -= value;
     }
 
-    public event UnityAction<int, int> OnLevelChanged
+    public event Action<int, int> OnLevelChanged
     {
         add => _model.OnLevelChanged += value;
         remove => _model.OnLevelChanged -= value;
     }
 
-    public event UnityAction<float, float> OnHpChanged
+    public event Action<float, float> OnHpChanged
     {
         add => _model.OnHpChanged += value;
         remove => _model.OnHpChanged -= value;
     }
 
-    public event UnityAction<float> OnDamageChanged
+    public event Action<float> OnDamageChanged
     {
         add => _model.OnDamageChanged += value;
         remove => _model.OnDamageChanged -= value;
     }
 
-    public event UnityAction<float> OnSpeedChanged
+    public event Action<float> OnSpeedChanged
     {
         add => _model.OnMoveSpeedChanged += value;  // HeroModel에서 이벤트명 변경됨
         remove => _model.OnMoveSpeedChanged -= value;
     }
 
-    public event UnityAction<float> OnItemGetRangeChanged
+    public event Action<float> OnItemGetRangeChanged
     {
         add => _model.OnItemGetRangeChanged += value;
         remove => _model.OnItemGetRangeChanged -= value;
     }
 
-    public event UnityAction OnDeath
+    public event Action OnDeath
     {
         add => _model.OnDeath += value;
         remove => _model.OnDeath -= value;

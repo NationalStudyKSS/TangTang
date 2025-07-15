@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -12,9 +13,6 @@ public class SpinBladeSkill : ActiveSkill
     [SerializeField] int _bulletCount;          // 총알 수(총알이 동시에 몇 개 배치되어 있을지)
     [SerializeField] float _bulletDuration;     // 총알 지속 시간(총알이 사라지기까지의 시간)
     [SerializeField] float _coolTime;           // 총알 발사 간격(쿨타임)
-
-    [Header("----- 총알 프리펩 -----")]
-    [SerializeField] Bullet _bulletPrefab;
 
     // 생성된 총알 리스트
     List<Bullet> _bullets = new List<Bullet>();
@@ -83,10 +81,20 @@ public class SpinBladeSkill : ActiveSkill
         // bulletCount만큼 총알 생성
         for (int i = 0; i < _bulletCount; i++)
         {
-            // _bulletPrefab의 복제본을
-            // 씬에 생성하고 bullet 변수로 그 복제본 게임오브젝트의
-            // Bullet 컴포넌트를 가리킨다.
-            Bullet bullet = Instantiate(_bulletPrefab);
+            // 일단 총알을 생성하고
+            GameObject go = GameManager.Instance.PoolManager.GetFromPool("Bullet/SpinBlade");
+            if (go == null)
+            {
+                Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");
+                return;
+            }
+
+            Bullet bullet = go.GetComponent<Bullet>();
+            if (bullet == null)
+            {
+                Debug.LogError("Enemy 컴포넌트를 찾을 수 없습니다.");
+                return;
+            }
 
             // 각 Bullet 게임오브젝트가 배치될 방향
             // Mathf.Cos(): 코사인(각도) -> x좌표
@@ -121,8 +129,17 @@ public class SpinBladeSkill : ActiveSkill
     {
         foreach (Bullet bullet in _bullets)
         {
-            // 총알 게임오브젝트를 파괴
-            Destroy(bullet.gameObject);
+            Poolable poolable = bullet.GetComponent<Poolable>();
+            if (poolable != null)
+            {
+                // Object Pooling을 사용하여 총알 게임오브젝트를 비활성화
+                poolable.ReturnToPool();
+            }
+            else
+            {
+                // Object Pooling을 사용하지 않는 경우, Destroy로 게임오브젝트 파괴
+                Destroy(gameObject);
+            }
         }
 
         // 리스트 비우기
@@ -134,7 +151,7 @@ public class SpinBladeSkill : ActiveSkill
         base.Upgrade();
         if (_model != null)
         {
-            SetDamage(_model.Damage.Current);
+            SetDamage(_model.Stats.Damage.Final);
         }
 
         if (_attackRoutine != null)

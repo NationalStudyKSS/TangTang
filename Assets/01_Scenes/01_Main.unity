@@ -209,13 +209,12 @@ MonoBehaviour:
   _level: -1
   _damageRate: 0
   _damage: 0
-  _activeSkillType: 0
+  _activeSkillType: 2
   _shootingRange: 0
   _bulletSpeed: 0
   _bulletCount: 0
   _bulletDuration: 0
   _coolTime: 0
-  _bulletPrefab: {fileID: -1356662332288775152, guid: 247e2c02e7f18db47974388e6819799f, type: 3}
 --- !u!1 &30544576
 GameObject:
   m_ObjectHideFlags: 0
@@ -23446,7 +23445,7 @@ MonoBehaviour:
   _level: -1
   _damageRate: 0
   _damage: 0
-  _activeSkillType: 0
+  _activeSkillType: 4
   _bulletSpeed: 0
   _bulletCount: 0
   _coolTime: 0
@@ -23454,7 +23453,6 @@ MonoBehaviour:
   _bulletDuration: 0
   _shootingRange: 0
   _attackCount: 0
-  _bulletPrefab: {fileID: 4042990430544478781, guid: 5fd779e31f14d144786f34ceb30ad55d, type: 3}
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -24050,6 +24048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 936045212}
+  - component: {fileID: 936045213}
   m_Layer: 6
   m_Name: IronHelmet
   m_TagString: Untagged
@@ -24072,6 +24071,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 763832607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &936045213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936045211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5efb1fdbc199f9f4eb8cca7dff3b2090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroModel: {fileID: 0}
+  _data: {fileID: 0}
+  _level: -1
+  _bonusValue: 0
+  _statName: 0
+  _passiveSkillType: 1
 --- !u!1 &960003917
 GameObject:
   m_ObjectHideFlags: 0
@@ -24276,13 +24293,12 @@ MonoBehaviour:
   _level: -1
   _damageRate: 0
   _damage: 0
-  _activeSkillType: 0
+  _activeSkillType: 1
   _bulletSpeed: 0
   _bulletCount: 0
   _coolTime: 0
   _fireDelay: 0
   _bulletDuration: 0
-  _bulletPrefab: {fileID: -776223353345296285, guid: f95f8ed2310c71f49bf5b412f05933b2, type: 3}
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -24481,7 +24497,7 @@ MonoBehaviour:
   _level: -1
   _damageRate: 0
   _damage: 0
-  _activeSkillType: 0
+  _activeSkillType: 3
   _radius: 0
   _damageInterval: 0
 --- !u!58 &1186071989
@@ -24530,7 +24546,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9027514047394002730}
   m_Father: {fileID: 420827011}
@@ -25098,7 +25114,8 @@ MonoBehaviour:
   _data: {fileID: 0}
   _level: -1
   _bonusValue: 0
-  _previousBonusValue: 0
+  _statName: 0
+  _passiveSkillType: 0
 --- !u!1 &1530899809
 GameObject:
   m_ObjectHideFlags: 0
@@ -34147,7 +34164,6 @@ MonoBehaviour:
   _fireDelay: 0
   _bulletDuration: 0
   _bulletRange: 0
-  _bulletPrefab: {fileID: 102184121294482047, guid: 882ce3be7c1932e4ca0a834bb273281b, type: 3}
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -34440,7 +34456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f563df7d987854e89ee471e2bbacd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testWeaponCount: 6
+  _testWeaponCount: 1
   _upgradePanel: {fileID: 861240902}
   _selectionViews:
   - {fileID: 1076188417}
@@ -34594,6 +34610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1800159833}
+  - component: {fileID: 1800159834}
   m_Layer: 6
   m_Name: ChargePlug
   m_TagString: Untagged
@@ -34616,6 +34633,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 763832607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800159834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800159832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8252c5cb1553ce439a6fb8ecfd0ae90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroModel: {fileID: 0}
+  _data: {fileID: 0}
+  _level: -1
+  _bonusValue: 0
+  _statName: 0
+  _passiveSkillType: 2
 --- !u!1 &1977767957
 GameObject:
   m_ObjectHideFlags: 0
@@ -39434,6 +39469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2105608146}
+  - component: {fileID: 2105608147}
   m_Layer: 6
   m_Name: WingShoes
   m_TagString: Untagged
@@ -39456,6 +39492,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 763832607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2105608147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105608145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09623b1c34f9954daa055d4fa2811b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroModel: {fileID: 0}
+  _data: {fileID: 0}
+  _level: -1
+  _bonusValue: 0
+  _statName: 0
+  _passiveSkillType: 3
 --- !u!1 &2106351003
 GameObject:
   m_ObjectHideFlags: 0
@@ -60715,9 +60769,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 7946078424804887804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295f15804d63b2348ac6ff41a8890276, type: 3}
+  m_Script: {fileID: 11500000, guid: a6cc5e32f8d547847912daf94701566e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stats:
+    MaxHp:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    Damage:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    MoveSpeed:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    ItemGetRange:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    ExpGainRate:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
 --- !u!4 &7987319433457351984
 Transform:
   m_ObjectHideFlags: 0

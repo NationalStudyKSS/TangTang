@@ -1,14 +1,15 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System;
+using System.Drawing;
 
 public class HeroPassiveSkillSOGenerator
 {
-    private const string CSV_PATH = "Data/CSV/PassiveSkillData"; // Resources ±‚¡ÿ, »Æ¿Â¿⁄ ¡¶ø‹
+    private const string CSV_PATH = "Data/CSV/PassiveSkillData"; // Resources Í∏∞Ï§Ä, ÌôïÏû•Ïûê Ï†úÏô∏
     private const string SAVE_PATH = "Assets/Resources/Data/HeroSkill/PassiveSkill";
 
     [MenuItem("Tools/Generate PassiveSkillData SOs")]
@@ -17,7 +18,7 @@ public class HeroPassiveSkillSOGenerator
         if (!Directory.Exists(SAVE_PATH))
             Directory.CreateDirectory(SAVE_PATH);
 
-        var rawDataList = ReadCSVWithCSVReader(CSV_PATH);
+        var rawDataList = PassiveSkillDataReader.ReadPassiveSkillData(CSV_PATH);
         var groupedBySkill = rawDataList.GroupBy(d => d.ID);
 
         foreach (var group in groupedBySkill)
@@ -27,14 +28,14 @@ public class HeroPassiveSkillSOGenerator
             PassiveSkillData skillData = ScriptableObject.CreateInstance<PassiveSkillData>();
             skillData.name = first.SkillName;
 
-            // Ω∫≈» ≈∏¿‘∫∞∑Œ ±◊∑Ï«Œ
-            var statGroups = group.GroupBy(d => d.EffectType);
+            // Ïä§ÌÉØ ÌÉÄÏûÖÎ≥ÑÎ°ú Í∑∏Î£πÌïë
+            var statGroups = group.GroupBy(d => d.StatName);
 
             List<PassiveSkillLevelStat> statList = new List<PassiveSkillLevelStat>();
 
             foreach (var statGroup in statGroups)
             {
-                PassiveSkillStatType statType = statGroup.Key;
+                StatName statName = statGroup.Key;
                 int maxLevel = statGroup.Max(g => g.Level);
 
                 float[] values = new float[maxLevel];
@@ -45,19 +46,26 @@ public class HeroPassiveSkillSOGenerator
                 }
 
                 PassiveSkillLevelStat levelStat = new PassiveSkillLevelStat();
-                typeof(PassiveSkillLevelStat).GetField("_statType", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(levelStat, statType);
+                typeof(PassiveSkillLevelStat).GetField("_statName", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(levelStat, statName);
                 typeof(PassiveSkillLevelStat).GetField("_levelValues", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(levelStat, values);
 
                 statList.Add(levelStat);
             }
+            Sprite icon = null;
+            if (!string.IsNullOrEmpty(first.IconPath))
+                icon = ResourceLoader.LoadSprite(first.IconPath);
 
             var type = typeof(PassiveSkillData);
             type.GetField("_id", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, first.ID);
             type.GetField("_passiveSkillName", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, first.SkillName);
             type.GetField("_description", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, first.Description);
             type.GetField("_levelStats", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, statList.ToArray());
+            type.GetField("_iconSprite", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, icon);
 
-            // maxLevel¿∫ Initialize()ø°º≠ ¿⁄µø ∞ËªÍµ 
+            PassiveSkillType parsedType = PassiveSkillDataReader.ParsePassiveSkillType(first.LocalizationKey);
+            type.GetField("_skillType", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(skillData, parsedType);
+
+            // maxLevelÏùÄ Initialize()ÏóêÏÑú ÏûêÎèô Í≥ÑÏÇ∞Îê®
             skillData.Initialize();
 
             string assetPath = $"{SAVE_PATH}/{first.LocalizationKey}.asset";
@@ -68,54 +76,6 @@ public class HeroPassiveSkillSOGenerator
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("PassiveSkillData SO ª˝º∫ øœ∑·!");
-    }
-
-    private static List<PassiveSkillRaw> ReadCSVWithCSVReader(string path)
-    {
-        var result = new List<PassiveSkillRaw>();
-        List<Dictionary<string, object>> rawData = CSVReader.Read(path);
-
-        foreach (var row in rawData)
-        {
-            var data = new PassiveSkillRaw
-            {
-                ID = GetInt(row, "ID"),
-                LocalizationKey = GetString(row, "LocalizationKey"),
-                SkillName = GetString(row, "SkillName"),
-                Level = GetInt(row, "Level"),
-                EffectType = ParseStatType(GetString(row, "EffectType")),
-                Value = GetFloat(row, "Value"),
-                Description = GetString(row, "Description")
-            };
-
-            result.Add(data);
-        }
-
-        return result;
-    }
-
-    private static int GetInt(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? Convert.ToInt32(row[key]) : 0;
-    }
-
-    private static float GetFloat(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? Convert.ToSingle(row[key]) : 0f;
-    }
-
-    private static string GetString(Dictionary<string, object> row, string key)
-    {
-        return row.ContainsKey(key) ? row[key].ToString() : string.Empty;
-    }
-
-    private static PassiveSkillStatType ParseStatType(string raw)
-    {
-        if (Enum.TryParse(raw, true, out PassiveSkillStatType result))
-            return result;
-
-        Debug.LogWarning($"[PassiveSkillSOGenerator] Unknown EffectType: {raw}");
-        return PassiveSkillStatType.ItemGetRange; // ±‚∫ª∞™
+        Debug.Log("PassiveSkillData SO ÏÉùÏÑ± ÏôÑÎ£å!");
     }
 }

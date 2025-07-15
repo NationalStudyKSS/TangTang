@@ -1,21 +1,21 @@
-﻿ID,LocalizationKey,SkillName,Level,EffectType,Value,Description
-1,_heroPassiveSkill_analogClock,아날로그시계,1,ItemGetRange,0.2,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가
-1,_heroPassiveSkill_analogClock,아날로그시계,2,ItemGetRange,0.4,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가
-1,_heroPassiveSkill_analogClock,아날로그시계,3,ItemGetRange,0.6,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가
-1,_heroPassiveSkill_analogClock,아날로그시계,4,ItemGetRange,0.8,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가
-1,_heroPassiveSkill_analogClock,아날로그시계,5,ItemGetRange,1,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가
-2,_heroPassiveSkill_ironHelmet,철제투구,1,MaxHp,0.2,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가
-2,_heroPassiveSkill_ironHelmet,철제투구,2,MaxHp,0.4,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가
-2,_heroPassiveSkill_ironHelmet,철제투구,3,MaxHp,0.6,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가
-2,_heroPassiveSkill_ironHelmet,철제투구,4,MaxHp,0.8,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가
-2,_heroPassiveSkill_ironHelmet,철제투구,5,MaxHp,1,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가
-3,_heroPassiveSkill_chargePlug,충전플러그,1,Damage,0.2,영웅의 스테이지 시작 시 공격력을 기준으로 증가
-3,_heroPassiveSkill_chargePlug,충전플러그,2,Damage,0.4,영웅의 스테이지 시작 시 공격력을 기준으로 증가
-3,_heroPassiveSkill_chargePlug,충전플러그,3,Damage,0.6,영웅의 스테이지 시작 시 공격력을 기준으로 증가
-3,_heroPassiveSkill_chargePlug,충전플러그,4,Damage,0.8,영웅의 스테이지 시작 시 공격력을 기준으로 증가
-3,_heroPassiveSkill_chargePlug,충전플러그,5,Damage,1,영웅의 스테이지 시작 시 공격력을 기준으로 증가
-4,_heroPassiveSkill_wingShoes,윙슈즈,1,MoveSpeed,0.2,영웅의 스테이지 시작 시 이동속도를 기준으로 증가
-4,_heroPassiveSkill_wingShoes,윙슈즈,2,MoveSpeed,0.4,영웅의 스테이지 시작 시 이동속도를 기준으로 증가
-4,_heroPassiveSkill_wingShoes,윙슈즈,3,MoveSpeed,0.6,영웅의 스테이지 시작 시 이동속도를 기준으로 증가
-4,_heroPassiveSkill_wingShoes,윙슈즈,4,MoveSpeed,0.8,영웅의 스테이지 시작 시 이동속도를 기준으로 증가
-4,_heroPassiveSkill_wingShoes,윙슈즈,5,MoveSpeed,1,영웅의 스테이지 시작 시 이동속도를 기준으로 증가
+﻿ID,LocalizationKey,SkillName,Level,StatName,Value,Description,IconPath
+1,_heroPassiveSkill_analogClock,아날로그시계,1,ItemGetRange,0.2,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가,Prefabs/Icon/AnalogClock
+1,_heroPassiveSkill_analogClock,아날로그시계,2,ItemGetRange,0.4,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가,Prefabs/Icon/AnalogClock
+1,_heroPassiveSkill_analogClock,아날로그시계,3,ItemGetRange,0.6,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가,Prefabs/Icon/AnalogClock
+1,_heroPassiveSkill_analogClock,아날로그시계,4,ItemGetRange,0.8,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가,Prefabs/Icon/AnalogClock
+1,_heroPassiveSkill_analogClock,아날로그시계,5,ItemGetRange,1,영웅의 스테이지 시작 시 드롭 확률을 기준으로 증가,Prefabs/Icon/AnalogClock
+2,_heroPassiveSkill_ironHelmet,철제투구,1,MaxHp,0.2,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가,Prefabs/Icon/IronHelmet
+2,_heroPassiveSkill_ironHelmet,철제투구,2,MaxHp,0.4,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가,Prefabs/Icon/IronHelmet
+2,_heroPassiveSkill_ironHelmet,철제투구,3,MaxHp,0.6,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가,Prefabs/Icon/IronHelmet
+2,_heroPassiveSkill_ironHelmet,철제투구,4,MaxHp,0.8,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가,Prefabs/Icon/IronHelmet
+2,_heroPassiveSkill_ironHelmet,철제투구,5,MaxHp,1,영웅의 스테이지 시작 시 최대 체력을 기준으로 증가,Prefabs/Icon/IronHelmet
+3,_heroPassiveSkill_chargePlug,충전플러그,1,Damage,0.2,영웅의 스테이지 시작 시 공격력을 기준으로 증가,Prefabs/Icon/ChargePlug
+3,_heroPassiveSkill_chargePlug,충전플러그,2,Damage,0.4,영웅의 스테이지 시작 시 공격력을 기준으로 증가,Prefabs/Icon/ChargePlug
+3,_heroPassiveSkill_chargePlug,충전플러그,3,Damage,0.6,영웅의 스테이지 시작 시 공격력을 기준으로 증가,Prefabs/Icon/ChargePlug
+3,_heroPassiveSkill_chargePlug,충전플러그,4,Damage,0.8,영웅의 스테이지 시작 시 공격력을 기준으로 증가,Prefabs/Icon/ChargePlug
+3,_heroPassiveSkill_chargePlug,충전플러그,5,Damage,1,영웅의 스테이지 시작 시 공격력을 기준으로 증가,Prefabs/Icon/ChargePlug
+4,_heroPassiveSkill_wingShoes,윙슈즈,1,MoveSpeed,0.2,영웅의 스테이지 시작 시 이동속도를 기준으로 증가,Prefabs/Icon/WingShoes
+4,_heroPassiveSkill_wingShoes,윙슈즈,2,MoveSpeed,0.4,영웅의 스테이지 시작 시 이동속도를 기준으로 증가,Prefabs/Icon/WingShoes
+4,_heroPassiveSkill_wingShoes,윙슈즈,3,MoveSpeed,0.6,영웅의 스테이지 시작 시 이동속도를 기준으로 증가,Prefabs/Icon/WingShoes
+4,_heroPassiveSkill_wingShoes,윙슈즈,4,MoveSpeed,0.8,영웅의 스테이지 시작 시 이동속도를 기준으로 증가,Prefabs/Icon/WingShoes
+4,_heroPassiveSkill_wingShoes,윙슈즈,5,MoveSpeed,1,영웅의 스테이지 시작 시 이동속도를 기준으로 증가,Prefabs/Icon/WingShoes

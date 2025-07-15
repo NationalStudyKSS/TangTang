@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum EnemyType
+{
+    Normal,      // 일반 적
+    Elite,       // 정예 적
+    Boss,        // 보스 적
+}
+
 /// <summary>
 /// 적에게 필요한 부품들을 조립해 적을 구성하는 역할
 /// 기본, 이동, 공격, 피격, 사망

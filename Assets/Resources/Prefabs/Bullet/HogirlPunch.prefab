@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3998103203076676910}
   - component: {fileID: 6670867598987305641}
   - component: {fileID: 102184121294482047}
+  - component: {fileID: 8829114830330794133}
   m_Layer: 8
   m_Name: HogirlPunch
   m_TagString: Untagged
@@ -153,3 +154,15 @@ MonoBehaviour:
   _dir: {x: 0, y: 0, z: 0}
   _startScale: {x: 0, y: 0, z: 0}
   _endScale: {x: 0, y: 0, z: 0}
+--- !u!114 &8829114830330794133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3548634953116089140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad87c0e1e00eb94ba4f0a4fd31b1f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

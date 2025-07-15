@@ -14,7 +14,6 @@ public class HeroStatData : ScriptableObject
     [SerializeField] float _baseMoveSpeed;            // 기본 이동 속력
     [SerializeField] float _baseItemGetRange;         // 기본 아이템 획득 범위
     [SerializeField] float _baseExpToLevelUp;         // 기본 레벨업 필요 경험치
-    [SerializeField] int _maxLevel;                    // 최대 레벨
     [SerializeField] float _baseExpGainRate;          // 경험치 획득률
 
     [Header("----- 레벨당 증가하는 스탯 관련 -----")]
@@ -24,7 +23,6 @@ public class HeroStatData : ScriptableObject
     [SerializeField] float _itemGetRangeGrowthRate;   // 아이템 획득 범위 성장률
     [SerializeField] float _expRequiredGrowthRate;    // 레벨업 경험치 증가율
 
-    public int MaxLevel => _maxLevel;
     public float BaseExpGainRate => _baseExpGainRate;
 
     /// <summary>

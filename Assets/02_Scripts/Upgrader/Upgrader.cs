@@ -35,12 +35,12 @@ public class Upgrader : MonoBehaviour
         //_upgradables[(int)ActiveSkillType.SpinBlade].Upgrade();
         //_upgradables[(int)ActiveSkillType.ElectricField].Upgrade();
         //_upgradables[(int)ActiveSkillType.Gun].Upgrade();
-        for (int i =0;i < _testWeaponCount; i++)
+        foreach (var upgradable in _upgradables)
         {
-            // 테스트용 무기 숫자만큼 무기를 지급
-            _upgradables[i].Upgrade();
+            upgradable.Initialize();
         }
-        BasicWeaponSelected?.Invoke(2);
+        // 테스트용 무기 생성
+        _upgradables[0].Upgrade();
     }
 
     /// <summary>
@@ -110,7 +110,6 @@ public class Upgrader : MonoBehaviour
         // 5. 남은 업그레이드 횟수 카운트 1 감소
         _upgradeCount--;
     }
-
     /// <summary>
     /// 업그레이드 선택을 종료하는 함수
     /// </summary>

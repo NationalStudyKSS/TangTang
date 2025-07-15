@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,7 +19,7 @@ public class PlayScene : MonoBehaviour
     [SerializeField] float _playTime;       // 게임이 시작된 후 경과한 시간
     [SerializeField] int _playTimeInt;      // 초 단위로 변환해서 저장하는 변수
 
-    public event UnityAction<int> OnPlayTimeChanged;
+    public event Action<int> OnPlayTimeChanged;
 
     private void Start()
     {

@@ -57,7 +57,17 @@ public class HogirlPunchBullet : Bullet
             yield return null;
         }
 
-        Destroy(gameObject);
+        Poolable poolable = GetComponent<Poolable>();
+        if (poolable != null)
+        {
+            // Object Pooling을 사용하여 총알 게임오브젝트를 비활성화
+            poolable.ReturnToPool();
+        }
+        else
+        {
+            // Object Pooling을 사용하지 않는 경우, Destroy로 게임오브젝트 파괴
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>

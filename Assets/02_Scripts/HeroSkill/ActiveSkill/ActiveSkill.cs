@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 // ActiveSkill의 역할에 대해 항상 정확하게 생각하고 인지해야함.
@@ -58,11 +59,15 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public string Description => _data.Description;
     public Sprite IconSprite => _data.IconSprite;
     public int Level => _level;
-    public bool IsMaxLevel => _level >= _data.MaxLevel;
+    public bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
     public float DamageRate => _damageRate;
 
-    public void Start()
+    public void Initialize()
     {
+        // 스킬데이터를 데이터매니저에서 가져옴
+        if (_data == null)
+            _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)ActiveSkillType];
+
         if (_model == null)
         {
             _model = GetComponentInParent<HeroModel>();
@@ -71,7 +76,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
         _model.OnDamageChanged += SetDamage;
         if (_data != null)
         {
-            SetDamage(_model.Damage.Current);
+            SetDamage(_model.Stats.Damage.Final);
         }
     }
 
@@ -86,11 +91,14 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
 
     public virtual void Upgrade()
     {
-        // 스킬데이터를 데이터매니저에서 가져옴
-        _data = GameManager.Instance.DataManager.ActiveSkillDataDict[(int)ActiveSkillType];
-
         _level++;  // 액티브스킬 레벨을 하나 올리고
         CalculateStats();  // 스텟을 다시 계산한다.
+        
+        _model.OnDamageChanged += SetDamage;
+        if (_data != null)
+        {
+            SetDamage(_model.Stats.Damage.Final);
+        }
     }
 
     /// <summary>

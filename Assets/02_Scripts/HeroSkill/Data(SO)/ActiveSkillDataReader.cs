@@ -22,6 +22,8 @@ public class ActiveSkillRaw
     public bool IsUnique;
     public string SpawnPosition;
     public string Description;
+    public string IconPath;
+    public string PrefabPath;
 }
 
 public static class ActiveSkillDataReader
@@ -56,6 +58,8 @@ public static class ActiveSkillDataReader
             skill.IsUnique = GetBool(row, "IsUnique");
             skill.SpawnPosition = GetString(row, "SpawnPosition");
             skill.Description = GetString(row, "Description");
+            skill.IconPath = GetString(row, "IconPath");
+            skill.PrefabPath = GetString(row, "PrefabPath");
 
             list.Add(skill);
         }

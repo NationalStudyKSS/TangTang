@@ -8,8 +8,8 @@ public class ElectricFieldSkill : ActiveSkill
     [SerializeField] float _radius; // 전기장 범위
     [SerializeField] float _damageInterval;
 
-    private List<Enemy> _enemiesInRange = new List<Enemy>();
-    private float _timer;
+    List<Enemy> _enemiesInRange = new List<Enemy>();
+    float _timer;
     Coroutine _attackRoutine;
 
     public override ActiveSkillType ActiveSkillType => ActiveSkillType.ElectricField;
@@ -20,6 +20,8 @@ public class ElectricFieldSkill : ActiveSkill
 
         _radius = _data.GetStat(ActiveSkillStatType.BulletRange, _level);
         _damageInterval = _data.GetStat(ActiveSkillStatType.FireDelay, _level);
+
+        transform.localScale = new Vector3(_radius, _radius, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

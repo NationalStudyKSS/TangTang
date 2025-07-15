@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WingShoes : MonoBehaviour
+public class WingShoes : PassiveSkill
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Apply()
     {
-        
-    }
+        if (_heroModel == null)
+            return;
 
-    // Update is called once per frame
-    void Update()
+        _heroModel.SetStat(_statName, StatType.Stage, _bonusValue);
+    }
+    private void OnValidate()
     {
-        
+        _passiveSkillType = PassiveSkillType.WingShoes;
     }
 }
