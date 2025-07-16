@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] PoolManager _poolManager; // 오브젝트 풀 매니저
     [SerializeField] DataManager _dataManager; // 데이터 매니저
     [SerializeField] CurrencyManager _currencyManager; // 재화 매니저
+    [SerializeField] HeroManager _heroManager;      // 임시) 영웅선택창부터 가져올 정보들을 담을 매니저
 
     public ResourceManager ResourceManager => _resourceManager; // 리소스 매니저 접근 프로퍼티
     public PoolManager PoolManager => _poolManager; // 오브젝트 풀 매니저 접근 프로퍼티
     public DataManager DataManager => _dataManager; // 데이터 매니저 접근 프로퍼티
     public CurrencyManager CurrencyManager => _currencyManager; // 재화 매니저 접근 프로퍼티
+    public HeroManager HeroManager => _heroManager;
 
     /// <summary>
     /// 게임 매니저 인스턴스에 접근하는 프로퍼티
@@ -108,6 +110,17 @@ public class GameManager : MonoBehaviour
         }
         // CurrencyManager 초기화
         _currencyManager.Initialize();
+
+        // HeroManager 컴포넌트 가져오기
+        _heroManager = GetComponent<HeroManager>();
+        // HeroManager 컴포넌트가 없으면
+        if (_heroManager == null)
+        {
+            // HeroManager 추가
+            _heroManager = gameObject.AddComponent<HeroManager>();
+        }
+        // HeroManager 초기화
+        _heroManager.Initialize();
     }
 
     private void Start()

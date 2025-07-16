@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,29 +20,39 @@ public class EnemyModel : MonoBehaviour, IDamageable
     [SerializeField] float _maxHp;
     // 현재 체력
     [SerializeField] float _currentHp;
-
+    // 속성
+    [SerializeField] ElementType _element;
+    // 타입
+    [SerializeField] EnemyType _enemyType;
+    
     EnemyStatData _enemyStatData;
 
     // 이동속도 변경 이벤트
     public event Action<float> OnSpeedChanged;
     // 체력 변경 이벤트
-    public event UnityAction<float, float> OnHpChanged;
+    public event Action<float, float> OnHpChanged;
     // 사망 이벤트
-    public event Action OnDeath;
+    public event Action OnDead;
 
     public float Damage => _damage;
     public float MoveSpeed => _moveSpeed;
     public float MaxHp => _maxHp;
     public float CurrentHp => _currentHp;
-    
+    public ElementType Element => _element;
+    public EnemyType EnemyType => _enemyType;
+
     public void Initialize()
     {
         // 적 스탯 데이터 가져오기
         _enemyStatData = GameManager.Instance.DataManager.EnemyStatData;
         // 가져온 데이터에 있는 값들 매칭해서 초기화
-        _damage = _enemyStatData.Damage;
-        _moveSpeed = _enemyStatData.Speed;
-        _maxHp = _enemyStatData.MaxHp;
+        // 임시(EnemyStatData 리팩토링중)
+        _damage = 10;
+        _moveSpeed = 5;
+        _maxHp = 100;
+        //_damage = _enemyStatData.Damage;
+        //_moveSpeed = _enemyStatData.Speed;
+        //_maxHp = _enemyStatData.MaxHp;
         
         // 초기화 필요한 변수들
         _currentHp = _maxHp;
@@ -52,9 +63,12 @@ public class EnemyModel : MonoBehaviour, IDamageable
     /// 죽으면 사망 이벤트도 발행
     /// </summary>
     /// <param name="amount">공격받은 데미지 양</param>
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, ElementType attackerElement)
     {
         if (_currentHp <= 0) return;
+
+        float multiplier = ElementalCalculator.GetMultiplier(attackerElement, _element);
+        amount *= multiplier; // 속성에 따른 배수 적용
 
         _currentHp = Mathf.Min(_currentHp - amount, _maxHp);
 
@@ -65,7 +79,7 @@ public class EnemyModel : MonoBehaviour, IDamageable
         if (_currentHp <= 0)
         {
             // 사망 이벤트 발행
-            OnDeath?.Invoke();
+            OnDead?.Invoke();
         }
     }
 }

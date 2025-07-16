@@ -1,11 +1,12 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
-public class HeroModel : MonoBehaviour
+public class HeroModel : MonoBehaviour, IDamageable
 {
-    [SerializeField]  // ÀÎ½ºÆåÅÍ ³ëÃâ À§ÇØ Ãß°¡
+    [SerializeField]  // ì¸ìŠ¤í™í„° ë…¸ì¶œ ìœ„í•´ ì¶”ê°€
     private HeroStats _stats = new HeroStats();
 
     public HeroStats Stats => _stats;
@@ -17,14 +18,14 @@ public class HeroModel : MonoBehaviour
     private HeroStatData _data;
     Coroutine _buffCoroutine;
 
-    // ÀÌº¥Æ® ¼±¾ğ
-    public event Action<float, float> OnHpChanged;           // (ÇöÀçHP, ÃÖ´ëHP)
-    public event Action<float, float> OnExpChanged;          // (ÇöÀçExp, ´ÙÀ½·¹º§Exp)
-    public event Action<int, int> OnLevelChanged;            // (ÀÌÀü·¹º§, ÇöÀç·¹º§)
-    public event Action<float> OnDamageChanged;              // (ÇöÀç °ø°İ·Â)
-    public event Action<float> OnMoveSpeedChanged;           // (ÇöÀç ÀÌµ¿ ¼Ó·Â)
-    public event Action<float> OnItemGetRangeChanged;        // (ÇöÀç ¾ÆÀÌÅÛ È¹µæ ¹üÀ§)
-    public event Action OnDeath;                             // Á×À½ ÀÌº¥Æ®
+    // ì´ë²¤íŠ¸ ì„ ì–¸
+    public event Action<float, float> OnHpChanged;           // (í˜„ì¬HP, ìµœëŒ€HP)
+    public event Action<float, float> OnExpChanged;          // (í˜„ì¬Exp, ë‹¤ìŒë ˆë²¨Exp)
+    public event Action<int, int> OnLevelChanged;            // (ì´ì „ë ˆë²¨, í˜„ì¬ë ˆë²¨)
+    public event Action<float> OnDamageChanged;              // (í˜„ì¬ ê³µê²©ë ¥)
+    public event Action<float> OnMoveSpeedChanged;           // (í˜„ì¬ ì´ë™ ì†ë ¥)
+    public event Action<float> OnItemGetRangeChanged;        // (í˜„ì¬ ì•„ì´í…œ íšë“ ë²”ìœ„)
+    public event Action OnDead;                             // ì£½ìŒ ì´ë²¤íŠ¸
 
     public void Initialize()
     {
@@ -44,19 +45,19 @@ public class HeroModel : MonoBehaviour
 
         CurrentHp = Stats.MaxHp.Final;
 
-        // Stat ÀÌº¥Æ® ±¸µ¶
+        // Stat ì´ë²¤íŠ¸ êµ¬ë…
         Stats.Damage.OnValueChanged += value => OnDamageChanged?.Invoke(value);
         Stats.MoveSpeed.OnValueChanged += value => OnMoveSpeedChanged?.Invoke(value);
         Stats.ItemGetRange.OnValueChanged += value => OnItemGetRangeChanged?.Invoke(value);
         Stats.MaxHp.OnValueChanged += max =>
         {
-            // MaxHp º¯°æ ½Ã Ã¼·Âµµ °»½Å ÇÊ¿ä
+            // MaxHp ë³€ê²½ ì‹œ ì²´ë ¥ë„ ê°±ì‹  í•„ìš”
             if (CurrentHp > max)
                 CurrentHp = max;
             OnHpChanged?.Invoke(CurrentHp, max);
         };
 
-        // ÃÊ±â ÀÌº¥Æ® È£Ãâ
+        // ì´ˆê¸° ì´ë²¤íŠ¸ í˜¸ì¶œ
         OnHpChanged?.Invoke(CurrentHp, Stats.MaxHp.Final);
         OnExpChanged?.Invoke(CurrentExp, _data.GetExpRequired(CurrentLevel));
         OnLevelChanged?.Invoke(CurrentLevel, CurrentLevel);
@@ -66,16 +67,16 @@ public class HeroModel : MonoBehaviour
     }
 
     /// <summary>
-    /// ÁÖÀÎ°øÀÇ °æÇèÄ¡¸¦ Ãß°¡ÇÏ´Â ÇÔ¼ö
+    /// ì£¼ì¸ê³µì˜ ê²½í—˜ì¹˜ë¥¼ ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
-    /// <param name="amount">Áõ°¡ÇÒ °æÇèÄ¡ ¾ç</param>
+    /// <param name="amount">ì¦ê°€í•  ê²½í—˜ì¹˜ ì–‘</param>
     public void AddExp(float amount)
     {
-        // °æÇèÄ¡ È¹µæ·üÀ» Àû¿ëÇÏ¿© °æÇèÄ¡¸¦ °è»ê
+        // ê²½í—˜ì¹˜ íšë“ë¥ ì„ ì ìš©í•˜ì—¬ ê²½í—˜ì¹˜ë¥¼ ê³„ì‚°
         amount *= Stats.ExpGainRate.Final;
-        // °æÇèÄ¡¸¦ Áõ°¡½ÃÅ°°í
+        // ê²½í—˜ì¹˜ë¥¼ ì¦ê°€ì‹œí‚¤ê³ 
         CurrentExp += amount;
-        // ÇöÀç ·¹º§¿¡ ÇÊ¿äÇÑ °æÇèÄ¡ ÀÌ»óÀÌ µÇ¸é ·¹º§¾÷À» ½Ãµµ
+        // í˜„ì¬ ë ˆë²¨ì— í•„ìš”í•œ ê²½í—˜ì¹˜ ì´ìƒì´ ë˜ë©´ ë ˆë²¨ì—…ì„ ì‹œë„
         while (CurrentExp >= _data.GetExpRequired(CurrentLevel))
         {
             LevelUp();
@@ -84,16 +85,16 @@ public class HeroModel : MonoBehaviour
     }
 
     /// <summary>
-    /// ·¹º§¾÷À» Ã³¸®ÇÏ´Â ÇÔ¼ö
+    /// ë ˆë²¨ì—…ì„ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     private void LevelUp()
     {
         int previousLevel = CurrentLevel;
         float oldMaxHp = Stats.MaxHp.Final;
 
-        // ·¹º§¾÷ ½Ã ÇöÀç °æÇèÄ¡¿¡¼­ ·¹º§¾÷¿¡ ÇÊ¿äÇÑ °æÇèÄ¡¸¦ Â÷°¨ÇÏ°í
+        // ë ˆë²¨ì—… ì‹œ í˜„ì¬ ê²½í—˜ì¹˜ì—ì„œ ë ˆë²¨ì—…ì— í•„ìš”í•œ ê²½í—˜ì¹˜ë¥¼ ì°¨ê°í•˜ê³ 
         CurrentExp -= _data.GetExpRequired(CurrentLevel);
-        // ·¹º§ ¾÷
+        // ë ˆë²¨ ì—…
         CurrentLevel++;
 
         Stats.MaxHp.Base = _data.GetMaxHp(CurrentLevel);
@@ -101,7 +102,7 @@ public class HeroModel : MonoBehaviour
         Stats.MoveSpeed.Base = _data.GetMoveSpeed(CurrentLevel);
         Stats.ItemGetRange.Base = _data.GetItemGetRange(CurrentLevel);
 
-        // ·¹º§¾÷ ÀüÈÄ ÃÖ´ë HP Â÷ÀÌ¸¸Å­ ÇöÀç Ã¼·Â Áõ°¡
+        // ë ˆë²¨ì—… ì „í›„ ìµœëŒ€ HP ì°¨ì´ë§Œí¼ í˜„ì¬ ì²´ë ¥ ì¦ê°€
         float newMaxHp = Stats.MaxHp.Final;
 
         CurrentHp += (newMaxHp - oldMaxHp);
@@ -113,13 +114,16 @@ public class HeroModel : MonoBehaviour
         OnExpChanged?.Invoke(CurrentExp, _data.GetExpRequired(CurrentLevel));
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float amount, ElementType attackerElement)
     {
-        CurrentHp = Mathf.Max(CurrentHp - damage, 0);
+        float multiplier = ElementalCalculator.GetMultiplier(attackerElement, GameManager.Instance.HeroManager.Type);
+        amount *= multiplier; // ì†ì„±ì— ë”°ë¥¸ ë°°ìˆ˜ ì ìš©
+
+        CurrentHp = Mathf.Max(CurrentHp - amount, 0);
         OnHpChanged?.Invoke(CurrentHp, Stats.MaxHp.Final);
 
         if (CurrentHp <= 0)
-            OnDeath?.Invoke();
+            OnDead?.Invoke();
     }
 
     public void Heal(float ratio)
@@ -156,19 +160,19 @@ public class HeroModel : MonoBehaviour
         switch (statType)
         {
             case StatType.Base:
-                stat.Base = 0; // ÃÊ±âÈ­
+                stat.Base = 0; // ì´ˆê¸°í™”
                 stat.Base += amount;
                 break;
             case StatType.Bonus:
-                stat.Bonus = 0; // ÃÊ±âÈ­
+                stat.Bonus = 0; // ì´ˆê¸°í™”
                 stat.Bonus += amount;
                 break;
             case StatType.Stage:
-                stat.Stage = 0; // ÃÊ±âÈ­
+                stat.Stage = 0; // ì´ˆê¸°í™”
                 stat.Stage += amount;
                 break;
             case StatType.Buff:
-                stat.Buff = 0; // ÃÊ±âÈ­
+                stat.Buff = 0; // ì´ˆê¸°í™”
                 stat.Buff += amount;
                 break;
         }
@@ -201,5 +205,10 @@ public class HeroModel : MonoBehaviour
     public void RemoveBuff(StatName statName, float rate)
     {
         SetStat(statName, StatType.Buff, 0);
+    }
+
+    public void TakeHit(float damage)
+    {
+        throw new NotImplementedException();
     }
 }

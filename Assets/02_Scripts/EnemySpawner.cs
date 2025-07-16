@@ -73,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 randomPos = _heroTransform.position + new Vector3(dir.x * dist, dir.y * dist, 0f);
 
         // 적 생성 후 enemy 지역변수에 할당
-        GameObject go = GameManager.Instance.PoolManager.GetFromPool("Enemy/Enemy");
+        GameObject go = GameManager.Instance.PoolManager.GetFromPool("Enemy/EliteEnemy");
         if (go == null)
         {
             Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");

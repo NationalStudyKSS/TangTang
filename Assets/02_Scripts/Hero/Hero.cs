@@ -56,8 +56,8 @@ public class Hero : MonoBehaviour
 
     public event Action OnDeath
     {
-        add => _model.OnDeath += value;
-        remove => _model.OnDeath -= value;
+        add => _model.OnDead += value;
+        remove => _model.OnDead -= value;
     }
 
     public void Initialize()
@@ -95,9 +95,9 @@ public class Hero : MonoBehaviour
     /// <summary>
     /// 주인공 캐릭터가 공격을 받았을 때 호출되는 함수
     /// </summary>
-    public void TakeHit(float damageAmount)
+    public void TakeHit(float amount, ElementType attackerElement)
     {
-        _model.TakeDamage(damageAmount);
+        _model.TakeDamage(amount, attackerElement);
     }
 
     /// <summary>
