@@ -184,11 +184,12 @@ public class RushState : EnemyState
 
     public override EnemyStateType StateType => EnemyStateType.Rush;
 
-    public RushState(Enemy enemy, float readyDuration, float duration) : base(enemy)
+    public RushState(RushEnemy enemy, float readyDuration, float duration) : base(enemy)
     {
-        _rushable = enemy as IRushable;
+        _rushable = enemy;
         _readyDuration = readyDuration;
         _rushDuration = duration;
+        
     }
 
     public override void Enter()
