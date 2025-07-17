@@ -59,6 +59,7 @@ public class EnemyArrow : Bullet<Hero>
     public void SetDirection(Vector3 dir)
     {
         _dir = dir;
+        transform.right = _dir;
     }
 
     protected override void Attack(Hero target)

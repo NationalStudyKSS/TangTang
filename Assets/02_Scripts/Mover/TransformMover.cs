@@ -13,7 +13,7 @@ public class TransformMover : Mover
     public override void Move(Vector3 direction)
     {
         _moveVector = direction * _speed;
-        transform.Translate(_moveVector * Time.deltaTime);
+        transform.Translate(_moveVector * Time.deltaTime, Space.World);
 
         OnMoved?.Invoke(_moveVector);
     }
