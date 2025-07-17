@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HogirlPunchBullet : Bullet
+public class HogirlPunchBullet : HeroBullet
 {
     float _returnDuration; // 쓸지말지 고민중
 

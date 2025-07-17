@@ -7,7 +7,7 @@ using UnityEngine.Events;
 /// 주인공 캐릭터 그 자체임.
 /// 부품을 다 낀 상태의 로봇같은 역할.
 /// </summary>
-public class Hero : MonoBehaviour
+public class Hero : MonoBehaviour, IDamageable
 {
     [Header("----- 컴포넌트 참조 -----")]
     [SerializeField] HeroModel _model;
@@ -30,7 +30,7 @@ public class Hero : MonoBehaviour
         remove => _model.OnLevelChanged -= value;
     }
 
-    public event Action<float, float> OnHpChanged
+    public event Action<float, float> RaiseOnHpChanged
     {
         add => _model.OnHpChanged += value;
         remove => _model.OnHpChanged -= value;
@@ -54,11 +54,7 @@ public class Hero : MonoBehaviour
         remove => _model.OnItemGetRangeChanged -= value;
     }
 
-    public event Action OnDeath
-    {
-        add => _model.OnDead += value;
-        remove => _model.OnDead -= value;
-    }
+    public event Action<GameObject> RaiseOnDead;
 
     public void Initialize()
     {
@@ -66,6 +62,7 @@ public class Hero : MonoBehaviour
         _model.OnMoveSpeedChanged += _mover.SetSpeed;  // 이벤트명 수정
         _model.OnHpChanged += _hudView.ChangeHpBar;
         _model.OnItemGetRangeChanged += _itemCollector.SetRange; // 아이템 수집 범위 변경
+        _model.OnDead += OnDead;
 
         _model.Initialize();
         _itemCollector.Initialize(transform); // 아이템 수집 컴포넌트 초기화
@@ -107,5 +104,12 @@ public class Hero : MonoBehaviour
     public void AddExp(float amount)
     {
         _model.AddExp(amount);
+    }
+
+    // 모델에서 죽음 이벤트가 발생하면 호출됨
+    private void OnDead()
+    {
+        // 자기 자신의 gameObject를 이벤트 구독자에게 알림
+        RaiseOnDead?.Invoke(gameObject);
     }
 }

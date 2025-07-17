@@ -6,7 +6,7 @@ using UnityEngine;
 /// 일정 방향을 향해 날아가 적 캐릭터에 닿으면
 /// 데미지를 입히는 총알 클래스
 /// </summary>
-public class ProjectileBullet : Bullet
+public class ProjectileBullet : HeroBullet
 {
     // 이동 속력
     [SerializeField] float _speed;

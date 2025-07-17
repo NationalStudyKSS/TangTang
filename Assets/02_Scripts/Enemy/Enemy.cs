@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -26,7 +27,7 @@ public enum ElementType
 /// 피격상태(데미지 입고 피격애니메이션), 
 /// 사망상태(사망 애니메이션 후 콜라이더 리지드바디 끄고 사라짐)
 /// </summary>
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [Header("----- 컴포넌트 참조 -----")]
     [SerializeField] protected Mover _mover;             // 적 캐릭터의 이동을 담당하는 Mover 컴포넌트
@@ -56,7 +57,10 @@ public abstract class Enemy : MonoBehaviour
     protected Coroutine _attackRoutine;       // 공격 코루틴 참조 변수
     protected Transform _target;              // 추적 대상
 
-    public event Action<Enemy> OnDeath;       // 사망 이벤트
+    public EnemyModel Model => _model;
+
+    public event Action<float, float> RaiseOnHpChanged;
+    public event Action<GameObject> RaiseOnDead;
 
     //임시
     public virtual void Initialize()
@@ -196,7 +200,7 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     /// <param name="hero"></param>
     /// <returns></returns>
-    IEnumerator AttackRoutine(Hero hero)
+    protected virtual IEnumerator AttackRoutine(Hero hero)
     {
         while (true)
         {
@@ -232,7 +236,7 @@ public abstract class Enemy : MonoBehaviour
     /// 물리적이던 뭐던 아무튼 피격을 당했을때 처리하는 함수
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeHit(float damage)
+    public void TakeHit(float damage, ElementType attackerElement)
     {
         if (_model.CurrentHp <= 0) return;
 
@@ -262,7 +266,7 @@ public abstract class Enemy : MonoBehaviour
         ChangeState(EnemyStateType.Dead);
 
         // 사망 이벤트 발행
-        OnDeath?.Invoke(this);
+        RaiseOnDead?.Invoke(gameObject);
     }
 
     /// <summary>

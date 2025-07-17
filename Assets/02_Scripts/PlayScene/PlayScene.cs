@@ -28,7 +28,7 @@ public class PlayScene : MonoBehaviour
         // 스테이지 UI 이벤트 연결
         OnPlayTimeChanged += _playSceneView.SetPlayTime; // 게임 시간 변경 이벤트를 UI에 연결
         _hero.OnDamageChanged += _playSceneView.SetDamage; // 영웅의 공격력 변경 이벤트를 UI에 연결
-        _hero.OnHpChanged += _playSceneView.SetHp; // 영웅의 체력 변경 이벤트를 UI에 연결
+        _hero.RaiseOnHpChanged += _playSceneView.SetHp; // 영웅의 체력 변경 이벤트를 UI에 연결
         _hero.OnExpChanged += _playSceneView.SetExp; // 영웅의 경험치 변경 이벤트를 UI에 연결
         _hero.OnLevelChanged += _playSceneView.SetLevel; // 영웅의 레벨 변경 이벤트를 UI에 연결
         _enemyManager.OnDeath += UpdateEnemyKillCount; // 적이 죽었을 때 적 처치 수를 업데이트하는 이벤트를 연결

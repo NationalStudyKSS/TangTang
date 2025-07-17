@@ -30,5 +30,4 @@ public class EnemyStatData : ScriptableObject
     public float heroDetectRange;      // 영웅 감지 거리
     public float skillCooldown;        // 스킬 쿨타임 (초)
     public float skillCastTime;        // 스킬 시전 시간 (초)
-
 }

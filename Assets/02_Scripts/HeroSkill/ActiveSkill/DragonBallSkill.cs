@@ -31,14 +31,14 @@ public class DragonBallSkill : FiringActiveSkill
         GameObject go = GameManager.Instance.PoolManager.GetFromPool("Bullet/DragonBall");
         if (go == null)
         {
-            Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");
+            Debug.LogError("DragonBall 프리팹을 찾을 수 없습니다.");
             return;
         }
 
         ProjectileBullet bullet = go.GetComponent<ProjectileBullet>();
         if (bullet == null)
         {
-            Debug.LogError("Enemy 컴포넌트를 찾을 수 없습니다.");
+            Debug.LogError("Projectile 컴포넌트를 찾을 수 없습니다.");
             return;
         }
 

@@ -39,10 +39,10 @@ MonoBehaviour:
   - _statType: 3
     _levelValues:
     - 1
-    - 1
-    - 2
     - 2
     - 3
+    - 4
+    - 5
   - _statType: 4
     _levelValues:
     - 1

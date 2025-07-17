@@ -171,33 +171,34 @@ public class DeadState : EnemyState
     }
 }
 
+/// <summary>
+/// 돌진 상태를 나타내는 클래스
+/// </summary>
 public class RushState : EnemyState
 {
-    IRushable _rushable;
-    private float _readyDuration;
-    private float _rushDuration;
-    private float _timer;
-    private Vector2 _direction;
-    private Transform _target;
-    private bool _isRushing;
-    Vector2 _rushDirection;
+    IRushable _rushable;            // 돌진인터페이스를 갖는 적을 참조할 변수
+    private float _readyDuration;   // 돌진 준비시간
+    private float _rushDuration;    // 돌진 시간
+    private float _timer;           // 내부 타이머
+    private Vector2 _direction;     // 방향을 받을 벡터 변수
+    private Transform _target;      // 영웅 위치를 받을 변수
+    private bool _isRushing;        // 돌진 허가해주는 불값
+    Vector2 _rushDirection;         // 돌진하는 방향을 저장할 변수
 
     public override EnemyStateType StateType => EnemyStateType.Rush;
 
-    public RushState(RushEnemy enemy, float readyDuration, float duration) : base(enemy)
+    public RushState(Enemy enemy, IRushable rushable, float readyDuration, float duration) : base(enemy)
     {
-        _rushable = enemy;
+        _rushable = rushable;
         _readyDuration = readyDuration;
         _rushDuration = duration;
-        
     }
 
     public override void Enter()
     {
-        _timer = 0f;
-        _isRushing = false;
-        _enemy.Stop();                 // 멈추기
-        _rushDirection = _rushable.CalculateRushDirection();
+        _timer = 0f;            // 타이머 초기화
+        _isRushing = false;     // 아직 돌진 하면 안되므로 거짓
+        _enemy.Stop();          // 멈추기
         //_enemy.PlayPreRushAnimation(); // 예열 애니메이션 (선택)
     }
 
@@ -205,18 +206,24 @@ public class RushState : EnemyState
     {
         _timer += Time.deltaTime;
 
+        // 돌진하면 안되는 상태이고 이제 돌진 준비시간이 끝났으면
         if (!_isRushing && _timer >= _readyDuration)
         {
-            _isRushing = true;
-            _timer = 0f;
+            _rushDirection = _rushable.CalculateRushDirection();       // 돌진 방향을 돌진하는 그 순간 딱 고정시킴
+            _isRushing = true;  // 돌진 해도되니까 참
+            _timer = 0f;        // 내부타이머 초기화
         }
 
+        // 돌진 허가를 받았으면
         if (_isRushing)
         {
+            // 계산한 방향으로 돌진
             _rushable.Rush(_rushDirection);
 
+            // 돌진진행 시간이 지났으면
             if (_timer >= _rushDuration)
             {
+                // 다시 Idle로 바꿈
                 _enemy.ChangeState(EnemyStateType.Idle);
             }
         }
@@ -224,31 +231,47 @@ public class RushState : EnemyState
 
     public override void Exit()
     {
+        // 돌진끝났을 때 해야하는 함수 실행
         _rushable.StopRush();
     }
 }
 
 public class RangedAttackState : EnemyState
 {
-    public RangedAttackState(Enemy enemy) : base(enemy)
+    IRangedAttackable _rangedAttackable;
+    float _attackTimer;
+    float _attackSpan;
+    float _bulletDuration;
+    float _bulletSpeed;
+    public RangedAttackState(Enemy enemy, IRangedAttackable rangedAttackable, float attackSpan) : base(enemy)
     {
+        _rangedAttackable = rangedAttackable;
+        _attackSpan = attackSpan;
     }
 
-    public override EnemyStateType StateType => throw new System.NotImplementedException();
+
+    public override EnemyStateType StateType => EnemyStateType.RangedAttack;
 
     public override void Enter()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Exit()
-    {
-        throw new System.NotImplementedException();
+        _attackTimer = 0f;
+        _enemy.Stop();
     }
 
     public override void Update()
     {
-        throw new System.NotImplementedException();
+        _attackTimer += Time.deltaTime;
+
+        if (_attackTimer >= _attackSpan)
+        {
+            _attackTimer = 0f;
+            _rangedAttackable.SpawnBullet();
+        }
+    }
+
+    public override void Exit()
+    {
+
     }
 }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] EnemySpawner _enemySpawner;
+    [SerializeField] EnemySpawner[] _enemySpawner;
     [SerializeField] ItemDropper _itemDropper;
 
     [Header("----- 현재 살아있는 적들(읽기 전용) -----")]
@@ -23,7 +23,10 @@ public class EnemyManager : MonoBehaviour
     public void Initialize(Transform hero)
     {
         // 적 스폰 이벤트 연결
-        _enemySpawner.OnEnemySpawned += RegisterEnemy;
+        foreach (EnemySpawner enemySpawner in _enemySpawner)
+        {
+            enemySpawner.OnEnemySpawned += RegisterEnemy;
+        }
 
         // 폭탄 아이템 연결
         DropItemManager.OnBombItemUsed += KillAllEnemies;
@@ -31,7 +34,10 @@ public class EnemyManager : MonoBehaviour
         // 리스트 한번 비워주기
         _currentEnemies.Clear();
 
-        _enemySpawner.Initialize(hero); // 적 스폰러 초기화
+        foreach (EnemySpawner enemySpawner in _enemySpawner)
+        {
+            enemySpawner.Initialize(hero); // 적 스폰러 초기화
+        }
         _itemDropper.Initialize(hero); // 아이템 드롭퍼 초기화
     }
 
@@ -42,7 +48,7 @@ public class EnemyManager : MonoBehaviour
         {
             if (enemy != null)
             {
-                enemy.TakeHit(9999f);
+                enemy.TakeHit(9999f, ElementType.Fire);
             }
         }
     }
@@ -55,7 +61,7 @@ public class EnemyManager : MonoBehaviour
     public void RegisterEnemy(Enemy enemy)
     {
         _currentEnemies.Add(enemy);
-        enemy.OnDeath += HandleEnemyDeath;
+        enemy.RaiseOnDead += HandleEnemyDeath;
     }
 
     /// <summary>
@@ -64,15 +70,16 @@ public class EnemyManager : MonoBehaviour
     /// 즉, 후처리를 해주는 함수
     /// </summary>
     /// <param name="enemy"></param>
-    void HandleEnemyDeath(Enemy enemy)
+    void HandleEnemyDeath(GameObject obj)
     {
+        Enemy enemy = obj.GetComponent<Enemy>();
         // 아이템 드롭 등 처리
         _itemDropper.DropItem(enemy);
 
         // 리스트에서 제거
         _currentEnemies.Remove(enemy);
         // 이벤트 연결 해제
-        enemy.OnDeath -= HandleEnemyDeath;
+        enemy.RaiseOnDead -= HandleEnemyDeath;
 
         // 외부에 적 사망 알림
         OnDeath?.Invoke(enemy);

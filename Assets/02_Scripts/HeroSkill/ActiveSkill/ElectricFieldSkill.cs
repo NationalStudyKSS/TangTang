@@ -49,7 +49,7 @@ public class ElectricFieldSkill : ActiveSkill
             foreach (Enemy enemy in _enemiesInRange.ToArray())
             {
                 if (enemy != null)
-                    enemy.TakeHit(_damage);
+                    enemy.TakeHit(_damage, _type);
             }
             yield return new WaitForSeconds(_damageInterval);
         }

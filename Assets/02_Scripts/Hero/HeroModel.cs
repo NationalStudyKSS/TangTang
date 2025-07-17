@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-public class HeroModel : MonoBehaviour, IDamageable
+public class HeroModel : MonoBehaviour
 {
     [SerializeField]  // 인스펙터 노출 위해 추가
     private HeroStats _stats = new HeroStats();
@@ -14,6 +14,7 @@ public class HeroModel : MonoBehaviour, IDamageable
     public float CurrentHp { get; private set; }
     public float CurrentExp { get; private set; }
     public int CurrentLevel { get; private set; }
+    public ElementType ElementType { get; private set; }
 
     private HeroStatData _data;
     Coroutine _buffCoroutine;
@@ -205,10 +206,5 @@ public class HeroModel : MonoBehaviour, IDamageable
     public void RemoveBuff(StatName statName, float rate)
     {
         SetStat(statName, StatType.Buff, 0);
-    }
-
-    public void TakeHit(float damage)
-    {
-        throw new NotImplementedException();
     }
 }

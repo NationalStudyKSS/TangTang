@@ -27,7 +27,7 @@ public class RushEnemy : Enemy, IRushable
 
         _rushTimer = 0f;
         // Rush 상태도 상태 배열에 추가
-        _states[(int)EnemyStateType.Rush] = new RushState(this, _readyDuration, _rushDuration);
+        _states[(int)EnemyStateType.Rush] = new RushState(this, this, _readyDuration, _rushDuration);
     }
 
     protected override void FixedUpdate()

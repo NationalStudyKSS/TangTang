@@ -15,7 +15,7 @@ public class SpinBladeSkill : ActiveSkill
     [SerializeField] float _coolTime;           // 총알 발사 간격(쿨타임)
 
     // 생성된 총알 리스트
-    List<Bullet> _bullets = new List<Bullet>();
+    List<HeroBullet> _bullets = new List<HeroBullet>();
 
     Coroutine _attackRoutine; // 공격 루틴 코루틴 변수
 
@@ -85,18 +85,18 @@ public class SpinBladeSkill : ActiveSkill
             GameObject go = GameManager.Instance.PoolManager.GetFromPool("Bullet/SpinBlade");
             if (go == null)
             {
-                Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");
+                Debug.LogError("SpinBlade 프리팹을 찾을 수 없습니다.");
                 return;
             }
 
-            Bullet bullet = go.GetComponent<Bullet>();
+            HeroBullet bullet = go.GetComponent<HeroBullet>();
             if (bullet == null)
             {
-                Debug.LogError("Enemy 컴포넌트를 찾을 수 없습니다.");
+                Debug.LogError("HeroBullet 컴포넌트를 찾을 수 없습니다.");
                 return;
             }
 
-            // 각 Bullet 게임오브젝트가 배치될 방향
+            // 각 HeroBullet 게임오브젝트가 배치될 방향
             // Mathf.Cos(): 코사인(각도) -> x좌표
             // Mathf.Sin(): 사인(각도) -> y좌표
             // 각도 단위: degree(0도 ~ 360도) 라디안(2 * Pi = 360도)
@@ -127,7 +127,7 @@ public class SpinBladeSkill : ActiveSkill
     /// </summary>
     void RemoveBullets()
     {
-        foreach (Bullet bullet in _bullets)
+        foreach (HeroBullet bullet in _bullets)
         {
             Poolable poolable = bullet.GetComponent<Poolable>();
             if (poolable != null)

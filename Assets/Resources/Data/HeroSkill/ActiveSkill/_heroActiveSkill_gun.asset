@@ -38,11 +38,11 @@ MonoBehaviour:
     - 5
   - _statType: 3
     _levelValues:
+    - 1
+    - 2
     - 3
-    - 3
-    - 3
-    - 3
-    - 3
+    - 4
+    - 5
   - _statType: 4
     _levelValues:
     - 1
@@ -73,18 +73,18 @@ MonoBehaviour:
     - 1
   - _statType: 8
     _levelValues:
-    - 0.5
-    - 0.7
-    - 0.9
-    - 1.1
-    - 1.3
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
   - _statType: 9
     _levelValues:
-    - 5
-    - 7
-    - 9
-    - 11
-    - 13
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
   - _statType: 10
     _levelValues:
     - 0

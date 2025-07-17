@@ -46,6 +46,10 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
 
     // 스킬 실제 데미지
     [SerializeField] protected float _damage;
+
+    // 영웅 속성 받아올 변수
+    [SerializeField] protected ElementType _type;
+
     // 영웅의 현재 공격력
     protected float _heroCurrentDamage;
 
@@ -61,6 +65,8 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public int Level => _level;
     public bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
     public float DamageRate => _damageRate;
+    public float Damage => _damage;
+    public ElementType Type => _type;
 
     public void Initialize()
     {
@@ -78,6 +84,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
         {
             SetDamage(_model.Stats.Damage.Final);
         }
+        SetType(_model.ElementType);
     }
 
     /// <summary>
@@ -109,5 +116,14 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     public void SetDamage(float heroCurrentDamage)
     {
         _damage = _damageRate * heroCurrentDamage;
+    }
+
+    /// <summary>
+    /// 무기가 데미지를 줄 때 필요한 속성을 Set하는 함수
+    /// </summary>
+    /// <param name="type">넣어줄 속성타입</param>
+    public void SetType(ElementType type)
+    {
+        _type = type;
     }
 }

@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] string _enemyPrefabPath;
+
     [Header("----- 스폰 데이터(나중에 데이터로 정리) -----")]
     [SerializeField] float _spawnSpan = 2f; // 적 생성 간격
     [SerializeField] float _minSpawnRange = 15f; // 최소 스폰 범위
@@ -73,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 randomPos = _heroTransform.position + new Vector3(dir.x * dist, dir.y * dist, 0f);
 
         // 적 생성 후 enemy 지역변수에 할당
-        GameObject go = GameManager.Instance.PoolManager.GetFromPool("Enemy/EliteEnemy");
+        GameObject go = GameManager.Instance.PoolManager.GetFromPool(_enemyPrefabPath);
         if (go == null)
         {
             Debug.LogError("Enemy 프리팹을 찾을 수 없습니다.");

@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// 적 캐릭터의 '데이터 로직'을 담당하는 역할
 /// 겉으로 보이는 상호작용이 아닌 수치를 갖고 노는 곳
 /// </summary>
-public class EnemyModel : MonoBehaviour, IDamageable
+public class EnemyModel : MonoBehaviour
 {
     [Header("----- 확인용 스탯 -----")]
     // 공격력
@@ -48,7 +48,7 @@ public class EnemyModel : MonoBehaviour, IDamageable
         // 가져온 데이터에 있는 값들 매칭해서 초기화
         // 임시(EnemyStatData 리팩토링중)
         _damage = 10;
-        _moveSpeed = 5;
+        _moveSpeed = 1;
         _maxHp = 100;
         //_damage = _enemyStatData.Damage;
         //_moveSpeed = _enemyStatData.Speed;
