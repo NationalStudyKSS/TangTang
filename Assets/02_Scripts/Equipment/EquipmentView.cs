@@ -54,14 +54,11 @@ public class EquipmentView : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _invento
 
         if (_equipment == null) return;
-        _dragController.ShowTooltip(_equipment.ItemModel);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _dragController.HideTooltip();
     }
 }

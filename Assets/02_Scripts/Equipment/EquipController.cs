@@ -25,7 +25,7 @@ public class EquipController : MonoBehaviour
     {
         foreach (var equipmentView in _equipmentViews)
         {
-            equipmentView.Initialize(this, _inventory);
+            equipmentView.Initialize(this);
             equipmentView.SetEquipment(null);
         }
     }
@@ -47,7 +47,7 @@ public class EquipController : MonoBehaviour
         // 장비 프리펩 생성
         Transform slotTransform = _slotTransforms[slotIndex];
         Equipment equipment = Instantiate(model.EquipmentPrefab, slotTransform);
-        equipment.SetEquipmentModel(model);
+        equipment.SetModel(model);
         _equipmentMap[slotType] = equipment;
 
         // 장비 스탯 적용
@@ -56,9 +56,8 @@ public class EquipController : MonoBehaviour
         GameManager.Instance.HeroManager.AddBonusMoveSpeed(equipment.BonusMoveSpeed);
         GameManager.Instance.HeroManager.AddBonusItemGetRange(equipment.BonusItemGetRange);
 
-        _equipmentViews[(int)slotType].Initialize(this, _inventory);
         _equipmentViews[(int)slotType].SetEquipment(equipment);
-        equipment.EquipmentModel.SetSlotIndex((int)slotType);
+        equipment.Model.SetSlotIndex((int)slotType);
         
     }
 
@@ -74,12 +73,9 @@ public class EquipController : MonoBehaviour
 
             // 1. 해당 장비와 연결된 아이템 모델을 인벤토리에 추가
             // -> 인벤토리에 아이템 추가 실패 시 장비 해제 불가
-            if (_inventory.TryAddEquipment(equipment.EquipmentModel) == false) return;
+            if (_inventory.TryAddEquipment(equipment.Model) == false) return;
 
             // 2. 장비로 인한 능력치 변화 해제
-            _heroModel.AddMaxHp(-equipment.BonusMaxHp);
-            _heroModel.AddArmor(-equipment.BonusArmor);
-            _heroModel.AddDamage(-equipment.BonusDamage);
 
             // 3. 장비 제거
             Destroy(equipment.gameObject);
@@ -97,7 +93,7 @@ public class EquipController : MonoBehaviour
 
     public void ShowEquipmentView(EquipmentModel model, Transform slotTransform)
     {
-        _itemDescView.SetEquipmentModel(model);
+        _itemDescView.SetModel(model);
         _itemDescView.transform.position = slotTransform.position;
         _itemDescView.gameObject.SetActive(true);
     }
