@@ -48,7 +48,7 @@ public class HeroManager : MonoBehaviour
     {
         _bonusMoveSpeed += amount;
     }
-    public void AddItemGetRange(float amount)
+    public void AddBonusItemGetRange(float amount)
     {
         _bonusItemGetRange += amount;
     }

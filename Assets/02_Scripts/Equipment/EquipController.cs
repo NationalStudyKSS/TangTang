@@ -51,20 +51,15 @@ public class EquipController : MonoBehaviour
         _equipmentMap[slotType] = equipment;
 
         // 장비 스탯 적용
-        _heroModel.AddMaxHp(equipment.BonusMaxHp);
-        _heroModel.AddArmor(equipment.BonusArmor);
-        _heroModel.AddDamage(equipment.BonusDamage);
+        GameManager.Instance.HeroManager.AddBonusHp(equipment.BonusMaxHp);
+        GameManager.Instance.HeroManager.AddBonusDamage(equipment.BonusDamage);
+        GameManager.Instance.HeroManager.AddBonusMoveSpeed(equipment.BonusMoveSpeed);
+        GameManager.Instance.HeroManager.AddBonusItemGetRange(equipment.BonusItemGetRange);
 
         _equipmentViews[(int)slotType].Initialize(this, _inventory);
         _equipmentViews[(int)slotType].SetEquipment(equipment);
         equipment.EquipmentModel.SetSlotIndex((int)slotType);
-
-        // is 키워드 사용(cf. as 키워드)
-        // 어떤 객체가 해당 클래스가 맞는지 검사할 수 있다.
-        if (equipment is Weapon weapon)
-        {
-            OnWeaponEquipped?.Invoke(weapon.HitPoint);
-        }
+        
     }
 
     /// <summary>
