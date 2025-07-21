@@ -58,6 +58,8 @@ public class Hero : MonoBehaviour, IDamageable
 
     public void Initialize()
     {
+        GameManager.Instance.HeroManager.ApplyStatsToHero(_model);
+
         _mover.OnMoved += OnMoved;
         _model.OnMoveSpeedChanged += _mover.SetSpeed;  // 이벤트명 수정
         _model.OnHpChanged += _hudView.ChangeHpBar;

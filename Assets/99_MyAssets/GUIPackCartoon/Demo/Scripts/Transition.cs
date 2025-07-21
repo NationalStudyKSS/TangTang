@@ -76,7 +76,7 @@ namespace Ricimi
             image.canvasRenderer.SetAlpha(1.0f);
             yield return new WaitForEndOfFrame();
 
-            SceneManager.LoadScene(level);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(level);
 
             time = 0.0f;
             while (time < halfDuration)

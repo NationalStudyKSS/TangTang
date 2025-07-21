@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d4dc1681b376d48b02653680d5933d, type: 3}
+  m_Name: 5_Ring
+  m_EditorClassIdentifier: 
+  _id: Ring
+  _equipmentName: "\uBC18\uC9C0"
+  _description: "\uC774\uB85C\uC6B4 \uD6A8\uACFC\uB97C \uC81C\uACF5\uD558\uB294 \uC7A5\uBE44\n\uC7A5\uCC29
+    \uC2DC \uC544\uC774\uD15C \uD68D\uB4DD \uBC94\uC704\uAC00 0.1 \uC99D\uAC00\uD55C\uB2E4."
+  _price: 1000
+  _iconSprite: {fileID: 21300000, guid: f66c057114b8725409847a8a8e83a75b, type: 3}
+  _equipmentPrefab: {fileID: 599585790649221163, guid: e356d2f3c0288dc4ca0a452369ffe3de, type: 3}

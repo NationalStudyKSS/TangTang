@@ -1,0 +1,56 @@
+[
+  {
+    "Index": 1,
+    "Word_Index": "_equipment_helmet",
+    "Type": "Helmet",
+    "BonusMaxHp": 20,
+    "BonusDamage": "",
+    "BonusMoveSpeed": "",
+    "ItemGetRange": ""
+  },
+  {
+    "Index": 2,
+    "Word_Index": "_equipment_armor",
+    "Type": "Armor",
+    "BonusMaxHp": 20,
+    "BonusDamage": "",
+    "BonusMoveSpeed": "",
+    "ItemGetRange": ""
+  },
+  {
+    "Index": 3,
+    "Word_Index": "_equipment_weapon",
+    "Type": "Weapon",
+    "BonusMaxHp": "",
+    "BonusDamage": 10,
+    "BonusMoveSpeed": "",
+    "ItemGetRange": ""
+  },
+  {
+    "Index": 4,
+    "Word_Index": "_equipment_gloves",
+    "Type": "Gloves",
+    "BonusMaxHp": "",
+    "BonusDamage": 10,
+    "BonusMoveSpeed": "",
+    "ItemGetRange": ""
+  },
+  {
+    "Index": 5,
+    "Word_Index": "_equipment_shoes",
+    "Type": "Shoes",
+    "BonusMaxHp": "",
+    "BonusDamage": "",
+    "BonusMoveSpeed": 0.2,
+    "ItemGetRange": ""
+  },
+  {
+    "Index": 6,
+    "Word_Index": "_equipment_ring",
+    "Type": "Ring",
+    "BonusMaxHp": "",
+    "BonusDamage": "",
+    "BonusMoveSpeed": "",
+    "ItemGetRange": 0.1
+  }
+]
