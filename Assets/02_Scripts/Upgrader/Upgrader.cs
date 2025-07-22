@@ -18,8 +18,6 @@ public class Upgrader : MonoBehaviour
     [SerializeField] GameObject _upgradePanel; // 업그레이드 패널
     [SerializeField] SelectionView[] _selectionViews;  // 업그레이드 선택 뷰 배열
 
-    public event Action<int> BasicWeaponSelected;
-
     int _upgradeCount = 0; // 남은 업그레이드 선택 횟수
     GameObject _hero;
 

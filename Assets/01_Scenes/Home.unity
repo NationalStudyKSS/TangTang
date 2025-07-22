@@ -4962,6 +4962,7 @@ MonoBehaviour:
   _dataManager: {fileID: 0}
   _currencyManager: {fileID: 0}
   _heroManager: {fileID: 0}
+  _sceneLoadManager: {fileID: 0}
 --- !u!4 &1023007404
 Transform:
   m_ObjectHideFlags: 0

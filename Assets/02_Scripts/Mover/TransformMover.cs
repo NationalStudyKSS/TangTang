@@ -13,6 +13,7 @@ public class TransformMover : Mover
     public override void Move(Vector3 direction)
     {
         _moveVector = direction * _speed;
+        // Space.World로 하는 것에 대해 이유 알아?
         transform.Translate(_moveVector * Time.deltaTime, Space.World);
 
         OnMoved?.Invoke(_moveVector);

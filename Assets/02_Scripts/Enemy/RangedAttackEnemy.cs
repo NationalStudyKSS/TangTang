@@ -77,8 +77,6 @@ public class RangedAttackEnemy : Enemy, IRangedAttackable
 
     public Vector3 GetDirection()
     {
-        Debug.Log(_target.transform.position);
-        Debug.Log(transform.position);
         Vector3 direction = (_target.transform.position - transform.position).normalized;
         return direction;
     }
