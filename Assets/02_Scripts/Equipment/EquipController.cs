@@ -28,7 +28,6 @@ public class EquipController : MonoBehaviour
     /// <param name="model">받아온 장비 모델</param>
     public void Equip(EquipmentModel model)
     {
-        Debug.Log($"[EQUIP] 장비 장착 요청: {model.Config.Id}"); // 이게 찍히는지 확인
         EquipSlotType slotType = model.Config.EquipSlotType;
         int slotIndex = (int)slotType;
 
