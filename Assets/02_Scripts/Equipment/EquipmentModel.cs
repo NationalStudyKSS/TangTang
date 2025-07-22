@@ -26,5 +26,8 @@ public class EquipmentModel
         _slotIndex = index;
     }
 
-    public void SetIsEquipped(bool isEquipped) => _isEquipped = isEquipped;
+    public void SetIsEquipped(bool isEquipped)
+    {
+        _isEquipped = isEquipped;
+    }
 }

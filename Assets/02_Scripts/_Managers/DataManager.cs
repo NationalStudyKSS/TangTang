@@ -19,6 +19,8 @@ public class DataManager : MonoBehaviour
 
     [SerializeField] Dictionary<int, DropItemData> _dropItemDataDict;    // 드롭 아이템 데이터를 ID로 관리하는 딕셔너리
 
+    [SerializeField] EquipmentConfig[] _equipmentConfigs;
+
     ResourceManager _resourceManager; // 리소스 매니저
 
     public HeroStatData HeroStatData => _heroStatData; // 주인공 능력치 데이터 접근 프로퍼티
@@ -27,6 +29,7 @@ public class DataManager : MonoBehaviour
     public EnemyStatData EnemyStatData => _enemyStatData; // 적 능력치 데이터 접근 프로퍼티
     public DropItemPoolData DropItemPool => _dropItemPool; // 드롭 아이템 풀 데이터 접근 프로퍼티
     public Dictionary<int, DropItemData> DropItemDataDict => _dropItemDataDict; // 드롭 아이템 데이터 딕셔너리 접근 프로퍼티
+    public EquipmentConfig[] EquipmentConfigs => _equipmentConfigs;
 
     public static DataManager _instance;
 
@@ -66,5 +69,7 @@ public class DataManager : MonoBehaviour
         _dropItemDataDict = new Dictionary<int, DropItemData>();
         foreach (var data in dropItemArray)
             _dropItemDataDict[data.ItemId] = data;
+
+        _equipmentConfigs = Resources.LoadAll<EquipmentConfig>("Data/Equipment");
     }
 }

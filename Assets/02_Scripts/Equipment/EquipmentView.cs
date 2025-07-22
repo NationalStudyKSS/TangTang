@@ -1,49 +1,63 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentView : MonoBehaviour
+public class EquipmentView : MonoBehaviour, IPointerClickHandler
 {
+    [Header("----- 컴포넌트 참조 -----")]
     [SerializeField] Image _iconImage;
+    [SerializeField] EquipSlotType _slotType;
+    
+    EquipmentModel _model;
 
-    public void SetEquipment(Equipment equipment)
+    public EquipSlotType SlotType => _slotType;
+
+    public event Action<EquipmentModel, Vector2> OnClicked;  
+
+    /// <summary>
+    /// 초기화 함수.
+    /// 아이콘을 비워준다.
+    /// </summary>
+    public void Initialize()
     {
-        if (equipment != null)
+        SetIcon(null);
+    }
+
+    /// <summary>
+    /// 아이콘 설정 함수
+    /// </summary>
+    /// <param name="model"></param>
+    public void SetIcon(EquipmentModel model)
+    {
+        if (model != null && model.Config.EquipSlotType != _slotType)
+            return; // 슬롯 타입 불일치 시 무시
+
+        _model = model;
+
+        if (model == null)
         {
-            _iconImage.sprite = equipment.Model.Config.IconSprite;
+            _iconImage.sprite = null;
+            _iconImage.enabled = false;
+            return;
+        }
+
+        Sprite icon = model.Config.IconSprite;
+
+        if (icon != null)
+        {
+            _iconImage.sprite = icon;
             _iconImage.enabled = true;
         }
-        else
-        {
-            _iconImage.enabled = false;
-        }
-    }
-<<<<<<< HEAD
-=======
-
-    public void Hide(bool isHidden)
-    {
-        _iconImage.enabled = !isHidden;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button != PointerEventData.InputButton.Right) return;
+        // 만약 슬롯 타입이 없다면 리턴
+        if (_slotType == EquipSlotType.None) return;
 
-        _equipController.UnEquip(_slotType);
-        SetEquipment(null);
+        // 뷰 클릭 시 자신의 슬롯인덱스를 매개변수로 이벤트를 발행한다.
+        // 이 이벤트는 EquipmentDescView가 구독하여 툴팁 창을 띄울 것이다.
+        OnClicked?.Invoke(_model, transform.position);
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _invento
-
-        if (_equipment == null) return;
-        _dragController.ShowTooltip(_equipment.ItemModel);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _dragController.HideTooltip();
-    }
->>>>>>> parent of 32a5505 (컴파일 에러제거)
 }

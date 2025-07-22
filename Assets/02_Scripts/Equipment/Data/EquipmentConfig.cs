@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EquipSlotType
 {
+    None = -1,
     Helmet,
     Armor,
     Weapon,
@@ -23,7 +24,6 @@ public class EquipmentConfig : ScriptableObject
     [TextArea(3, 5)][SerializeField] string _description;   // 장비 설명
     [SerializeField] int _price;                            // 장비 가격
     [SerializeField] Sprite _iconSprite;                    // 장비 아이콘
-    [SerializeField] Equipment _equipmentPrefab;            // 장비
 
     [Header("----- 장비 스탯 -----")]
     [SerializeField] float _bonusMaxHp;
@@ -39,7 +39,6 @@ public class EquipmentConfig : ScriptableObject
     public string Description => _description;
     public int Price => _price;
     public Sprite IconSprite => _iconSprite;
-    public Equipment EquipmentPrefab => _equipmentPrefab;
     public float BonusMaxHp => _bonusMaxHp;
     public float BonusDamage => _bonusDamage;
     public float BonusMoveSpeed => _bonusMoveSpeed;

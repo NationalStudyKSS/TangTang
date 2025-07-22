@@ -18,9 +18,8 @@ MonoBehaviour:
     \uC2DC \uCD5C\uB300 \uCCB4\uB825\uC774 20 \uC99D\uAC00\uD55C\uB2E4."
   _price: 500
   _iconSprite: {fileID: 21300000, guid: d359cffafe45e0e4c82527e85234799b, type: 3}
-  _equipmentPrefab: {fileID: 599585790649221163, guid: c0c7c602cafe15842b14913ad25ca9fd, type: 3}
   _bonusMaxHp: 20
   _bonusDamage: 0
   _bonusMoveSpeed: 0
   _bonusItemGetRange: 0
-  _equipSlotType: 0
+  _equipSlotType: 1

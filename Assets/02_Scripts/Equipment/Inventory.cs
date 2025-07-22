@@ -1,193 +1,174 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-///// <summary>
-///// 획득한 장비를 보관하는 인벤토리
-///// </summary>
-//public class Inventory : MonoBehaviour
-//{
-//    public const int _inventoryCount = 20;
+/// <summary>
+/// 인벤토리 시스템의 모든 것을 담는 클래스
+/// 아이템의 첫 생성이 이루어지고 이에 따라 아이템의 정보도 갖고있어야 한다.
+/// </summary>
+public class Inventory : MonoBehaviour
+{
+    const int _inventoryCount = 20;
 
-//    [Header("----- 아이템 설정 데이터 -----")]
-//    [SerializeField] EquipmentConfig[] _EquipmentConfigs;      // 아이템 설정 데이터 배열
-//    Dictionary<string, EquipmentConfig> _EquipmentConfigMap = new();  // 아이템 설정 데이터 맵
+    [Header("----- 장비 설정 데이터(ReadOnly) -----")]
+    [SerializeField] EquipmentConfig[] _configs;
+    
+    Dictionary<string, EquipmentConfig> _configMap = new();
+    // 유저가 보유중인 장비의 모델인데 Equipment Class를 받을지 고민해봐야함
+    EquipmentModel[] _equipmentModels = new EquipmentModel[_inventoryCount];
 
-//    [Header("----- 컴포넌트 참조 -----")]
-//    [SerializeField] InventorySlotView[] _inventoryViews;         // 아이템 뷰 배열
-//    [SerializeField] EquipmentDescView _equipmentDescView;          // 아이템 툴팁 창
-//    [SerializeField] EquipController _equipController;              // 장비 장착 컨트롤러
+    public EquipmentModel[] EquipmentModels => _equipmentModels;
 
-//    public EquipController EquipController => _equipController;
+    public event Action<int, EquipmentModel> OnSlotChanged;      // 자기 슬롯 번호와 장비 모델을 매개변수로 전달
 
-//    // 유저가 보유하고 있는 아이템 배열
-//    EquipmentModel[] _equipmentModels = new EquipmentModel[_inventoryCount];
+    public void Initialize()
+    {
+        if(GameManager.Instance?.DataManager == null)
+    {
+            Debug.LogError("DataManager 초기화 안됨");
+            return;
+        }
 
-//    // 현재 선택 중인 슬롯 번호
-//    int _selectedSlotIndex = -1;
+        _configs = GameManager.Instance.DataManager.EquipmentConfigs;
 
-//    private void Awake()
-//    {
-//        // 장비 설정 데이터를 맵에 저장
-//        foreach (var equipmentConfig in _EquipmentConfigs)
-//        {
-//            _EquipmentConfigMap[equipmentConfig.Id] = equipmentConfig;
-//        }
-//        // 아이템 뷰 초기화
-//        for (int i = 0; i < _inventoryCount; i++)
-//        {
-//            _inventoryViews[i].SetModel(null);
-//        }
-//    }
+        if (_configs == null || _configs.Length == 0)
+        {
+            Debug.LogWarning("장비 설정 데이터가 비어있음");
+            return;
+        }
 
-//    private void Start()
-//    {
-//        for (int i = 0; i < _inventoryViews.Length; i++)
-//        {
-//            _inventoryViews[i].SetModel(_equipmentModels[i]);
-//            _inventoryViews[i].Initialize(this, i);
-//        }
+        _configMap.Clear();
+        foreach (var config in _configs)
+        {
+            _configMap[config.Id] = config;
+        }
+    }
 
-//        //_equipController.Initialize();
-//    }
+    // 임시) 장비 추가 치트
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            AddEquipment("Helmet");
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            AddEquipment("Armor");
+        }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            AddEquipment("Weapon");
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            AddEquipment("Gloves");
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            AddEquipment("Boots");
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            AddEquipment("Ring");
+        }
+    }
 
-//    /// <summary>
-//    /// 아이템 설정 데이터로 아이템 모델을 만들어 반환해 주는 함수
-//    /// </summary>
-//    /// <param name="itemConfig"></param>
-//    /// <returns></returns>
-//    public EquipmentModel CreateEquipmentModel(EquipmentConfig itemConfig)
-//    {
-//        return new EquipmentModel(itemConfig);
-//    }
+    /// <summary>
+    /// EquipmentModel을 생성하여 반환하는 함수
+    /// </summary>
+    /// <param name="config">생성할 장비의 정보</param>
+    /// <returns>생성된 장비 모델</returns>
+    public EquipmentModel CreateEquipmentModel(EquipmentConfig config)
+    {
+        return new EquipmentModel(config);
+    }
 
-//    /// <summary>
-//    /// 인덱스 번호로 모델 반환을 시도하는 함수
-//    /// </summary>
-//    /// <param name="slotIndex">슬롯의 인덱스 번호</param>
-//    /// <param name="model">반환할 모델</param>
-//    /// <returns>아이템 모델 존재 여부</returns>
-//    public bool TryGetEquipmentModel(int slotIndex, out EquipmentModel model)
-//    {
-//        model = null;
+    /// <summary>
+    /// 장비의 Id를 이용하여 장비를 하나 추가하는 함수
+    /// </summary>
+    /// <param name="id">추가할 장비의 Id</param>
+    public void AddEquipment(string id)
+    {
+        // 만약 딕셔너리에 등록된 id가 아니라면 리턴
+        if (_configMap.ContainsKey(id) == false)
+        {
+            Debug.Log($"존재하지 않는 아이템입니다. (id: {id})");
+            return;
+        }
 
-//        if (slotIndex < 0 || slotIndex >= _inventoryViews.Length) return false;
+        // 입력받은 Id를 통해 딕셔너리에서 아이템 정보 찾고
+        EquipmentConfig config = _configMap[id];
 
-//        model = _equipmentModels[slotIndex];
-//        return model != null;
-//    }
+        // 인벤토리 용량을 이용해 인벤토리 슬롯 다 돌면서
+        for (int i = 0; i < _inventoryCount; i++)
+        {
+            // 만약 슬롯의 모델이 없다면(= 슬롯이 비어있다면)
+            if (_equipmentModels[i] == null)
+            {
+                // 처음으로 장비가 등록되어야 하니까 생성해주고
+                _equipmentModels[i] = CreateEquipmentModel(config);
 
-//    /// <summary>
-//    /// 최초로 인벤토리에 장비를 추가하는 함수
-//    /// 아이템 추가 시 인벤토리를 순회하여 빈자리를 찾아보고
-//    /// 빈자리가 있으면 로직이 실행된다.
-//    /// </summary>
-//    /// <param name="id">추가할 장비의 Id</param>
-//    public void AddEquipment(string id)
-//    {
-//        if (_EquipmentConfigMap.ContainsKey(id) == false)
-//        {
-//            Debug.Log($"존재하지 않는 아이템입니다. (id: {id})");
-//            return;
-//        }
+                // 장비모델에 인덱스 등록해주고
+                _equipmentModels[i].SetSlotIndex(i);
 
-//        // 설정 데이터 검색
-//        EquipmentConfig config = _EquipmentConfigMap[id];
+                // 인벤토리에 생성된거니까 장착여부 false로 해주고
+                _equipmentModels[i].SetIsEquipped(false);
 
-//        // 인벤토리 순회
-//        for (int i = 0; i < _inventoryCount; i++)
-//        {
-//            // 만약 빈자리라면(모델이 존재하지 않기때문)
-//            // 빈자리가 있는지 판단하는 조건문으로도 작용함
-//            if (_equipmentModels[i] == null)
-//            {
-//                // 모델을 하나 만들어주고
-//                _equipmentModels[i] = CreateEquipmentModel(config);
-//                // View 초기화 해주고
-//                _inventoryViews[i].Initialize(this, i);
-//                // View에 모델 할당해주기
-//                _inventoryViews[i].SetModel(_equipmentModels[i]);
-//                // 아이템 하나 추가에 한번만 실행해야되니까 실행 후 리턴
-//                return;
-//            }
-//        }
+                // 슬롯 바뀌었다고 이벤트 알림
+                // InventorySlotView가 구독하여 아이템 보여줄거임
+                OnSlotChanged?.Invoke(i, _equipmentModels[i]);
 
-//        // 만약 위 for문을 거치지 않았을 경우(아이템이 꽉찼다는 소리)
-//        Debug.Log("인벤토리가 가득 찼습니다.");
-//    }
+                // 하나 추가했으면 끝
+                return;
+            }
+        }
 
-//    /// <summary>
-//    /// 이미 존재하는 장비를 인벤토리에 추가 시도하는 함수
-//    /// </summary>
-//    /// <param name="model"></param>
-//    public bool TryAddEquipment(EquipmentModel model)
-//    {
-//        for (int i = 0; i < _inventoryCount; i++)
-//        {
-//            if (_equipmentModels[i] == null)
-//            {
-//                _equipmentModels[i] = model;
-//                model.SetSlotIndex(i);
-//                _inventoryViews[i].SetModel(model);
-//                return true;
-//            }
-//        }
+        Debug.Log("인벤토리가 가득 찼습니다.");
+    }
 
-//        Debug.Log("인벤토리가 가득 찼습니다.");
-//        return false;
-//    }
+    /// <summary>
+    /// 인벤토리에 장비 추가를 시도하는 함수
+    /// </summary>
+    /// <param name="model">추가하려는 장비 모델</param>
+    /// <returns>성공했나요?</returns>
+    public bool TryAddEquipment(EquipmentModel model)
+    {
+        // 인벤토리 순회하면서
+        for (int i = 0; i < _equipmentModels.Length; i++)
+        {
+            // 빈공간이 있으면(= 장비 모델이 비어있으면)
+            if (_equipmentModels[i] == null)
+            {
+                // 그 자리에 지금 추가하려는 장비 모델 넣고
+                _equipmentModels[i] = model;
+                // 슬롯 인덱스 다시 부여해주고
+                _equipmentModels[i].SetSlotIndex(i);
+                // 인벤토리에 들어온거니까 장착여부 false로 해주고
+                _equipmentModels[i].SetIsEquipped(false);
+                // 슬롯 정보 바뀌었으니까 이벤트 알림
+                OnSlotChanged?.Invoke(i, model);
+                // 추가 되었으니까 true 반환
+                return true;
+            }
+        }
 
-//    /// <summary>
-//    /// 인벤토리에서 아이템을 제거하는 함수
-//    /// </summary>
-//    /// <param name="slotIndex">제거하려는 인덱스 번호</param>
-//    public void RemoveEquipment(int slotIndex)
-//    {
-//        // 제거하려는 슬롯에 모델이 있는경우
-//        if (TryGetEquipmentModel(slotIndex, out EquipmentModel model) == true)
-//        {
-//            // 모델의 삭제 함수를 실행시켜주고
-//            // 지금 슬롯의 모델자리 청소해서 비워주고
-//            _equipmentModels[slotIndex] = null;
-//            // View에도 모델 비었다고 말해줘야함
-//            _inventoryViews[slotIndex].SetModel(_equipmentModels[slotIndex]);
-//        }
-//    }
+        // 위 조건을 만족 못했으면 인벤토리가 가득찬거니까
+        Debug.Log("아이템 슬롯이 가득 찼습니다.");
+        // false 반환
+        return false;
+    }
 
-//    /// <summary>
-//    /// 장비 장착 버튼을 눌렀을 때 실행되야 하는 함수
-//    /// </summary>
-//    /// <param name="slotIndex"></param>
-//    public void OnEquipped(int slotIndex)
-//    {
+    /// <summary>
+    /// 장비를 제거하는 함수
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    public void RemoveEquipment(EquipmentModel model)
+    {
+        int slotIndex = model.SlotIndex;
+        if (_equipmentModels[slotIndex] == null) return;
 
-//    }
-
-//    private void Update()
-//    {
-//        if (Input.GetKeyDown(KeyCode.F1))
-//        {
-//            AddEquipment("Helmet");
-//        }
-//        if (Input.GetKeyDown(KeyCode.F2))
-//        {
-//            AddEquipment("Armor");
-//        }
-//        if (Input.GetKeyDown(KeyCode.F3))
-//        {
-//            AddEquipment("Weapon");
-//        }
-//        if (Input.GetKeyDown(KeyCode.F4))
-//        {
-//            AddEquipment("Gloves");
-//        }
-//        if (Input.GetKeyDown(KeyCode.F5))
-//        {
-//            AddEquipment("Boots");
-//        }
-//        if (Input.GetKeyDown(KeyCode.F6))
-//        {
-//            AddEquipment("Ring");
-//        }
-//    }
-//}
+        _equipmentModels[slotIndex] = null;
+        OnSlotChanged?.Invoke(slotIndex, _equipmentModels[slotIndex]);
+    }
+}

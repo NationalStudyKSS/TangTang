@@ -1,64 +1,43 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class InventoryPresenter
+/// <summary>
+/// 인벤토리뷰와 장비 모델 사이의 상호작용에 대한 처리를 담당할 클래스
+/// 의존성 주입, 상호작용, 함수 실행 등등 여러가지를 처리한다.
+/// MVP 패턴의 P에 해당한다.
+/// </summary>
+public class InventoryPresenter : MonoBehaviour
 {
-    private InventoryModel _model;
-    private InventorySlotView[] _slotViews;
-    private EquipController _equipController;
+    [Header("----- 컴포넌트 참조 -----")]
+    [SerializeField] InventorySlotView[] _slotViews;
+    [SerializeField] EquipmentDescView _equipmentDescView;
 
-    public InventoryPresenter(InventoryModel model, InventorySlotView[] slotViews, EquipController equipController)
+    EquipmentModel[] _models;
+    
+    public void Initialize(Inventory inventory, EquipmentModel[] models)
     {
-        _model = model;
-        _slotViews = slotViews;
-        _equipController = equipController;
+        _models = models;
 
         for (int i = 0; i < _slotViews.Length; i++)
         {
-            int index = i; // 클로저 문제 방지용
+            // 슬롯 각각에 인덱스 번호 부여 및 아이콘 초기화
+            int index = i;
             _slotViews[i].Initialize(index);
-            _slotViews[i].OnClicked += (slotIndex) => OnSlotClicked(index);
-        }
+            inventory.OnSlotChanged += _slotViews[i].SetIcon;
 
-        RefreshView();
-    }
-
-    private void RefreshView()
-    {
-        for (int i = 0; i < _slotViews.Length; i++)
-        {
-            var item = _model.GetItem(i);
-            _slotViews[i].SetIcon(item?.Config.IconSprite);
+            _slotViews[i].OnClicked += (slotIndex, pos) =>
+            {
+                var model = GetModelByIndex(slotIndex, models);
+                if (model != null)
+                    _equipmentDescView.Show(model, pos);
+            };
         }
     }
 
-    private void OnSlotClicked(int slotIndex)
+    EquipmentModel GetModelByIndex(int slotIndex, EquipmentModel[] models)
     {
-        var item = _model.GetItem(slotIndex);
-        if (item != null)
-        {
-            // 장비 장착 요청
-            _equipController.Equip(item);
-            // 선택한 아이템에 대한 UI 처리, 툴팁 등도 여기서 호출 가능
-        }
-    }
-
-    public void AddItem(EquipmentModel item)
-    {
-        if (_model.AddItem(item))
-        {
-            RefreshView();
-        }
-        else
-        {
-            Debug.Log("인벤토리 가득 참");
-        }
-    }
-
-    public void RemoveItem(int slotIndex)
-    {
-        if (_model.RemoveItem(slotIndex))
-        {
-            RefreshView();
-        }
+        if (slotIndex >= 0 && slotIndex < models.Length)
+            return models[slotIndex];
+        return null;
     }
 }

@@ -1,126 +1,86 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// 장비 장착/해제를 담당하는 Controller (MVP의 C 역할)
+/// </summary>
 public class EquipController : MonoBehaviour
 {
-    Dictionary<EquipSlotType, Equipment> _equipped = new();
+    Inventory _inventory;      // 아이템을 뺄 때 필요함.
+    const int _equipSlotCount = 6;
 
-    [SerializeField] Transform[] _slotTransforms;
-    [SerializeField] EquipmentView[] _equipmentViews;
-
-<<<<<<< HEAD
-=======
-    /// <summary>
-    /// 무기 장착 이벤트. HitPoint 전달
-    /// </summary>
-    public event Action<Transform> OnWeaponEquipped;
-
-    public void Initialize()
+    // 장비 슬롯 딕셔너리 => 장비 장착 시 슬롯타입을 키로 장비 모델을 등록해놓음
+    // 장비 스탯 데이터만 필요하고 실물은 필요없어서 장비 모델을 사용함.
+    // 추후에 실제 프리펩 형태의 게임오브젝트가 필요하다면 Equipment 클래스를 사용하여
+    // 딕셔너리를 만드는게 좋을듯.
+    Dictionary<EquipSlotType, EquipmentModel> _equipmentMap = new();
+    
+    public void Initialize(Inventory inventory)
     {
-        foreach (var equipmentView in _equipmentViews)
-        {
-            equipmentView.Initialize(this, _inventory);
-            equipmentView.SetEquipment(null);
-        }
+        _inventory = inventory;
     }
 
     /// <summary>
-    /// 장비를 장착하는 함수
-    /// 기존 장비가 있으면 자동으로 해제 후 새 장비를 장착한다.
+    /// 장비를 장착하는 함수.
+    /// 기존에 장착된 장비가 있으면 자동으로 해제 후 새 장비를 장착한다.
     /// </summary>
-    /// <param name="model"></param>
->>>>>>> parent of 32a5505 (컴파일 에러제거)
+    /// <param name="model">받아온 장비 모델</param>
     public void Equip(EquipmentModel model)
     {
+        Debug.Log($"[EQUIP] 장비 장착 요청: {model.Config.Id}"); // 이게 찍히는지 확인
         EquipSlotType slotType = model.Config.EquipSlotType;
         int slotIndex = (int)slotType;
 
-        // 기존 장비 해제
-        UnEquip(slotType);
+        if (slotIndex < 0 || slotIndex >= _equipSlotCount) return;
 
-<<<<<<< HEAD
-        var prefab = model.Config.EquipmentPrefab;
-        if (prefab == null)
-        {
-            Debug.LogError("프리팹 없음");
-            return;
-        }
+        // 기존 장비가 있었다면 해제
+        Unequip(slotType);
 
-        var equipGO = GameObject.Instantiate(prefab, _slotTransforms[slotIndex]);
-        var equipment = equipGO.GetComponent<Equipment>();
-        equipment.SetModel(model);
-        _equipped[slotType] = equipment;
-
-        _equipmentViews[slotIndex].SetEquipment(equipment);
-=======
-        // 장비 프리펩 생성
-        Transform slotTransform = _slotTransforms[slotIndex];
-        Equipment equipment = Instantiate(model.EquipmentPrefab, slotTransform);
-        equipment.SetEquipmentModel(model);
-        _equipmentMap[slotType] = equipment;
+        // 장비 슬롯 딕셔너리에 등록
+        _equipmentMap[slotType] = model;
 
         // 장비 스탯 적용
-        GameManager.Instance.HeroManager.AddBonusHp(equipment.BonusMaxHp);
-        GameManager.Instance.HeroManager.AddBonusDamage(equipment.BonusDamage);
-        GameManager.Instance.HeroManager.AddBonusMoveSpeed(equipment.BonusMoveSpeed);
-        GameManager.Instance.HeroManager.AddBonusItemGetRange(equipment.BonusItemGetRange);
+        GameManager.Instance.HeroManager.AddBonusHp(model.Config.BonusMaxHp);
+        GameManager.Instance.HeroManager.AddBonusDamage(model.Config.BonusDamage);
+        GameManager.Instance.HeroManager.AddBonusMoveSpeed(model.Config.BonusMoveSpeed);
+        GameManager.Instance.HeroManager.AddBonusItemGetRange(model.Config.BonusItemGetRange);
 
-        _equipmentViews[(int)slotType].Initialize(this, _inventory);
-        _equipmentViews[(int)slotType].SetEquipment(equipment);
-        equipment.EquipmentModel.SetSlotIndex((int)slotType);
-        
->>>>>>> parent of 32a5505 (컴파일 에러제거)
-    }
-
-    public void UnEquip(EquipSlotType slotType)
-    {
-        if (_equipped.TryGetValue(slotType, out var equipment))
-        {
-<<<<<<< HEAD
-            GameObject.Destroy(equipment.gameObject);
-            _equipped.Remove(slotType);
-            _equipmentViews[(int)slotType].SetEquipment(null);
-        }
-    }
-=======
-            Equipment equipment = _equipmentMap[slotType];
-
-            // 1. 해당 장비와 연결된 아이템 모델을 인벤토리에 추가
-            // -> 인벤토리에 아이템 추가 실패 시 장비 해제 불가
-            if (_inventory.TryAddEquipment(equipment.EquipmentModel) == false) return;
-
-            // 2. 장비로 인한 능력치 변화 해제
-            _heroModel.AddMaxHp(-equipment.BonusMaxHp);
-            _heroModel.AddArmor(-equipment.BonusArmor);
-            _heroModel.AddDamage(-equipment.BonusDamage);
-
-            // 3. 장비 제거
-            Destroy(equipment.gameObject);
-
-            // 4. 장비 맵에서 키 제거
-            _equipmentMap.Remove(slotType);
-
-            // 5. 무기의 경우 무기 제거 이벤트 알림
-            if (slotType == EquipSlotType.Weapon)
-            {
-                OnWeaponEquipped?.Invoke(null);
-            }
-        }
-    }
-
-    public void ShowEquipmentView(EquipmentModel model, Transform slotTransform)
-    {
-        _itemDescView.SetEquipmentModel(model);
-        _itemDescView.transform.position = slotTransform.position;
-        _itemDescView.gameObject.SetActive(true);
+        // 장비 모델 세팅
+        model.SetIsEquipped(true);
     }
 
     /// <summary>
-    /// 아이템 설명 뷰(툴팁)를 숨기는 함수
+    /// 장비장착 슬롯의 타입을 받아서 장비 모델을 딕셔너리에서 검색 후
+    /// 장비를 해제하는 함수.
     /// </summary>
-    public void HideEquipmentDescView()
+    /// <param name="slotType">해제하려는 슬롯의 타입</param>
+    public void Unequip(EquipSlotType slotType)
     {
-        _itemDescView.gameObject.SetActive(false);
+        // 만약 장비 슬롯 딕셔너리에서 슬롯타입에 Value가 있으면(= 장비 모델이 있으면)
+        if (_equipmentMap.ContainsKey(slotType))
+        {
+            // slotType을 키값으로 하는 Value, 즉 EquipmentModel을 찾는다.
+            EquipmentModel model = _equipmentMap[slotType];
+
+            // 혹시 장비를 해제하려고 했는데 장비창이 꽉 차서 Try함수가 실패하면 리턴
+            if (_inventory.TryAddEquipment(model) == false)
+            {
+                Debug.LogWarning("인벤토리에 공간이 없어 장비 해제에 실패했습니다.");
+                return;
+            }
+
+            // 장비 스탯 해제(스탯 증가에서 -부호를 붙여서 스탯 감소 = 해제)
+            GameManager.Instance.HeroManager.AddBonusHp(-model.Config.BonusMaxHp);
+            GameManager.Instance.HeroManager.AddBonusDamage(-model.Config.BonusDamage);
+            GameManager.Instance.HeroManager.AddBonusMoveSpeed(-model.Config.BonusMoveSpeed);
+            GameManager.Instance.HeroManager.AddBonusItemGetRange(-model.Config.BonusItemGetRange);
+
+            // 딕셔너리에서 키 제거
+            _equipmentMap.Remove(slotType);
+
+            // 장비 모델 세팅
+            model.SetIsEquipped(false);
+        }
     }
->>>>>>> parent of 32a5505 (컴파일 에러제거)
 }

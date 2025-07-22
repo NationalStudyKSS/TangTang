@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,14 @@ public class HeroManager : MonoBehaviour
     [SerializeField] float _bonusMoveSpeed;
     [SerializeField] float _bonusItemGetRange;
 
+    public float BonusHp => _bonusHp;
+    public float BonusDamage => _bonusDamage;
+    public float BonusMoveSpeed => _bonusMoveSpeed;
+    public float BonusItemGetRange => _bonusItemGetRange;
+
     public ElementType Type => _type;
+
+    public event Action OnBonusStatChanged;
 
     public void Initialize()
     {
@@ -39,18 +47,22 @@ public class HeroManager : MonoBehaviour
     public void AddBonusHp(float amount)
     {
         _bonusHp += amount;
+        OnBonusStatChanged?.Invoke();
     }
     public void AddBonusDamage(float amount)
     {
         _bonusDamage += amount;
+        OnBonusStatChanged?.Invoke();
     }
     public void AddBonusMoveSpeed(float amount)
     {
         _bonusMoveSpeed += amount;
+        OnBonusStatChanged?.Invoke();
     }
     public void AddBonusItemGetRange(float amount)
     {
         _bonusItemGetRange += amount;
+        OnBonusStatChanged?.Invoke();
     }
 
     /// <summary>

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 장비 클래스
+/// 장비에 실제 장착되는 역할을 한다.
+/// 모델을 부여받아 자신이 어떤 장비인지 알 수 있다.
 /// </summary>
 public class Equipment : MonoBehaviour
 {
