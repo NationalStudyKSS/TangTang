@@ -34,7 +34,6 @@ public class EquipmentDescView : MonoBehaviour
             return;
         }
 
-
         if (isShowing && _currentModel == model)
         {
             Hide();
@@ -66,5 +65,10 @@ public class EquipmentDescView : MonoBehaviour
         _currentModel = null;
         gameObject.SetActive(false);
         _blocker?.SetActive(false); // blocker도 함께 닫기
+    }
+
+    public void OnEquipButtonClicked()
+    {
+
     }
 }

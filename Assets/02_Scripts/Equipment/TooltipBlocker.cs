@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TooltipBlocker : MonoBehaviour
 {
-    [SerializeField] EquipmentDescView _descView;
+    [SerializeField] InventoryPresenter _presenter;
 
     public void OnClickOutside()
     {
-        _descView.Toggle(null, Vector2.zero);
+        //_presenter.Toggle(null, Vector2.zero);
         gameObject.SetActive(false);
     }
 }

@@ -8,51 +8,23 @@ using UnityEngine;
 /// </summary>
 public class EquipmentModel
 {
-    EquipmentConfig _config;  // 아이템 설정 데이터
-    Inventory _inventory;
+    EquipmentConfig _config;
     int _slotIndex = -1;
+    bool _isEquipped = false;
 
-    public EquipmentConfig Config => _config;  // 아이템 설정 데이터 접근자
+    public EquipmentConfig Config => _config;
     public int SlotIndex => _slotIndex;
+    public bool IsEquipped => _isEquipped;
+
     public EquipmentModel(EquipmentConfig config)
     {
         _config = config;
     }
 
-    public void SetSlotIndex(int slotIndex)
+    public void SetSlotIndex(int index)
     {
-        _slotIndex = slotIndex;
+        _slotIndex = index;
     }
 
-    /// <summary>
-    /// 아이템이 인벤토리에 추가될 때 자동으로 호출되어야 하는 함수
-    /// 비소모성 아이템의 경우 패시브 효과를 적용한다.
-    /// </summary>
-    /// <param name="inventory"></param>
-    public void Acquire(Inventory inventory, int slotIndex)
-    {
-        _inventory = inventory;
-        _slotIndex = slotIndex;
-    }
-
-    /// <summary>
-    /// 아이템이 인벤토리에서 제거될 때 자동으로 호출되어야 하는 함수
-    /// 비소모성 아이템의 경우 패시브 효과를 해제한다.
-    /// </summary>
-    public void Remove()
-    {
-        _slotIndex = -1;
-        if (_inventory == null) return;
-    }
-
-    Equipment _equipmentPrefab;
-    public Equipment EquipmentPrefab => _equipmentPrefab;
-
-    public void Use()
-    {
-        if (_inventory == null) return;
-
-        // 장비 장착
-        //_inventory.EquipController.Equip(this);
-    }
+    public void SetIsEquipped(bool isEquipped) => _isEquipped = isEquipped;
 }
