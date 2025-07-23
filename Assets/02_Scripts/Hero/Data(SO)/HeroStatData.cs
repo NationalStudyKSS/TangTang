@@ -8,6 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "HeroStatData", menuName = "GameSettings/Hero/HeroStatData")]
 public class HeroStatData : ScriptableObject
 {
+    [SerializeField] string _heroId;
+
     [Header("----- 주인공 기본 스탯 -----")]
     [SerializeField] float _baseMaxHp;                // 기본 최대 체력
     [SerializeField] float _baseDamage;               // 기본 공격력
@@ -23,6 +25,7 @@ public class HeroStatData : ScriptableObject
     [SerializeField] float _itemGetRangeGrowthRate;   // 아이템 획득 범위 성장률
     [SerializeField] float _expRequiredGrowthRate;    // 레벨업 경험치 증가율
 
+    public string HeroId => _heroId;
     public float BaseExpGainRate => _baseExpGainRate;
 
     /// <summary>

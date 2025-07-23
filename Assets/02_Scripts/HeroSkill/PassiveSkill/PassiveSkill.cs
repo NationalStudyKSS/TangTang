@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public enum PassiveSkillType
 {
@@ -8,7 +9,7 @@ public enum PassiveSkillType
     WingShoes,      // 이동속도 증가
 }
 
-public abstract class PassiveSkill : MonoBehaviour, IUpgradable
+public abstract class PassiveSkill : SkillBase
 {
     [Header("----- 대상 모델 -----")]
     [SerializeField] protected HeroModel _heroModel;
@@ -25,13 +26,15 @@ public abstract class PassiveSkill : MonoBehaviour, IUpgradable
     public StatName StatName => _statName;
     public PassiveSkillType PassiveSkillType => _passiveSkillType;
 
-    public string UpgradeName => _data.PassiveSkillName;
-    public string Description => _data.Description;
-    public Sprite IconSprite => _data.IconSprite;
-    public int Level => _level;
-    public bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
+    public override string UpgradeName => _data.PassiveSkillName;
+    public override string Description => _data.Description;
+    public override Sprite IconSprite => _data.IconSprite;
+    public override int Level => _level;
+    public override bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
+    public override bool CanUpgrade => _data != null && !IsMaxLevel;
+    public override UpgradeType UpgradeType => UpgradeType.PassiveSkill;
 
-    public void Initialize()
+    public override void Initialize()
     {
         _heroModel = GetComponentInParent<HeroModel>();
 
@@ -62,11 +65,14 @@ public abstract class PassiveSkill : MonoBehaviour, IUpgradable
     /// <summary>
     /// 장비 업그레이드 함수
     /// </summary>
-    public void Upgrade()
+    public override void Upgrade()
     {
         _level++;
         CalculateStats();
         Apply();
+
+        SkillUpgradeManager.Instance.RegisterUpgrade(this);
+        RaiseOnUpgraded();
     }
 
     /// <summary>

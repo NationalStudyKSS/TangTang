@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.IO;
 public class HeroStatSOGenerator : MonoBehaviour
 {
     private const string CSV_PATH = "Data/CSV/HeroStatData";
-    private const string SAVE_PATH = "Assets/Resources/Data/Hero"; // ÀúÀåµÉ Æú´õ
+    private const string SAVE_PATH = "Assets/Resources/Data/Hero"; // ì €ì¥ë  í´ë”
 
     [MenuItem("Tools/Generate HeroStatData SOs")]
     public static void GenerateSOs()
@@ -26,7 +26,7 @@ public class HeroStatSOGenerator : MonoBehaviour
             SetStats(asset, hero);
 
             string assetPath = $"{SAVE_PATH}/{hero.LocalizationKey}.asset";
-            // ±âÁ¸ SO°¡ ÀÖÀ¸¸é »èÁ¦
+            // ê¸°ì¡´ SOê°€ ìˆìœ¼ë©´ ì‚­ì œ
             if (File.Exists(assetPath))
             {
                 AssetDatabase.DeleteAsset(assetPath);
@@ -36,7 +36,7 @@ public class HeroStatSOGenerator : MonoBehaviour
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        Debug.Log("HeroStatData SO »ı¼º ¿Ï·á!");
+        Debug.Log("HeroStatData SO ìƒì„± ì™„ë£Œ!");
     }
 
     private static void SetStats(HeroStatData asset, HeroDataRaw data)
@@ -57,7 +57,7 @@ public class HeroStatSOGenerator : MonoBehaviour
         soType.GetField("_baseExpToLevelUp", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(asset, data.BaseExpToLevelUp);
         soType.GetField("_expRequiredGrowthRate", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(asset, data.ExpRequiredGrowthRate);
 
-        // ±âº»°ªÀ¸·Î ¼³Á¤ÇÒ ¼ö ÀÖ´Â ºÎºĞµé
+        // ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •í•  ìˆ˜ ìˆëŠ” ë¶€ë¶„ë“¤
         soType.GetField("_maxLevel", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(asset, 99);
         soType.GetField("_baseExpGainRate", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(asset, 1f);
     }

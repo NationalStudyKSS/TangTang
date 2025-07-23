@@ -47,9 +47,7 @@ public class EnemyModel : MonoBehaviour
         _enemyStatData = GameManager.Instance.DataManager.EnemyStatData;
         // 가져온 데이터에 있는 값들 매칭해서 초기화
         // 임시(EnemyStatData 리팩토링중)
-        _damage = 10;
-        _moveSpeed = 1;
-        _maxHp = 100;
+        
         //_damage = _enemyStatData.Damage;
         //_moveSpeed = _enemyStatData.Speed;
         //_maxHp = _enemyStatData.MaxHp;

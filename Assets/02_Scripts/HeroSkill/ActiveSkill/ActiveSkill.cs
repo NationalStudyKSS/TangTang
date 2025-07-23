@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -29,10 +30,11 @@ public enum ActiveSkillType
 /// <summary>
 /// 액티브스킬의 공통 기능을 포함하는 추상 클래스.
 /// </summary>
-public abstract class ActiveSkill : MonoBehaviour, IUpgradable
+public abstract class ActiveSkill : SkillBase
 {
     [Header("----- 대상 모델(인스펙터뷰 연결해아함) -----")]
     [SerializeField] protected HeroModel _model;
+    [SerializeField] PassiveSkill _somePassiveSkill;
 
     [Header("----- 스탯 데이터 -----")]
     // 액티브스킬 데이터
@@ -59,16 +61,31 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
     // 자식들에게 너의 액티브스킬타입을 ActiveSkillType이라는 변수로 공개하라라고 명령
     public abstract ActiveSkillType ActiveSkillType { get; }
 
-    public string UpgradeName => _data.ActiveSkillName;
-    public string Description => _data.Description;
-    public Sprite IconSprite => _data.IconSprite;
-    public int Level => _level;
-    public bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
+    public override string UpgradeName => _data.ActiveSkillName;
+    public override string Description => _data.Description;
+    public override Sprite IconSprite => _data.IconSprite;
+    public override int Level => _level;
+    public override bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
+    public override bool CanUpgrade
+    {
+        get
+        {
+            if (!IsMaxLevel)
+                return true; // 일반 업그레이드 가능
+
+            // 초월 조건: 특정 패시브가 1레벨 이상인지 체크
+            if (_somePassiveSkill.Level >= 0)
+                return true; // 초월 강화 가능
+
+            return false;
+        }
+    }
     public float DamageRate => _damageRate;
     public float Damage => _damage;
     public ElementType Type => _type;
+    public override UpgradeType UpgradeType => UpgradeType.ActiveSkill;
 
-    public void Initialize()
+    public override void Initialize()
     {
         // 스킬데이터를 데이터매니저에서 가져옴
         if (_data == null)
@@ -96,7 +113,7 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
         _damageRate = _data.GetStat(ActiveSkillStatType.DamageRate, _level);
     }
 
-    public virtual void Upgrade()
+    public override void Upgrade()
     {
         _level++;  // 액티브스킬 레벨을 하나 올리고
         CalculateStats();  // 스텟을 다시 계산한다.
@@ -106,6 +123,9 @@ public abstract class ActiveSkill : MonoBehaviour, IUpgradable
         {
             SetDamage(_model.Stats.Damage.Final);
         }
+
+        SkillUpgradeManager.Instance.RegisterUpgrade(this);
+        RaiseOnUpgraded();
     }
 
     /// <summary>

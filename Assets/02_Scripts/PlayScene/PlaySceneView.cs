@@ -24,6 +24,9 @@ public class PlaySceneView : MonoBehaviour
     [SerializeField] Image _pauseIcon;                    // 일시정지 아이콘
     [SerializeField] TextMeshProUGUI _heroLvText;         // 영웅 레벨을 표시하는 텍스트
     [SerializeField] Image _expBar;                       // 경험치 바 이미지
+    [SerializeField] GameObject _pausePanel;              // 일시정지 패널
+
+    bool _isPlaying = true;
 
     public void Initialize()
     {
@@ -90,5 +93,21 @@ public class PlaySceneView : MonoBehaviour
     public void SetExp(float currentExp, float expRequired)
     {
         _expBar.fillAmount = currentExp / expRequired; // fillAmount를 사용하여 경험치 바를 채움
+    }
+
+    public void Pause()
+    {
+        _isPlaying = !_isPlaying;
+
+        if (_isPlaying)
+        {
+            Time.timeScale = 1f; // 게임 재개
+            _pausePanel.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f; // 게임 일시정지
+            _pausePanel.SetActive(true);
+        }
     }
 }

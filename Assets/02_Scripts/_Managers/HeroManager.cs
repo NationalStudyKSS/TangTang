@@ -13,6 +13,7 @@ public class HeroManager : MonoBehaviour
     [SerializeField] float _bonusDamage;
     [SerializeField] float _bonusMoveSpeed;
     [SerializeField] float _bonusItemGetRange;
+    [SerializeField] string _selectedHeroName;
 
     public float BonusHp => _bonusHp;
     public float BonusDamage => _bonusDamage;
@@ -75,5 +76,14 @@ public class HeroManager : MonoBehaviour
         model.SetStat(StatName.Damage, StatType.Bonus, _bonusDamage);
         model.SetStat(StatName.MoveSpeed, StatType.Bonus, _bonusMoveSpeed);
         model.SetStat(StatName.ItemGetRange, StatType.Bonus, _bonusItemGetRange);
+    }
+
+    /// <summary>
+    /// 선택한 영웅의 이름을 저장하는 함수
+    /// </summary>
+    /// <param name="heroName"></param>
+    public void SetHero(string heroName)
+    {
+        _selectedHeroName = heroName;
     }
 }

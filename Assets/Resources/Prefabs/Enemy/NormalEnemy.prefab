@@ -7229,7 +7229,6 @@ MonoBehaviour:
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _attackSpan: 1
   _staggerDuration: 0.3
   _deathDuration: 0.7
 --- !u!114 &1316164085421149720
@@ -7244,10 +7243,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d32c6abca510334399946f561530765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 10
   _moveSpeed: 3
-  _maxHp: 0
+  _maxHp: 500
   _currentHp: 0
+  _element: 0
+  _enemyType: 0
 --- !u!50 &5557854131827468643
 Rigidbody2D:
   serializedVersion: 4

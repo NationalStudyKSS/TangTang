@@ -394,7 +394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7581967007021178767
 Transform:
   m_ObjectHideFlags: 0
@@ -16790,7 +16790,7 @@ GameObject:
   - component: {fileID: 816062068127328508}
   - component: {fileID: 6526018102105269522}
   m_Layer: 6
-  m_Name: HeroRenderer
+  m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20496,6 +20496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
+  _somePassiveSkill: {fileID: 4219404156133008363}
   _data: {fileID: 0}
   _level: -1
   _damageRate: 0
@@ -20689,7 +20690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2721448988399528227
 Transform:
   m_ObjectHideFlags: 0
@@ -20718,6 +20719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
+  _somePassiveSkill: {fileID: 1129528676695865310}
   _data: {fileID: 0}
   _level: -1
   _damageRate: 0
@@ -22109,6 +22111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
+  _somePassiveSkill: {fileID: 1129528676695865310}
   _data: {fileID: 0}
   _level: -1
   _damageRate: 0
@@ -22374,6 +22377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
+  _somePassiveSkill: {fileID: 8425240588278982526}
   _data: {fileID: 0}
   _level: -1
   _damageRate: 0
@@ -22382,6 +22386,7 @@ MonoBehaviour:
   _activeSkillType: 3
   _radius: 0
   _damageInterval: 0
+  _effect: {fileID: 963943436143620968}
 --- !u!1 &7293933116063241424
 GameObject:
   m_ObjectHideFlags: 0
@@ -23191,6 +23196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
+  _somePassiveSkill: {fileID: 7989357307340723690}
   _data: {fileID: 0}
   _level: -1
   _damageRate: 0
@@ -23538,7 +23544,7 @@ GameObject:
   - component: {fileID: 8432564020891015823}
   - component: {fileID: 2532485542698659544}
   m_Layer: 6
-  m_Name: Hero
+  m_Name: BunnyHogirl
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

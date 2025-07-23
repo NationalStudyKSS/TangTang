@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b2be93746b80dd4fbf7e8835896ca83, type: 3}
-  m_Name: _hero_bunnyDragon
+  m_Name: 0_BunnyHogirlStatData
   m_EditorClassIdentifier: 
+  _heroId: BunnyHogirl
   _baseMaxHp: 200
   _baseDamage: 50
   _baseMoveSpeed: 5
   _baseItemGetRange: 1
   _baseExpToLevelUp: 100
-  _maxLevel: 99
   _baseExpGainRate: 1
   _hpGrowthRate: 1.1
   _damageGrowthRate: 1.05

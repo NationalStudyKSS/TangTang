@@ -7,6 +7,7 @@ public class ElectricFieldSkill : ActiveSkill
 {
     [SerializeField] float _radius; // 전기장 범위
     [SerializeField] float _damageInterval;
+    [SerializeField] GameObject _effect;
 
     List<Enemy> _enemiesInRange = new List<Enemy>();
     float _timer;
@@ -58,6 +59,7 @@ public class ElectricFieldSkill : ActiveSkill
     public override void Upgrade()
     {
         base.Upgrade();
+        _effect.SetActive(true);
 
         // AttackRoutine() 코루틴이 실행 중이 아니면
         if (_attackRoutine == null)

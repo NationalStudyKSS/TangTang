@@ -28,11 +28,7 @@ public class Upgrader : MonoBehaviour
         _upgradables = _hero.gameObject.GetComponentsInChildren<IUpgradable>();
 
         // 시작 시 무기 하나 지급
-        //_upgradables[(int)ActiveSkillType.HogirlPunch].Upgrade();
-        //_upgradables[(int)ActiveSkillType.DragonBall].Upgrade();
-        //_upgradables[(int)ActiveSkillType.SpinBlade].Upgrade();
-        //_upgradables[(int)ActiveSkillType.ElectricField].Upgrade();
-        //_upgradables[(int)ActiveSkillType.Gun].Upgrade();
+        
         foreach (var upgradable in _upgradables)
         {
             upgradable.Initialize();
@@ -70,10 +66,8 @@ public class Upgrader : MonoBehaviour
         _shuffledUpgradables.Clear();
         foreach (var upgradable in _upgradables)
         {
-            // 업그레이드 대상 객체가 최대 레벨이 아니면
-            if (upgradable.IsMaxLevel == false)
+            if (upgradable.CanUpgrade)
             {
-                // 업그레이드 후보 리스트에 포함한다.
                 _shuffledUpgradables.Add(upgradable);
             }
         }
