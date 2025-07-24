@@ -7893,7 +7893,7 @@ PrefabInstance:
     - target: {fileID: 7321322983867938461, guid: a73da9306f2d10244ae12ae5245ea242, type: 3}
       propertyPath: _spriteRoot
       value: 
-      objectReference: {fileID: 4327915995742075992}
+      objectReference: {fileID: 6574681289741362383}
     - target: {fileID: 9026797302154792751, guid: a73da9306f2d10244ae12ae5245ea242, type: 3}
       propertyPath: m_Name
       value: BunnyDragon
@@ -7907,11 +7907,6 @@ PrefabInstance:
       addedObject: {fileID: 6574681289741362383}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a73da9306f2d10244ae12ae5245ea242, type: 3}
---- !u!4 &4327915995742075992 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5151549512216557631, guid: a73da9306f2d10244ae12ae5245ea242, type: 3}
-  m_PrefabInstance: {fileID: 8895209968004678759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8558285512666987993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 988259752231172542, guid: a73da9306f2d10244ae12ae5245ea242, type: 3}
