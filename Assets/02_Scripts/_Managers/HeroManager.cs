@@ -19,6 +19,7 @@ public class HeroManager : MonoBehaviour
     public float BonusDamage => _bonusDamage;
     public float BonusMoveSpeed => _bonusMoveSpeed;
     public float BonusItemGetRange => _bonusItemGetRange;
+    public string SelectedHeroName => _selectedHeroName;
 
     public ElementType Type => _type;
 

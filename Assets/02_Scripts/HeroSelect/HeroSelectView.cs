@@ -19,10 +19,13 @@ public class HeroSelectView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _heroDamageText;
     [SerializeField] TextMeshProUGUI _heroMoveSpeedText;
     [SerializeField] Button _selectButton;
+    [SerializeField] TextMeshProUGUI _selectButtonText;
 
     string _heroId;
 
-    public event Action<string> OnSelected;
+    public string HeroId => _heroId;
+
+    public event Action<HeroSelectView, string> OnSelected;
 
     public void SetHero(string heroId)
     {
@@ -35,11 +38,19 @@ public class HeroSelectView : MonoBehaviour
         _heroDamageText.text = $"기본 공격력 : {data.HeroStatDataMap[heroId].GetDamage(0)}";
         _heroMoveSpeedText.text = $"기본 이동속도 : {data.HeroStatDataMap[heroId].GetMoveSpeed(0)}";
 
+        _heroId = data.HeroMetaDataMap[heroId].HeroId;
+
         _selectButton.onClick.AddListener(OnButtonClicked);
     }
 
     public void OnButtonClicked()
     {
-        OnSelected?.Invoke(_heroId);
+        OnSelected?.Invoke(this, _heroId);
+    }
+
+    public void SetSelected(bool isSelected)
+    {
+        _selectButton.interactable = !isSelected;
+        _selectButtonText.text = isSelected ? "선택 중" : "선택하기";
     }
 }

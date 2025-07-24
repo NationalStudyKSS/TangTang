@@ -23,7 +23,7 @@ public class CurrencyManager : MonoBehaviour
 
     public event Action<int> OnGoldChanged; // 골드 변경 이벤트
     public event Action<int> OnCarrotChanged; // 당근 변경 이벤트
-
+    
     public void Initialize()
     {
         // 재화 불러오기
