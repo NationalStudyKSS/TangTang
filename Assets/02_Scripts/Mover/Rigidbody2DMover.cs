@@ -13,7 +13,7 @@ public class Rigidbody2DMover : Mover
 
     Rigidbody2D _rigid;
 
-    private void Start()
+    private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
     }

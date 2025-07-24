@@ -13,8 +13,10 @@ public class IntroSceneView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _goldText;
     [SerializeField] Button _goldCheatButton;
     [SerializeField] RawImage _selectedHeroRawImage;
+    [SerializeField] Button _gameStartButton;
 
     public event Action OnGoldCheatButtonClicked;
+    public event Action GameStartButtonClicked;
 
     public void Initialize()
     {
@@ -25,6 +27,7 @@ public class IntroSceneView : MonoBehaviour
         SetGoldText(GameManager.Instance.CurrencyManager.Gold);
 
         _goldCheatButton.onClick.AddListener(GoldCheatButtonClick);
+        _gameStartButton.onClick.AddListener(OnGameStartButtonClicked);
     }
 
     /// <summary>
@@ -44,5 +47,10 @@ public class IntroSceneView : MonoBehaviour
     public void SetTexture(string heroId)
     {
         _selectedHeroRawImage.texture = GameManager.Instance.DataManager.HeroMetaDataMap[heroId].HeroTexture;
+    }
+
+    public void OnGameStartButtonClicked()
+    {
+        GameManager.Instance.SceneLoadManager.GameStart();
     }
 }

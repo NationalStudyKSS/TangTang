@@ -17,15 +17,22 @@ public class EquipmentShopController : MonoBehaviour
         int index = 0;
         foreach (var heroId in GameManager.Instance.DataManager.EquipmentMap.Keys)
         {
-            _views[index].Initialize(heroId);
-            _views[index].OnBuyButtonClicked += GameManager.Instance.CurrencyManager.ChangeGold;
+            _views[index].Initialize(index, heroId);
+            _views[index].OnBuyButtonClicked += BuyEquipment;
             index++;
         }
     }
 
-    public void BuyEquipment(int price)
+    public void BuyEquipment(int slotIndex, string equipmentId)
     {
-        GameManager.Instance.CurrencyManager.ChangeGold(-price);
-        OnEquipmentBought?.Invoke()
+        var currency = GameManager.Instance.CurrencyManager;
+        int price = GameManager.Instance.DataManager.EquipmentMap[equipmentId].Price;
+
+        if (currency.Gold < price)
+            return;
+
+        currency.ChangeGold(-price);
+        _views[slotIndex].gameObject.SetActive(false);
+        OnEquipmentBought?.Invoke(equipmentId);
     }
 }

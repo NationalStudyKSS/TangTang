@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,9 @@ public class PlayScene : MonoBehaviour
     [SerializeField] Upgrader _upgrader; // 업그레이드 선택 시스템을 관리하는 컴포넌트
     [SerializeField] InputHandler _inputHandler;
     [SerializeField] PlaySceneView _playSceneView; // 게임 진행 중인 UI를 관리하는 컴포넌트
+    [SerializeField] CinemachineVirtualCamera _camera;
+    [SerializeField] DeadView _deadView;
+    [SerializeField] StageFailView _stageFailView;
 
     [Header("----- 게임 상태(읽기 전용) -----")]
     [SerializeField] int _enmeyKillCount;   // 적 처치 수
@@ -23,7 +27,43 @@ public class PlayScene : MonoBehaviour
 
     private void Start()
     {
-        _inputHandler.OnMoveInput += OnMoveInput;        // 이동 입력 이벤트를 연결
+        string heroId;
+        // PlayScene에서 바로 시작되는 경우용
+        if (string.IsNullOrEmpty(GameManager.Instance.HeroManager.SelectedHeroName))
+        {
+            Debug.Log("선택된 영웅이 없어 기본 영웅을 생성합니다.");
+            heroId = "BunnyHogirl";
+            GameManager.Instance.DataManager.SetHeroData(heroId);
+        }
+        // 정상적으로 선택된 영웅을 받아오면
+        else
+        {
+            heroId = GameManager.Instance.HeroManager.SelectedHeroName;
+            GameManager.Instance.DataManager.SetHeroData(heroId);
+        }
+
+        // 영웅 생성
+        GameObject heroObj = Resources.Load<GameObject>($"Prefabs/Hero/{heroId}");
+
+        if (heroObj != null)
+        {
+            GameObject hero = Instantiate(heroObj);
+
+            // 카메라 설정
+            _camera.Follow = hero.transform;
+
+            _hero = hero.GetComponent<Hero>();
+            if (_hero == null)
+                Debug.LogError("Hero 컴포넌트를 찾지 못했습니다.");
+
+            if (_hero.Model == null)
+                Debug.LogError("HeroModel이 연결되지 않았습니다.");
+        }
+        else
+        {
+            Debug.Log("영웅 생성 실패");
+            return;
+        }
         
         // 스테이지 UI 이벤트 연결
         OnPlayTimeChanged += _playSceneView.SetPlayTime; // 게임 시간 변경 이벤트를 UI에 연결
@@ -34,6 +74,12 @@ public class PlayScene : MonoBehaviour
         _enemyManager.OnDeath += UpdateEnemyKillCount; // 적이 죽었을 때 적 처치 수를 업데이트하는 이벤트를 연결
 
         _hero.OnLevelChanged += OnLevelUp;
+        _hero.RaiseOnDead += _deadView.OnDead;
+
+        // 죽었을 때 창 이벤트 구독 및 초기화
+        _deadView.YesButtonClicked += _hero.Revive;
+        _deadView.NoButtonClicked += ShowFailResult;
+        _deadView.Initialize();
 
         // 게임 상태 초기화
         _enmeyKillCount = 0;
@@ -44,6 +90,9 @@ public class PlayScene : MonoBehaviour
         _playSceneView.Initialize();
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
+
+        _inputHandler.OnMoveInput += OnMoveInput;        // 이동 입력 이벤트를 연결
+
         // 업그레이드 시스템 초기화
         _upgrader.SetHero(_hero.gameObject);
         _upgrader.Initialize();
@@ -94,5 +143,10 @@ public class PlayScene : MonoBehaviour
     {
         _enmeyKillCount++;
         _playSceneView.SetEnemyKillCount(_enmeyKillCount);
+    }
+    
+    void ShowFailResult()
+    {
+        _stageFailView.Initialize();
     }
 }

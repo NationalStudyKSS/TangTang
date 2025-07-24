@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,8 +14,14 @@ using UnityEngine.UI;
 public class PauseView : MonoBehaviour
 {
     [Header("----- 컴포넌트 참조 -----")]
-    [SerializeField] private SkillSlotView[] _activeSkillSlots;
-    [SerializeField] private SkillSlotView[] _passiveSkillSlots;
+    [SerializeField] SkillSlotView[] _activeSkillSlots;
+    [SerializeField] SkillSlotView[] _passiveSkillSlots;
+    [SerializeField] Button _mainButton;
+    [SerializeField] Button _muteButton;
+    [SerializeField] TextMeshProUGUI _muteText;
+
+    public event Action MainButtonClicked;
+    public event Action MuteButtonClicked;
 
     /// <summary>
     /// 초기화 함수
@@ -30,6 +38,9 @@ public class PauseView : MonoBehaviour
         {
             _passiveSkillSlots[i].Initialize();
         }
+
+        _mainButton.onClick.AddListener(MainButtonClick);
+        _muteButton.onClick.AddListener(MuteButtonClick);
     }
 
     /// <summary>
@@ -50,5 +61,32 @@ public class PauseView : MonoBehaviour
         {
             _passiveSkillSlots[slotIndex].SetSlotView(upgradable);
         }
+    }
+
+    /// <summary>
+    /// 메인화면 버튼을 누르면 실행할 함수
+    /// </summary>
+    public void MainButtonClick()
+    {
+        // 메인화면 버튼 눌렸어! 이벤트 발행
+        MainButtonClicked?.Invoke();
+    }
+
+    /// <summary>
+    /// 음소거 버튼을 누르면 실행할 함수
+    /// </summary>
+    public void MuteButtonClick()
+    {
+        // 음소거 버튼 눌렸어! 이벤트 발행
+        MuteButtonClicked?.Invoke();
+    }
+
+    /// <summary>
+    /// 음소거 버튼에 달린 텍스트를 설정할 함수
+    /// </summary>
+    /// <param name="isMuted">지금 음소거인지 여부</param>
+    public void SetMuteText(bool isMuted)
+    {
+        _muteText.text = isMuted ? "음소거 해제" : "음소거";
     }
 }

@@ -23538,11 +23538,11 @@ GameObject:
   m_Component:
   - component: {fileID: 988259752231172542}
   - component: {fileID: 7321322983867938461}
+  - component: {fileID: 2532485542698659544}
   - component: {fileID: 1032256585978152856}
   - component: {fileID: 7341206349578558328}
   - component: {fileID: 414475017488248882}
   - component: {fileID: 8432564020891015823}
-  - component: {fileID: 2532485542698659544}
   m_Layer: 6
   m_Name: BunnyHogirl
   m_TagString: Hero
@@ -23588,6 +23588,44 @@ MonoBehaviour:
   _hudView: {fileID: 7341206349578558328}
   _itemCollector: {fileID: 6296223934562238716}
   _spriteRoot: {fileID: 816062068127328508}
+--- !u!114 &2532485542698659544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026797302154792751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6cc5e32f8d547847912daf94701566e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats:
+    MaxHp:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    Damage:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    MoveSpeed:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    ItemGetRange:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
+    ExpGainRate:
+      _base: 0
+      _bonus: 0
+      _stage: 0
+      _buff: 0
 --- !u!114 &1032256585978152856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23676,44 +23714,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   m_Size: {x: 0.4, y: 0.7}
   m_Direction: 0
---- !u!114 &2532485542698659544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026797302154792751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6cc5e32f8d547847912daf94701566e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stats:
-    MaxHp:
-      _base: 0
-      _bonus: 0
-      _stage: 0
-      _buff: 0
-    Damage:
-      _base: 0
-      _bonus: 0
-      _stage: 0
-      _buff: 0
-    MoveSpeed:
-      _base: 0
-      _bonus: 0
-      _stage: 0
-      _buff: 0
-    ItemGetRange:
-      _base: 0
-      _bonus: 0
-      _stage: 0
-      _buff: 0
-    ExpGainRate:
-      _base: 0
-      _bonus: 0
-      _stage: 0
-      _buff: 0
 --- !u!1 &9159135547090226113
 GameObject:
   m_ObjectHideFlags: 0

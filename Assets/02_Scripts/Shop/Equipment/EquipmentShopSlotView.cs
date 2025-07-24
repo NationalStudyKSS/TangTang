@@ -15,20 +15,21 @@ public class EquipmentShopSlotView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _priceText;
     [SerializeField] TextMeshProUGUI _DescText;
 
-    string _heroId;
+    int _slotIndex;
+    string _equipmentId;
 
-    public event Action<string> OnBuyButtonClicked;
+    public event Action<int, string> OnBuyButtonClicked;
 
     /// <summary>
     /// 초기화 함수
     /// </summary>
-    /// <param name="heroId">받아온 영웅의 Id</param>
-    public void Initialize(string heroId)
+    /// <param name="EquipmentId">받아온 장비의 Id</param>
+    public void Initialize(int slotIndex, string equipmentId)
     {
-        // 내부
-        _heroId = heroId;
+        _slotIndex = slotIndex;
+        _equipmentId = equipmentId;
 
-        EquipmentConfig config = GameManager.Instance.DataManager.EquipmentMap[_heroId];
+        EquipmentConfig config = GameManager.Instance.DataManager.EquipmentMap[_equipmentId];
         _equipmentIcon.sprite = config.IconSprite;
         _priceText.text = $"{config.Price} 골드";
         _DescText.text = config.Description;
@@ -38,7 +39,6 @@ public class EquipmentShopSlotView : MonoBehaviour
 
     public void BuyButtonClick()
     {
-        OnBuyButtonClicked?.Invoke(_heroId);
-        gameObject.SetActive(false);
+        OnBuyButtonClicked?.Invoke(_slotIndex, _equipmentId);
     }
 }

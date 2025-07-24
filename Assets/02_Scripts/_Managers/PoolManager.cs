@@ -43,7 +43,7 @@ public class PoolManager : MonoBehaviour
 
             // 프리팹 로드에 성공했으면 부모 게임오브젝트를 하나 생성해 이름을 정하고
             Transform parent = new GameObject($"Pool_{prefabPath}").transform;
-            DontDestroyOnLoad(parent.gameObject);
+            //DontDestroyOnLoad(parent.gameObject);
             Pool pool = new Pool(prefab, parent, size);
             _poolMap[prefabPath] = pool;
         }

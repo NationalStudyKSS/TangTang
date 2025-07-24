@@ -12,6 +12,7 @@ public class IntroScene : MonoBehaviour
     [SerializeField] HeroSelectController _heroSelectController;
     [SerializeField] IntroSceneView _introView;
     [SerializeField] EquipmentShopController _equipmentShopController;
+    [SerializeField] InventoryManager _inventoryManager;
 
     private void Start()
     {
@@ -21,6 +22,10 @@ public class IntroScene : MonoBehaviour
         _heroSelectController.Initialize();
         _introView.Initialize();
         _equipmentShopController.Initialize();
+        _inventoryManager.Initialize();
+
+        _equipmentShopController.OnEquipmentBought+= _inventoryManager.Inventory.AddEquipment;
+
     }
 
     public void GoldCheatUsed()

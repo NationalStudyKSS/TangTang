@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 /// <summary>
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
         // _Instance가 null이면
         if (_Instance == null)
         {
+            Debug.Log("인스턴스가 없습니다.");
             // 현재 인스턴스를 _Instance로 설정하고
             _Instance = this;
             // 게임 오브젝트를 파괴하지 않도록 설정
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
         // _Instance가 null이 아니면
         else
         {
+            Debug.Log("인스턴스가 이미 존재합니다. 파괴합니다.");
             // 중복된 인스턴스는 파괴
             Destroy(gameObject);
         }
@@ -133,10 +136,5 @@ public class GameManager : MonoBehaviour
         }
         // SceneLoadManager 초기화
         _sceneLoadManager.Initialize();
-    }
-
-    private void Start()
-    {
-        
     }
 }

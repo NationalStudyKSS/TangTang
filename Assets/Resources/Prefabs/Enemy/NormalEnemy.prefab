@@ -7245,7 +7245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _moveSpeed: 3
-  _maxHp: 500
+  _maxHp: 50
   _currentHp: 0
   _element: 0
   _enemyType: 0

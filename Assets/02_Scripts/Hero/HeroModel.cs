@@ -34,6 +34,15 @@ public class HeroModel : MonoBehaviour
         DropItemManager.OnExpItemUsed += AddExp;
         DropItemManager.OnHpPotionItemUsed += Heal;
 
+        if (GameManager.Instance == null)
+            Debug.LogError("GameManager.Instance가 Null입니다.");
+
+        if (GameManager.Instance.DataManager == null)
+            Debug.LogError("DataManager가 Null입니다.");
+
+        if (GameManager.Instance.DataManager.HeroStatData == null)
+            Debug.LogError("HeroStatData가 Null입니다.");
+
         _data = GameManager.Instance.DataManager.HeroStatData;
         CurrentLevel = 1;
         CurrentExp = 0;
@@ -125,6 +134,11 @@ public class HeroModel : MonoBehaviour
 
         if (CurrentHp <= 0)
             OnDead?.Invoke();
+    }
+
+    public void Revive()
+    {
+        CurrentHp = Stats.MaxHp.Final;
     }
 
     public void Heal(float ratio)

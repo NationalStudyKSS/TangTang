@@ -17,6 +17,8 @@ public class Hero : MonoBehaviour, IDamageable
     [SerializeField] HeroItemCollector _itemCollector; // 아이템 수집 컴포넌트
     [SerializeField] Transform _spriteRoot; // 캐릭터 스프라이트 부모 오브젝트 (좌우 반전 용)
 
+    public HeroModel Model => _model;
+
     // 이벤트 중개 - 외부에서 Hero의 이벤트를 구독하면 내부 _model의 이벤트 구독과 동일하게 처리
     public event Action<float, float> OnExpChanged
     {
@@ -58,15 +60,27 @@ public class Hero : MonoBehaviour, IDamageable
 
     public void Initialize()
     {
-        GameManager.Instance.HeroManager.ApplyStatsToHero(_model);
+        if (_model == null)
+        {
+            Debug.LogError("HeroModel이 연결되지 않았습니다.");
+            return; // 없으면 더 이상 진행하지 말 것
+        }
 
+        if (_mover == null)
+        {
+            Debug.LogError("Mover가 연결되지 않았습니다.");
+            return;
+        }
+
+        GameManager.Instance.HeroManager.ApplyStatsToHero(_model);
+        
         _mover.OnMoved += OnMoved;
         _model.OnMoveSpeedChanged += _mover.SetSpeed;  // 이벤트명 수정
         _model.OnHpChanged += _hudView.ChangeHpBar;
         _model.OnItemGetRangeChanged += _itemCollector.SetRange; // 아이템 수집 범위 변경
         _model.OnDead += OnDead;
 
-        _model.Initialize();
+        _model?.Initialize();
         _itemCollector.Initialize(transform); // 아이템 수집 컴포넌트 초기화
     }
 
@@ -113,5 +127,13 @@ public class Hero : MonoBehaviour, IDamageable
     {
         // 자기 자신의 gameObject를 이벤트 구독자에게 알림
         RaiseOnDead?.Invoke(gameObject);
+    }
+
+    /// <summary>
+    /// 부활 로직 중개
+    /// </summary>
+    public void Revive()
+    {
+        _model.Revive();
     }
 }

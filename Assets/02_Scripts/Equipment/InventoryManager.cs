@@ -13,7 +13,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Inventory _inventory;
     [SerializeField] BonusStatUI _bonusStatUI;
 
-    void Start()
+    public Inventory Inventory => _inventory;
+
+    public void Initialize()
     {
         _inventoryPresenter.Initialize(_inventory, _inventory.EquipmentModels);
         _equipPresenter.Initialize(_inventory, _inventory.EquipmentModels);
