@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ using UnityEngine;
 public class EquipmentShopController : MonoBehaviour
 {
     [SerializeField] EquipmentShopSlotView[] _views;
+
+    public event Action<string> OnEquipmentBought;
 
     public void Initialize()
     {
@@ -23,5 +26,6 @@ public class EquipmentShopController : MonoBehaviour
     public void BuyEquipment(int price)
     {
         GameManager.Instance.CurrencyManager.ChangeGold(-price);
+        OnEquipmentBought?.Invoke()
     }
 }
