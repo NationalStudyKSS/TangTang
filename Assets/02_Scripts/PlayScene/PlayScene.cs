@@ -17,6 +17,7 @@ public class PlayScene : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera _camera;
     [SerializeField] DeadView _deadView;
     [SerializeField] StageFailView _stageFailView;
+    [SerializeField] GroundReposition[] _grounds;
 
     [Header("----- 게임 상태(읽기 전용) -----")]
     [SerializeField] int _enmeyKillCount;   // 적 처치 수
@@ -99,6 +100,12 @@ public class PlayScene : MonoBehaviour
         
         // Spawner 초기화
         _enemyManager.Initialize(_hero.transform);
+
+        // GroundRepositions 초기화
+        foreach (var ground in _grounds)
+        {
+            ground.Initialize(_hero.transform);
+        }
     }
 
     private void Update()

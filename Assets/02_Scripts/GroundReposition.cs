@@ -6,7 +6,7 @@ using UnityEngine;
 /// 타겟(주인공, 카메라)의 위치에 따라 게임오브젝트(지면, 배경)를
 /// 반복적으로 일정 간격으로 재배치하는 역할
 /// </summary>
-public class GoundReposition : MonoBehaviour
+public class GroundReposition : MonoBehaviour
 {
     // 재배치 기준이 되는 대상의 트랜스폼 컴포넌트
     [SerializeField] Transform _target;
@@ -16,6 +16,11 @@ public class GoundReposition : MonoBehaviour
 
     // 재배치 시 이동 거리
     [SerializeField] float _reposDistance;
+
+    public void Initialize(Transform heroPos)
+    {
+        _target = heroPos;
+    }
 
     private void FixedUpdate()
     {

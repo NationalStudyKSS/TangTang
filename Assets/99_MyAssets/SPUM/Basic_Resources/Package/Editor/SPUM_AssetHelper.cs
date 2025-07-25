@@ -230,7 +230,7 @@ public class HelpWindow : EditorWindow
     public void LoadSceneByPath()
     {
         string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
     private bool IsPositionInLink(Vector2 position, (string text, string url, int startIndex, int endIndex) link, Rect totalRect)
     {

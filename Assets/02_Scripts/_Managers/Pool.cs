@@ -75,10 +75,10 @@ public class Pool
             // 풀에서 게임오브젝트를 꺼내고
             GameObject go = _pool.Pop();
 
-            //if (go == null)
-            //{
-            //    return Pop();
-            //}
+            if (go == null)
+            {
+                return Pop();
+            }
 
             // 활성화 상태로 변경
             go.SetActive(true);

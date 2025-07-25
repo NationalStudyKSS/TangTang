@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class HeroModel : MonoBehaviour
 {
+    [Header("----- 임시 무적관련 -----")]
+    [SerializeField] float _invincibleDuration = 0.3f;
+    [SerializeField] bool _isInvincible = false;
+
     [SerializeField]  // 인스펙터 노출 위해 추가
     private HeroStats _stats = new HeroStats();
 
@@ -16,7 +20,8 @@ public class HeroModel : MonoBehaviour
     public int CurrentLevel { get; private set; }
     public ElementType ElementType { get; private set; }
 
-    private HeroStatData _data;
+    HeroStatData _data;
+    Coroutine _invincibleCoroutine;
     Coroutine _buffCoroutine;
 
     // 이벤트 선언
@@ -126,6 +131,8 @@ public class HeroModel : MonoBehaviour
 
     public void TakeDamage(float amount, ElementType attackerElement)
     {
+        if (_isInvincible == true) return;
+
         float multiplier = ElementalCalculator.GetMultiplier(attackerElement, GameManager.Instance.HeroManager.Type);
         amount *= multiplier; // 속성에 따른 배수 적용
 
@@ -134,11 +141,25 @@ public class HeroModel : MonoBehaviour
 
         if (CurrentHp <= 0)
             OnDead?.Invoke();
+
+        _invincibleCoroutine = StartCoroutine(InvincibilityRoutine());
+    }
+
+    /// <summary>
+    /// 무적여부를 껐다가 무적시간만큼 지난 후 켜주는 코루틴
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator InvincibilityRoutine()
+    {
+        _isInvincible = true;
+        yield return new WaitForSeconds(_invincibleDuration);
+        _isInvincible = false;
     }
 
     public void Revive()
     {
         CurrentHp = Stats.MaxHp.Final;
+        OnHpChanged?.Invoke(CurrentHp, Stats.MaxHp.Final);
     }
 
     public void Heal(float ratio)

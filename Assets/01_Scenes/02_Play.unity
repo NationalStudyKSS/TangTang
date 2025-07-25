@@ -6240,6 +6240,16 @@ MonoBehaviour:
   _camera: {fileID: 2022280503}
   _deadView: {fileID: 800348131}
   _stageFailView: {fileID: 996550884}
+  _grounds:
+  - {fileID: 1618640962}
+  - {fileID: 1636342841}
+  - {fileID: 2031153627}
+  - {fileID: 454036420}
+  - {fileID: 336583900}
+  - {fileID: 387052070}
+  - {fileID: 222161906}
+  - {fileID: 2118006224}
+  - {fileID: 609544509}
   _enmeyKillCount: 0
   _playTime: 0
   _playTimeInt: 0
@@ -25707,7 +25717,7 @@ GameObject:
   - component: {fileID: 765539581}
   - component: {fileID: 765539580}
   m_Layer: 0
-  m_Name: RushEnemySpawner
+  m_Name: NormalRangedAttackEnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28808,6 +28818,7 @@ MonoBehaviour:
   _enemySpawner:
   - {fileID: 822860366}
   - {fileID: 765539580}
+  - {fileID: 1278755094}
   _itemDropper: {fileID: 691400768}
   _currentEnemies: []
 --- !u!4 &1178865789
@@ -29034,6 +29045,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268968205}
   m_CullTransparentMesh: 1
+--- !u!1 &1278755093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278755095}
+  - component: {fileID: 1278755094}
+  m_Layer: 0
+  m_Name: NormalRushEnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1278755094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278755093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3491b9ea30642d04392aff860feed16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPrefabPath: Enemy/NormalRushEnemy
+  _spawnSpan: 1
+  _minSpawnRange: 10
+  _maxSpawnRange: 15
+--- !u!4 &1278755095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278755093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1292764619
 GameObject:
   m_ObjectHideFlags: 0
@@ -52598,6 +52657,7 @@ SceneRoots:
   - {fileID: 2022280504}
   - {fileID: 822860365}
   - {fileID: 765539581}
+  - {fileID: 1278755095}
   - {fileID: 691400769}
   - {fileID: 1533620687}
   - {fileID: 1178865789}
