@@ -66,20 +66,7 @@ public abstract class ActiveSkill : SkillBase
     public override Sprite IconSprite => _data.IconSprite;
     public override int Level => _level;
     public override bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
-    public override bool CanUpgrade
-    {
-        get
-        {
-            if (!IsMaxLevel)
-                return true; // 일반 업그레이드 가능
-
-            // 초월 조건: 특정 패시브가 1레벨 이상인지 체크
-            if (_somePassiveSkill.Level >= 0)
-                return true; // 초월 강화 가능
-
-            return false;
-        }
-    }
+    
     public float DamageRate => _damageRate;
     public float Damage => _damage;
     public ElementType Type => _type;

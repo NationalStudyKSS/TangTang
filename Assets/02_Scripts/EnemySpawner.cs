@@ -14,14 +14,18 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float _spawnSpan = 2f; // 적 생성 간격
     [SerializeField] float _minSpawnRange = 15f; // 최소 스폰 범위
     [SerializeField] float _maxSpawnRange = 20f; // 최대 스폰 범위
+    [SerializeField] bool _isBoss;
 
     Transform _heroTransform; // 영웅의 Transform 컴포넌트 변수
     Coroutine _spawnRoutine;  // 생성 루틴
 
+    int _playTimeInt;
+
     public event Action<Enemy> OnEnemySpawned; // 적이 생성되었을 때 발생하는 이벤트
 
-    public void Initialize(Transform target)
+    public void Initialize(Transform target, int playTimeInt)
     {
+        _playTimeInt = playTimeInt;
         // 영웅의 Transform 컴포넌트를 받아와서 _heroTransform에 저장
         _heroTransform = target;
         // 적 생성 루틴 시작
@@ -46,6 +50,10 @@ public class EnemySpawner : MonoBehaviour
     /// <returns></returns>
     IEnumerator SpawnEnemyRoutine()
     {
+        if (_isBoss)
+        {
+            yield return new WaitForSeconds(10f);
+        }
         // 뭔가 에러가 있어서 1초 대기
         yield return new WaitForSeconds(1f);
 
@@ -93,7 +101,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = randomPos;
 
         // 적 초기화
-        enemy.Initialize();
+        enemy.Initialize(_playTimeInt);
 
         // 적이 생성되었을 때 이벤트를 발생시킴
         OnEnemySpawned?.Invoke(enemy);

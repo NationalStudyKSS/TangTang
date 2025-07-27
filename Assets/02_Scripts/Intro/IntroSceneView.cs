@@ -14,9 +14,11 @@ public class IntroSceneView : MonoBehaviour
     [SerializeField] Button _goldCheatButton;
     [SerializeField] RawImage _selectedHeroRawImage;
     [SerializeField] Button _gameStartButton;
+    [SerializeField] GameObject _stageSelectPanel;
+    [SerializeField] Button _normalStageButton;
+    [SerializeField] Button _bossStageButton;
 
     public event Action OnGoldCheatButtonClicked;
-    public event Action GameStartButtonClicked;
 
     public void Initialize()
     {
@@ -27,7 +29,9 @@ public class IntroSceneView : MonoBehaviour
         SetGoldText(GameManager.Instance.CurrencyManager.Gold);
 
         _goldCheatButton.onClick.AddListener(GoldCheatButtonClick);
-        _gameStartButton.onClick.AddListener(OnGameStartButtonClicked);
+        _gameStartButton.onClick.AddListener(GameStartButtonClicked);
+        _normalStageButton.onClick.AddListener(NormalStageButtonClicked);
+        _bossStageButton.onClick.AddListener(BossStageButtonClicked);
     }
 
     /// <summary>
@@ -49,8 +53,18 @@ public class IntroSceneView : MonoBehaviour
         _selectedHeroRawImage.texture = GameManager.Instance.DataManager.HeroMetaDataMap[heroId].HeroTexture;
     }
 
-    public void OnGameStartButtonClicked()
+    public void GameStartButtonClicked()
     {
-        GameManager.Instance.SceneLoadManager.GameStart();
+        _stageSelectPanel.SetActive(true);
+    }
+
+    public void NormalStageButtonClicked()
+    {
+        GameManager.Instance.SceneLoadManager.NormalStageStart();
+    }
+
+    public void BossStageButtonClicked()
+    {
+        GameManager.Instance.SceneLoadManager.BossStageStart();
     }
 }

@@ -41,8 +41,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected LayerMask _targetLayerMask;   // 공격 타겟 레이어 마스크
 
     [Header("----- 임시 수치 -----")]
-    [SerializeField] float _staggerDuration = 0.3f; // 피격 상태 지속시간
+    [SerializeField] float _staggerDuration = 0.01f; // 피격 상태 지속시간
     [SerializeField] float _deathDuration = 0.7f;    // 죽음 상태 지속시간
+    [SerializeField] bool _isBoss;
 
     /// <summary>
     /// 적 캐릭터 상태 객체들
@@ -63,7 +64,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public event Action<GameObject> RaiseOnDead;
 
     //임시
-    public virtual void Initialize()
+    public virtual void Initialize(int playTimeInt)
     {
         _states = new EnemyState[(int)EnemyStateType.Count];
 
@@ -90,7 +91,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _model.OnDead += OnDead;
 
         // 모델 초기화
-        _model.Initialize();
+        _model.Initialize(playTimeInt);
 
         // 타겟 설정
         _target = GameObject.FindGameObjectWithTag("Hero")?.transform;
@@ -239,9 +240,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public void TakeHit(float damage, ElementType attackerElement)
     {
         if (_model.CurrentHp <= 0) return;
-
-        ChangeState(EnemyStateType.Stagger);
+        RaiseOnHpChanged?.Invoke(_model.CurrentHp, _model.MaxHp);
         _model.TakeDamage(damage, GameManager.Instance.HeroManager.Type);
+        if (_isBoss) return;
+        ChangeState(EnemyStateType.Stagger);
     }
 
     /// <summary>

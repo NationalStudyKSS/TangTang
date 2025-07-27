@@ -31,7 +31,6 @@ public abstract class PassiveSkill : SkillBase
     public override Sprite IconSprite => _data.IconSprite;
     public override int Level => _level;
     public override bool IsMaxLevel => _data != null && _level >= _data.MaxLevel;
-    public override bool CanUpgrade => _data != null && !IsMaxLevel;
     public override UpgradeType UpgradeType => UpgradeType.PassiveSkill;
 
     public override void Initialize()

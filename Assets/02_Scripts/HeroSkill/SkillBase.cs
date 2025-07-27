@@ -10,7 +10,6 @@ public abstract class SkillBase : MonoBehaviour, IUpgradable
     public abstract Sprite IconSprite { get; }
     public abstract int Level { get; }
     public abstract bool IsMaxLevel { get; }
-    public abstract bool CanUpgrade { get; }
     public abstract UpgradeType UpgradeType { get; }
 
     public event Action<IUpgradable> OnUpgraded;

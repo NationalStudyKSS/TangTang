@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -25,11 +26,27 @@ public class PlaySceneView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _heroLvText;         // 영웅 레벨을 표시하는 텍스트
     [SerializeField] Image _expBar;                       // 경험치 바 이미지
     [SerializeField] GameObject _pausePanel;              // 일시정지 패널
+    [SerializeField] TextMeshProUGUI _normalStageIntroText; // 일반 스테이지 진입 시 출력되는 텍스트
+    [SerializeField] TextMeshProUGUI _bossStageIntroText; // 보스 스테이지 진입 시 출력되는 텍스트
+    [SerializeField] TextMeshProUGUI _bossClearText;
+    [SerializeField] Image _bossHpBar;
+    [SerializeField] TextMeshProUGUI _bossHpText;
+    [SerializeField] GameObject _clearPanel;
+    //[SerializeField] Button _refreshButton;               // 새로고침 버튼
+    //[SerializeField] TextMeshProUGUI _refreshCountText;   // 새로고침 가능한 횟수 텍스트
 
     bool _isPlaying = true;
 
+    public event Action OnRefreshClicked;
+
     public void Initialize()
     {
+        if (_bossHpBar != null && _bossHpText != null)
+        {
+            _bossHpBar.enabled = false;
+            _bossHpText.enabled = false;
+        }
+        
         // 골드 변경 이벤트 구독
         GameManager.Instance.CurrencyManager.OnGoldChanged += SetGold;
         // 당근 변경 이벤트 구독
@@ -43,6 +60,7 @@ public class PlaySceneView : MonoBehaviour
         // 적 처치 수 초기화
         SetEnemyKillCount(0);
         SetPlayTime(0);
+        //_refreshButton.onClick.AddListener(RefreshClicked);
     }
 
     public void SetEnemyKillCount(int enemyKillCount)
@@ -110,4 +128,110 @@ public class PlaySceneView : MonoBehaviour
             _pausePanel.SetActive(true);
         }
     }
+
+    public void NormalStageIntro()
+    {
+        StartCoroutine(NormalStageIntroRoutine());
+    }
+
+    IEnumerator NormalStageIntroRoutine()
+    {
+        Color color = _normalStageIntroText.color;
+
+        float t = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, t / 1.5f);
+            _normalStageIntroText.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        t = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, t / 1.5f);
+            _normalStageIntroText.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+    }
+
+    public void BossStageIntro()
+    {
+        StartCoroutine(BossStageIntroRoutine());
+    }
+
+    IEnumerator BossStageIntroRoutine()
+    {
+        Color color = _bossStageIntroText.color;
+
+        float t = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, t / 1.5f);
+            _bossStageIntroText.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        t = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, t / 1.5f);
+            _bossStageIntroText.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+    }
+
+    public void SetBossUI(float curHp, float maxHp)
+    {
+        _bossHpBar.enabled = true;
+        _bossHpText.enabled = true;
+        _bossHpBar.fillAmount = curHp / maxHp;
+        _bossHpText.text = $"{(int)curHp}/{maxHp}";
+    }
+    
+    public void OpenClearPanel()
+    {
+        _clearPanel.SetActive(true);
+    }
+
+    public void BossCleared(GameObject bossObj)
+    {
+        StartCoroutine(BossStageClearRoutine());
+    }
+
+    IEnumerator BossStageClearRoutine()
+    {
+        Color color = _bossClearText.color;
+
+        float t = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, t / 1.5f);
+            _bossClearText.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        OpenClearPanel();
+    }
+
+    //public void RefreshClicked()
+    //{
+    //    OnRefreshClicked?.Invoke();
+    //}
+
+    //public void SetRefreshCountText(int refreshCount)
+    //{
+    //    _refreshCountText.text = $"새로고침\n({refreshCount}/3)";
+    //}
 }

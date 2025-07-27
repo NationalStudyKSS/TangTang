@@ -13,8 +13,13 @@ public class SceneLoadManager : MonoBehaviour
 
     }
 
-    public void GameStart()
+    public void NormalStageStart()
     {
-        SceneManager.LoadScene("02_Play");
+        SceneManager.LoadScene("02_Play_Normal");
+    }
+
+    public void BossStageStart()
+    {
+        SceneManager.LoadScene("02_Play_Boss");
     }
 }

@@ -102,7 +102,7 @@ public class HeroModel : MonoBehaviour
     /// <summary>
     /// 레벨업을 처리하는 함수
     /// </summary>
-    private void LevelUp()
+    public void LevelUp()
     {
         int previousLevel = CurrentLevel;
         float oldMaxHp = Stats.MaxHp.Final;

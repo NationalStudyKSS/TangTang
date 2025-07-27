@@ -66,10 +66,7 @@ public class Upgrader : MonoBehaviour
         _shuffledUpgradables.Clear();
         foreach (var upgradable in _upgradables)
         {
-            if (upgradable.CanUpgrade)
-            {
-                _shuffledUpgradables.Add(upgradable);
-            }
+            _shuffledUpgradables.Add(upgradable);
         }
 
         // 2. 선별된 후보들을 셔플

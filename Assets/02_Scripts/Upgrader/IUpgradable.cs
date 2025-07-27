@@ -42,11 +42,6 @@ public interface IUpgradable
     bool IsMaxLevel { get; }
 
     /// <summary>
-    /// 업그레이드 가능한 상태인지 확인하는 여부
-    /// </summary>
-    bool CanUpgrade { get; }
-
-    /// <summary>
     /// 본인이 어떤 업그레이드 타입인지(액티브스킬? 패시브스킬? 장비?)
     /// </summary>
     UpgradeType UpgradeType { get; }

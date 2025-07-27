@@ -7231,6 +7231,7 @@ MonoBehaviour:
     m_Bits: 64
   _staggerDuration: 0.3
   _deathDuration: 0.7
+  _isBoss: 0
 --- !u!114 &1316164085421149720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7245,7 +7246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 10
   _moveSpeed: 3
-  _maxHp: 1000
+  _maxHp: 50
   _currentHp: 0
   _element: 0
   _enemyType: 0

@@ -21,9 +21,9 @@ public class RushEnemy : Enemy, IRushable
     public float RushSpeed => _rushSpeed;
     public Vector2 RushDirection => _rushDirection;
 
-    public override void Initialize()
+    public override void Initialize(int playTimeInt)
     {
-        base.Initialize();
+        base.Initialize(playTimeInt);
 
         _rushTimer = 0f;
         // Rush 상태도 상태 배열에 추가

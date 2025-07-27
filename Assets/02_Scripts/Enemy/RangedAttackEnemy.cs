@@ -18,9 +18,9 @@ public class RangedAttackEnemy : Enemy, IRangedAttackable
 
     public float BulletDuration => _bulletDuration;
 
-    public override void Initialize()
+    public override void Initialize(int playTimeInt)
     {
-        base.Initialize();
+        base.Initialize(playTimeInt);
 
         _states[(int)EnemyStateType.RangedAttack] = new RangedAttackState(this, this, _attackSpan);
     }

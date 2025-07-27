@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -8295629711136364043}
   m_Layer: 7
   m_Name: NormalRushEnemy
-  m_TagString: Untagged
+  m_TagString: BossEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5816260856020436821}
@@ -59,12 +59,13 @@ MonoBehaviour:
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _staggerDuration: 0.3
+  _staggerDuration: 0.001
   _deathDuration: 0.7
-  _rushCoolTime: 3
-  _readyDuration: 0.5
+  _isBoss: 1
+  _rushCoolTime: 1
+  _readyDuration: 0.2
   _rushDuration: 1
-  _rushSpeed: 7
+  _rushSpeed: 20
   _rushDirection: {x: 0, y: 0}
 --- !u!114 &1316164085421149720
 MonoBehaviour:
@@ -78,9 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d32c6abca510334399946f561530765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 50
-  _moveSpeed: 3
-  _maxHp: 50
+  _damage: 300
+  _moveSpeed: 10
+  _maxHp: 123456
   _currentHp: 0
   _element: 0
   _enemyType: 0
@@ -186,7 +187,7 @@ PrefabInstance:
     - target: {fileID: 6006277754853055315, guid: 030ae38f176d63d4dabfcd503e10dc4c, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 43dea03677a15ef468f7f5a5291c3588, type: 2}
+      objectReference: {fileID: 9100000, guid: 5dce6150e2f3f4f4ca73868b85ba6519, type: 2}
     - target: {fileID: 6257777187431397444, guid: 030ae38f176d63d4dabfcd503e10dc4c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

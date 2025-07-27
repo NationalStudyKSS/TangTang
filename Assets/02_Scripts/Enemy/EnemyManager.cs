@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 /// <summary>
 /// 현재 살아있는 적들 관리할 때 필요할거같아서 만든 매니저
@@ -9,6 +10,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] EnemySpawner[] _enemySpawner;
+    [SerializeField] BossSpawner _bossSpawner;
     [SerializeField] ItemDropper _itemDropper;
 
     [Header("----- 현재 살아있는 적들(읽기 전용) -----")]
@@ -19,8 +21,9 @@ public class EnemyManager : MonoBehaviour
     public List<Enemy> CurrentEnemies => _currentEnemies;
 
     public event Action<Enemy> OnDeath; // 외부에 적 사망 알림
+    public event Action<Enemy> OnBossSpawned;
 
-    public void Initialize(Transform hero)
+    public void Initialize(Transform hero, int playTimeInt)
     {
         // 적 스폰 이벤트 연결
         foreach (EnemySpawner enemySpawner in _enemySpawner)
@@ -36,9 +39,13 @@ public class EnemyManager : MonoBehaviour
 
         foreach (EnemySpawner enemySpawner in _enemySpawner)
         {
-            enemySpawner.Initialize(hero); // 적 스폰러 초기화
+            enemySpawner.Initialize(hero, playTimeInt); // 적 스폰러 초기화
         }
         _itemDropper.Initialize(hero); // 아이템 드롭퍼 초기화
+
+        if (_bossSpawner == null) return;
+        _bossSpawner.OnEnemySpawned += BossSpawned;
+        _bossSpawner.Initialize(hero, playTimeInt);
     }
 
     public void KillAllEnemies()
@@ -83,5 +90,10 @@ public class EnemyManager : MonoBehaviour
 
         // 외부에 적 사망 알림
         OnDeath?.Invoke(enemy);
+    }
+
+    public void BossSpawned(Enemy enemy)
+    {
+        OnBossSpawned?.Invoke(enemy);
     }
 }

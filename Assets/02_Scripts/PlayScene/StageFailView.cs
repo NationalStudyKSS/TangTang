@@ -17,7 +17,7 @@ public class StageFailView : MonoBehaviour
     /// <summary>
     /// 확인버튼 눌렀을 때 호출되는 함수
     /// </summary>
-    void OnOkButtonClicked()
+    public void OnOkButtonClicked()
     {
         Time.timeScale = 1.0f;
         gameObject.SetActive(false);

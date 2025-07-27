@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/01_Scenes/01_Main.unity
     guid: 2538b0b945960b24eb1c32fb8b7e158c
   - enabled: 1
-    path: Assets/01_Scenes/02_Play.unity
+    path: Assets/01_Scenes/02_Play_Normal.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/01_Scenes/02_Play_Boss.unity
+    guid: d78ecb18427815f4ca39e6d95aa45970
   m_configObjects: {}

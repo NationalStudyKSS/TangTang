@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using TMPro.EditorUtilities;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class PlayScene : MonoBehaviour
 {
@@ -23,6 +26,11 @@ public class PlayScene : MonoBehaviour
     [SerializeField] int _enmeyKillCount;   // 적 처치 수
     [SerializeField] float _playTime;       // 게임이 시작된 후 경과한 시간
     [SerializeField] int _playTimeInt;      // 초 단위로 변환해서 저장하는 변수
+
+    public int PlayTimeInt => _playTimeInt;
+
+    [Header("----- 보스 씬 판단 체크하기 -----")]
+    [SerializeField] bool _isBoss;
 
     public event Action<int> OnPlayTimeChanged;
 
@@ -87,7 +95,10 @@ public class PlayScene : MonoBehaviour
         _playTime = 0f;
         _playTimeInt = 0;
 
+        //_upgrader.OnRefreshed += _playSceneView.SetRefreshCountText;
+        //_playSceneView.OnRefreshClicked += _upgrader.RefreshSelection;
         // PlaySceneView 초기화(순서 중요함)
+        _enemyManager.OnBossSpawned += SaveBossInfo;
         _playSceneView.Initialize();
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
@@ -99,7 +110,7 @@ public class PlayScene : MonoBehaviour
         _upgrader.Initialize();
         
         // Spawner 초기화
-        _enemyManager.Initialize(_hero.transform);
+        _enemyManager.Initialize(_hero.transform, _playTimeInt);
 
         // GroundRepositions 초기화
         foreach (var ground in _grounds)
@@ -108,9 +119,49 @@ public class PlayScene : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (_isBoss)
+        {
+            _playSceneView.BossStageIntro();
+            StartCoroutine(BossStage30LevelUp());
+        }
+        else
+        {
+            _playSceneView.NormalStageIntro();
+        }
+    }
+
+    IEnumerator BossStage30LevelUp()
+    {
+        yield return new WaitForSeconds(5f);
+        HeroModel model = _hero.gameObject.GetComponent<HeroModel>();
+        for (int i = 0; i < 30; i++)
+        {
+            model.LevelUp();
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        model.Heal(9999f);
+    }
+
     private void Update()
     {
         UpdatePlayTime();
+        if (!_isBoss && _playTime > 180f)
+        {
+            _playSceneView.OpenClearPanel();
+        }
+        if (_isBoss)
+        {
+            
+            GameObject bossEnemyobj = GameObject.FindGameObjectWithTag("BossEnemy");
+            if (bossEnemyobj != null)
+            {
+                Enemy bossEnemy = bossEnemyobj.GetComponent<Enemy>();
+                bossEnemy.RaiseOnDead += _playSceneView.BossCleared;
+            }
+        }
     }
 
     /// <summary>
@@ -155,5 +206,10 @@ public class PlayScene : MonoBehaviour
     void ShowFailResult()
     {
         _stageFailView.Initialize();
+    }
+
+    void SaveBossInfo(Enemy enemy)
+    {
+        enemy.RaiseOnHpChanged += _playSceneView.SetBossUI;
     }
 }

@@ -41,17 +41,22 @@ public class EnemyModel : MonoBehaviour
     public ElementType Element => _element;
     public EnemyType EnemyType => _enemyType;
 
-    public void Initialize()
+    public void Initialize(int playTimeInt)
     {
+
         // 적 스탯 데이터 가져오기
         _enemyStatData = GameManager.Instance.DataManager.EnemyStatData;
         // 가져온 데이터에 있는 값들 매칭해서 초기화
         // 임시(EnemyStatData 리팩토링중)
-        
+
         //_damage = _enemyStatData.Damage;
         //_moveSpeed = _enemyStatData.Speed;
         //_maxHp = _enemyStatData.MaxHp;
-        
+
+        float multiplier = 1f + (playTimeInt / 30f) * 0.2f;
+        _maxHp *= multiplier;
+        _damage *= multiplier;
+
         // 초기화 필요한 변수들
         _currentHp = _maxHp;
     }
@@ -76,6 +81,8 @@ public class EnemyModel : MonoBehaviour
         // 현재 체력이 0 이하가 되면 사망 처리
         if (_currentHp <= 0)
         {
+            _currentHp = 0;
+            OnHpChanged?.Invoke(_currentHp, _maxHp);
             // 사망 이벤트 발행
             OnDead?.Invoke();
         }

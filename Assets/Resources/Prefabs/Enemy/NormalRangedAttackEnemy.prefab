@@ -394,6 +394,7 @@ MonoBehaviour:
     m_Bits: 64
   _staggerDuration: 0.3
   _deathDuration: 0.7
+  _isBoss: 0
   _attackRange: 10
   _attackSpan: 1
   _bulletSpeed: 5
@@ -410,9 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d32c6abca510334399946f561530765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 50
+  _damage: 30
   _moveSpeed: 3
-  _maxHp: 10
+  _maxHp: 100
   _currentHp: 0
   _element: 0
   _enemyType: 0
