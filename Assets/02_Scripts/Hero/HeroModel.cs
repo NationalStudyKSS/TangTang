@@ -32,6 +32,7 @@ public class HeroModel : MonoBehaviour
     public event Action<float> OnMoveSpeedChanged;           // (현재 이동 속력)
     public event Action<float> OnItemGetRangeChanged;        // (현재 아이템 획득 범위)
     public event Action OnDead;                             // 죽음 이벤트
+    public event Action<float> OnExpAdded;
 
     public void Initialize()
     {
@@ -91,6 +92,7 @@ public class HeroModel : MonoBehaviour
         amount *= Stats.ExpGainRate.Final;
         // 경험치를 증가시키고
         CurrentExp += amount;
+        OnExpAdded?.Invoke(amount);
         // 현재 레벨에 필요한 경험치 이상이 되면 레벨업을 시도
         while (CurrentExp >= _data.GetExpRequired(CurrentLevel))
         {

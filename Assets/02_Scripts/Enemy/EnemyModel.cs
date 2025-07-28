@@ -26,6 +26,8 @@ public class EnemyModel : MonoBehaviour
     [SerializeField] EnemyType _enemyType;
     
     EnemyStatData _enemyStatData;
+    float _baseDamage;
+    float _baseMaxHp;
 
     // 이동속도 변경 이벤트
     public event Action<float> OnSpeedChanged;
@@ -43,22 +45,18 @@ public class EnemyModel : MonoBehaviour
 
     public void Initialize(int playTimeInt)
     {
+        //if (_baseDamage == 0 || _baseMaxHp == 0)
+        //{
+        //    _baseDamage = _damage;
+        //    _baseMaxHp = _maxHp;
+        //}
 
-        // 적 스탯 데이터 가져오기
-        _enemyStatData = GameManager.Instance.DataManager.EnemyStatData;
-        // 가져온 데이터에 있는 값들 매칭해서 초기화
-        // 임시(EnemyStatData 리팩토링중)
+        float multiplier = 1f + (playTimeInt / 10) * 0.1f;
 
-        //_damage = _enemyStatData.Damage;
-        //_moveSpeed = _enemyStatData.Speed;
-        //_maxHp = _enemyStatData.MaxHp;
-
-        float multiplier = 1f + (playTimeInt / 30f) * 0.2f;
-        _maxHp *= multiplier;
-        _damage *= multiplier;
-
-        // 초기화 필요한 변수들
+        _damage = _damage * multiplier;
+        _maxHp = _maxHp * multiplier;
         _currentHp = _maxHp;
+        Debug.Log($"[EnemyModel] Initialize: Damage={_damage}, MaxHp={_maxHp}, PlayTime={playTimeInt}");
     }
 
     /// <summary>

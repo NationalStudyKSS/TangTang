@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -32,6 +33,7 @@ public class PlaySceneView : MonoBehaviour
     [SerializeField] Image _bossHpBar;
     [SerializeField] TextMeshProUGUI _bossHpText;
     [SerializeField] GameObject _clearPanel;
+    [SerializeField] GameObject _bossClearPanel;
     //[SerializeField] Button _refreshButton;               // 새로고침 버튼
     //[SerializeField] TextMeshProUGUI _refreshCountText;   // 새로고침 가능한 횟수 텍스트
 
@@ -196,10 +198,25 @@ public class PlaySceneView : MonoBehaviour
         _bossHpBar.fillAmount = curHp / maxHp;
         _bossHpText.text = $"{(int)curHp}/{maxHp}";
     }
-    
-    public void OpenClearPanel()
+
+    public void OpenClearPanel(PlayScene playScene)
     {
         _clearPanel.SetActive(true);
+        StageFailView view = _clearPanel.GetComponent<StageFailView>();
+
+        if (view == null)
+        {
+            Debug.LogError("StageFailView 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
+
+        Debug.Log("StageFailView 컴포넌트를 찾았습니다. UI를 설정합니다.");
+        view.Initialize(playScene);
+    }
+
+    public void OpenBossClearPanel()
+    {
+        _bossClearPanel.SetActive(true);
     }
 
     public void BossCleared(GameObject bossObj)
@@ -222,7 +239,17 @@ public class PlaySceneView : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
-        OpenClearPanel();
+        OpenBossClearPanel();
+    }
+
+    /// <summary>
+    /// 확인버튼 눌렀을 때 호출되는 함수
+    /// </summary>
+    public void OnOkButtonClicked()
+    {
+        Time.timeScale = 1.0f;
+        gameObject.SetActive(false);
+        SceneManager.LoadScene("01_Main");
     }
 
     //public void RefreshClicked()

@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Àåºñ ÀåÂøµîÀ¸·Î »ı±ä º¸³Ê½º ½ºÅÈÀ» º¸¿©ÁÖ´Â UI
+/// ì¥ë¹„ ì¥ì°©ë“±ìœ¼ë¡œ ìƒê¸´ ë³´ë„ˆìŠ¤ ìŠ¤íƒ¯ì„ ë³´ì—¬ì£¼ëŠ” UI
 /// </summary>
 public class BonusStatUI : MonoBehaviour
 {
-    [Header("----- ÄÄÆ÷³ÍÆ® ÂüÁ¶ -----")]
+    [Header("----- ì»´í¬ë„ŒíŠ¸ ì°¸ì¡° -----")]
     [SerializeField] TextMeshProUGUI _bonusHpText;
     [SerializeField] TextMeshProUGUI _bonusDamageText;
     [SerializeField] TextMeshProUGUI _bonusMoveSpeedText;
@@ -25,9 +25,9 @@ public class BonusStatUI : MonoBehaviour
 
     void RefreshUI()
     {
-        _bonusHpText.text = $"ÃÖ´ëÃ¼·Â +{_heroManager.BonusHp}";
-        _bonusDamageText.text = $"°ø°İ·Â +{_heroManager.BonusDamage}";
-        _bonusMoveSpeedText.text = $"ÀÌµ¿¼Óµµ +{_heroManager.BonusMoveSpeed}";
-        _bonusItemGetRangeText.text = $"¾ÆÀÌÅÛÈ¹µæ¹üÀ§ +{_heroManager.BonusItemGetRange}";
+        _bonusHpText.text = $"ìµœëŒ€ì²´ë ¥ +{_heroManager.BonusHp}";
+        _bonusDamageText.text = $"ê³µê²©ë ¥ +{_heroManager.BonusDamage}";
+        _bonusMoveSpeedText.text = $"ì´ë™ì†ë„ +{_heroManager.BonusMoveSpeed}";
+        _bonusItemGetRangeText.text = $"ì•„ì´í…œíšë“ë²”ìœ„ +{_heroManager.BonusItemGetRange}";
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// 뷰 클릭시 나오는 툴팁창을 관리하는 클래스.
@@ -20,6 +20,8 @@ public class EquipmentDescView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _priceText;    // 장비 가격 텍스트
     [SerializeField] GameObject _equipButton;       // 장착 버튼
     [SerializeField] GameObject _unequipButton;     // 해제 버튼
+    [SerializeField] RectTransform _parentRectTransform; // 툴팁을 띄울 부모 RectTransform
+    [SerializeField] RectTransform _rect;           // 자기 자신의 RectTransform
 
     EquipmentModel _model;
 
@@ -65,16 +67,44 @@ public class EquipmentDescView : MonoBehaviour
     /// </summary>
     /// <param name="model">이번에 보여줄 장비의 정보모델</param>
     /// <param name="pos">띄울 위치</param>
+    //public void Show(EquipmentModel model, Vector2 pos)
+    //{
+    //    RefreshUI(model);
+    //    // 아래쪽 아이템을 누르면 짤리는 경우를 대비
+    //    //Debug.Log(pos.y);
+    //    if (pos.y < 240f)
+    //    {
+    //        pos.y = 240f;
+    //    }
+    //    if (pos.y > 900f)
+    //    {
+    //        pos.y = 900f;
+    //    }
+    //    if(pos.x < -350f)
+    //    {
+    //        pos.x = -350f;
+    //    }
+    //    if (pos.x > 350f)
+    //    {
+    //        pos.x = 350f;
+    //    }
+        
+    //    transform.position = pos;
+    //    gameObject.SetActive(true);
+    //}
+
     public void Show(EquipmentModel model, Vector2 pos)
     {
         RefreshUI(model);
-        // 아래쪽 아이템을 누르면 짤리는 경우를 대비
-        //Debug.Log(pos.y);
-        if (pos.y < 240f)
-        {
-            pos.y = 240f;
-        }
-        transform.position = pos;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _parentRectTransform,
+            pos,
+            null,
+            out Vector2 localPoint
+        );
+
+        _rect.anchoredPosition = localPoint;
         gameObject.SetActive(true);
     }
 

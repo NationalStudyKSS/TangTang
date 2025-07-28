@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using TMPro.EditorUtilities;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -26,11 +24,18 @@ public class PlayScene : MonoBehaviour
     [SerializeField] int _enmeyKillCount;   // 적 처치 수
     [SerializeField] float _playTime;       // 게임이 시작된 후 경과한 시간
     [SerializeField] int _playTimeInt;      // 초 단위로 변환해서 저장하는 변수
+    [SerializeField] float _expTotal;
+    [SerializeField] int _startGold;
+    [SerializeField] Enemy _bossEnemy;
 
+    public int EnemyKillCount => _enmeyKillCount;
     public int PlayTimeInt => _playTimeInt;
+    public int ExpTotal => (int)_expTotal;
+    public int StartGold => _startGold;
 
     [Header("----- 보스 씬 판단 체크하기 -----")]
     [SerializeField] bool _isBoss;
+    [SerializeField] bool _isClearPanelOpened = false;
 
     public event Action<int> OnPlayTimeChanged;
 
@@ -73,7 +78,13 @@ public class PlayScene : MonoBehaviour
             Debug.Log("영웅 생성 실패");
             return;
         }
-        
+
+        _hero.OnExpChanged -= _playSceneView.SetExp;
+        _hero.OnLevelChanged -= _playSceneView.SetLevel;
+        _hero.RaiseOnHpChanged -= _playSceneView.SetHp;
+        _hero.OnDamageChanged -= _playSceneView.SetDamage;
+        _hero.RaiseOnDead -= _deadView.OnDead;
+
         // 스테이지 UI 이벤트 연결
         OnPlayTimeChanged += _playSceneView.SetPlayTime; // 게임 시간 변경 이벤트를 UI에 연결
         _hero.OnDamageChanged += _playSceneView.SetDamage; // 영웅의 공격력 변경 이벤트를 UI에 연결
@@ -92,8 +103,10 @@ public class PlayScene : MonoBehaviour
 
         // 게임 상태 초기화
         _enmeyKillCount = 0;
-        _playTime = 0f;
+        _playTime = 0;
         _playTimeInt = 0;
+        _expTotal = 0;
+        _startGold = GameManager.Instance.CurrencyManager.Gold;
 
         //_upgrader.OnRefreshed += _playSceneView.SetRefreshCountText;
         //_playSceneView.OnRefreshClicked += _upgrader.RefreshSelection;
@@ -102,6 +115,7 @@ public class PlayScene : MonoBehaviour
         _playSceneView.Initialize();
         // 임시(나중에 게임시작 시 영웅선택창 만들면 필요없을듯?)
         _hero.Initialize();
+        _hero.OnExpAdded += CalculateExp;
 
         _inputHandler.OnMoveInput += OnMoveInput;        // 이동 입력 이벤트를 연결
 
@@ -132,6 +146,44 @@ public class PlayScene : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (_hero != null)
+        {
+            _hero.OnDamageChanged -= _playSceneView.SetDamage;
+            _hero.RaiseOnHpChanged -= _playSceneView.SetHp;
+            _hero.OnExpChanged -= _playSceneView.SetExp;
+            _hero.OnLevelChanged -= _playSceneView.SetLevel;
+            _hero.RaiseOnDead -= _deadView.OnDead;
+            _hero.OnLevelChanged -= OnLevelUp;
+            _hero.OnExpAdded -= CalculateExp;
+        }
+
+        if (_enemyManager != null)
+        {
+            _enemyManager.OnDeath -= UpdateEnemyKillCount;
+            _enemyManager.OnBossSpawned -= SaveBossInfo;
+        }
+
+        if (_deadView != null)
+        {
+            _deadView.YesButtonClicked -= _hero.Revive;
+            _deadView.NoButtonClicked -= ShowFailResult;
+        }
+
+        if (_inputHandler != null)
+        {
+            _inputHandler.OnMoveInput -= OnMoveInput;
+        }
+
+        if (_bossEnemy != null)
+        {
+            _bossEnemy.RaiseOnHpChanged -= _playSceneView.SetBossUI;
+        }
+
+        OnPlayTimeChanged -= _playSceneView.SetPlayTime;
+    }
+
     IEnumerator BossStage30LevelUp()
     {
         yield return new WaitForSeconds(5f);
@@ -147,10 +199,16 @@ public class PlayScene : MonoBehaviour
 
     private void Update()
     {
-        UpdatePlayTime();
-        if (!_isBoss && _playTime > 180f)
+        if (!_isClearPanelOpened)
         {
-            _playSceneView.OpenClearPanel();
+            UpdatePlayTime();
+        }
+        
+        if (!_isBoss && _playTime > 180f && !_isClearPanelOpened)
+        {
+            _playSceneView.OpenClearPanel(this);
+            _isClearPanelOpened = true;
+            return;
         }
         if (_isBoss)
         {
@@ -205,11 +263,27 @@ public class PlayScene : MonoBehaviour
     
     void ShowFailResult()
     {
-        _stageFailView.Initialize();
+        _stageFailView.Initialize(this);
     }
 
     void SaveBossInfo(Enemy enemy)
     {
-        enemy.RaiseOnHpChanged += _playSceneView.SetBossUI;
+        _bossEnemy = enemy;
+        _bossEnemy.RaiseOnHpChanged += _playSceneView.SetBossUI;
+    }
+
+    void CalculateExp(float exp)
+    {
+        _expTotal += exp;
+    }
+
+    public void PlayTimeCheat()
+    {
+        for (int i = 0; i < 150; i++)
+        {
+            _playTime += 1f; // 1초씩 직접 추가
+            _playTimeInt = Mathf.FloorToInt(_playTime);
+            OnPlayTimeChanged?.Invoke(_playTimeInt);
+        }
     }
 }

@@ -10,8 +10,7 @@ using UnityEngine;
 public class ItemDropper : MonoBehaviour
 {
     //[Header("----- 드롭아이템 목록(읽기 전용) -----")]
-    //[SerializeField]
-    List<DropItem> _currentDropItems = new(); // 드롭 아이템 목록
+    [SerializeField] List<DropItem> _currentDropItems = new(); // 드롭 아이템 목록
 
     Coroutine _spawnEnemyRoutine;       // 적 생성 코루틴 변수
     Coroutine _magnetEffectRoutine; // 자석 아이템 효과 코루틴 변수

@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float _minSpawnRange = 15f; // 최소 스폰 범위
     [SerializeField] float _maxSpawnRange = 20f; // 최대 스폰 범위
     [SerializeField] bool _isBoss;
+    [SerializeField] PlayScene _playScene;
 
     Transform _heroTransform; // 영웅의 Transform 컴포넌트 변수
     Coroutine _spawnRoutine;  // 생성 루틴
@@ -101,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.position = randomPos;
 
         // 적 초기화
-        enemy.Initialize(_playTimeInt);
+        enemy.Initialize(_playScene.PlayTimeInt);
 
         // 적이 생성되었을 때 이벤트를 발생시킴
         OnEnemySpawned?.Invoke(enemy);

@@ -67,4 +67,9 @@ public class IntroSceneView : MonoBehaviour
     {
         GameManager.Instance.SceneLoadManager.BossStageStart();
     }
+
+    public void GameQuitButton()
+    {
+        Application.Quit();
+    }
 }

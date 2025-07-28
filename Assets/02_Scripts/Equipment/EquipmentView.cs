@@ -58,6 +58,6 @@ public class EquipmentView : MonoBehaviour, IPointerClickHandler
 
         // 뷰 클릭 시 자신의 슬롯인덱스를 매개변수로 이벤트를 발행한다.
         // 이 이벤트는 EquipmentDescView가 구독하여 툴팁 창을 띄울 것이다.
-        OnClicked?.Invoke(_model, transform.position);
+        OnClicked?.Invoke(_model, eventData.position);
     }
 }

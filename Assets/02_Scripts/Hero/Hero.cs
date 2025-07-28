@@ -58,6 +58,28 @@ public class Hero : MonoBehaviour, IDamageable
 
     public event Action<GameObject> RaiseOnDead;
 
+    public event Action<float> OnExpAdded
+    {
+        add => _model.OnExpAdded += value;
+        remove => _model.OnExpAdded -= value;
+    }
+
+    private void OnDestroy()
+    {
+        if (_model != null)
+        {
+            _model.OnMoveSpeedChanged -= _mover.SetSpeed;
+            _model.OnHpChanged -= _hudView.ChangeHpBar;
+            _model.OnItemGetRangeChanged -= _itemCollector.SetRange;
+            _model.OnDead -= OnDead;
+        }
+
+        if (_mover != null)
+        {
+            _mover.OnMoved -= OnMoved;
+        }
+    }
+
     public void Initialize()
     {
         if (_model == null)

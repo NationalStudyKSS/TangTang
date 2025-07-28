@@ -112,6 +112,7 @@ public class SpinBladeSkill : ActiveSkill
 
             // 생성한 bullet의 데미지를 설정
             bullet.SetDamage(_damage);
+            bullet.SetColor(i);
 
             // 생성한 bullet 게임오브젝트의 부모 게임오브젝트를
             // ShovelActiveSkill 컴포넌트가 붙어 있는 게임오브젝트로 설정

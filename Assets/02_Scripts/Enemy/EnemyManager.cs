@@ -55,7 +55,7 @@ public class EnemyManager : MonoBehaviour
         {
             if (enemy != null)
             {
-                enemy.TakeHit(9999f, ElementType.Fire);
+                enemy.TakeHit(999999f, ElementType.Fire);
             }
         }
     }
