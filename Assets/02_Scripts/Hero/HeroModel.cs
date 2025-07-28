@@ -82,6 +82,13 @@ public class HeroModel : MonoBehaviour
         OnItemGetRangeChanged?.Invoke(Stats.ItemGetRange.Final);
     }
 
+    private void OnDestroy()
+    {
+        DropItemManager.OnAtkUpItemUsed -= ApplyDamageBuff;
+        DropItemManager.OnExpItemUsed -= AddExp;
+        DropItemManager.OnHpPotionItemUsed -= Heal;
+    }
+
     /// <summary>
     /// 주인공의 경험치를 추가하는 함수
     /// </summary>

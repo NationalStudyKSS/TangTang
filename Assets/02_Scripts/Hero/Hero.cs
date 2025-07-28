@@ -64,21 +64,21 @@ public class Hero : MonoBehaviour, IDamageable
         remove => _model.OnExpAdded -= value;
     }
 
-    private void OnDestroy()
-    {
-        if (_model != null)
-        {
-            _model.OnMoveSpeedChanged -= _mover.SetSpeed;
-            _model.OnHpChanged -= _hudView.ChangeHpBar;
-            _model.OnItemGetRangeChanged -= _itemCollector.SetRange;
-            _model.OnDead -= OnDead;
-        }
+    //private void OnDestroy()
+    //{
+    //    if (_model != null)
+    //    {
+    //        _model.OnMoveSpeedChanged -= _mover.SetSpeed;
+    //        _model.OnHpChanged -= _hudView.ChangeHpBar;
+    //        _model.OnItemGetRangeChanged -= _itemCollector.SetRange;
+    //        _model.OnDead -= OnDead;
+    //    }
 
-        if (_mover != null)
-        {
-            _mover.OnMoved -= OnMoved;
-        }
-    }
+    //    if (_mover != null)
+    //    {
+    //        _mover.OnMoved -= OnMoved;
+    //    }
+    //}
 
     public void Initialize()
     {
@@ -95,7 +95,7 @@ public class Hero : MonoBehaviour, IDamageable
         }
 
         GameManager.Instance.HeroManager.ApplyStatsToHero(_model);
-        
+
         _mover.OnMoved += OnMoved;
         _model.OnMoveSpeedChanged += _mover.SetSpeed;  // 이벤트명 수정
         _model.OnHpChanged += _hudView.ChangeHpBar;
