@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerInputHandler : InputHandler
 {
+    [SerializeField] private FixedJoystick _joystick;
+
     public override event UnityAction<Vector2> OnMoveInput;
 
     Vector2 _moveInput;
@@ -49,6 +51,19 @@ public class PlayerInputHandler : InputHandler
 
     private void FixedUpdate()
     {
-        OnMoveInput?.Invoke(_moveInput);
+        Vector2 finalInput = _moveInput;
+
+        if (_joystick != null)
+        {
+            Vector2 joystickInput = new Vector2(_joystick.Horizontal, _joystick.Vertical);
+
+            // 조이스틱이 약간이라도 움직였으면 조이스틱 입력 사용
+            if (joystickInput.magnitude > 0.1f)
+            {
+                finalInput = joystickInput;
+            }
+        }
+
+        OnMoveInput?.Invoke(finalInput);
     }
 }

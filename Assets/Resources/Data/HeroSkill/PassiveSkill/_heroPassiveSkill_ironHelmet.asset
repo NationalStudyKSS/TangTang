@@ -25,4 +25,4 @@ MonoBehaviour:
   _skillType: 1
   _description: "\uC601\uC6C5\uC758 \uC2A4\uD14C\uC774\uC9C0 \uC2DC\uC791 \uC2DC
     \uCD5C\uB300 \uCCB4\uB825\uC744 \uAE30\uC900\uC73C\uB85C \uC99D\uAC00"
-  _iconSprite: {fileID: 21300000, guid: 76a16b369d548fb4eb9d9f2a9a56fcdb, type: 2}
+  _iconSprite: {fileID: 21300000, guid: 732442a90ec3747df83c46125de06b60, type: 3}

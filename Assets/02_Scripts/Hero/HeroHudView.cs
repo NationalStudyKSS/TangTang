@@ -12,7 +12,7 @@ public class HeroHudView : MonoBehaviour
 
     public void ChangeHpBar(float currentHp, float MaxHp)
     {
-        Debug.Log(currentHp + " / " + MaxHp, gameObject);
+        //Debug.Log(currentHp + " / " + MaxHp, gameObject);
         _hpBar.fillAmount = currentHp / MaxHp;
     }
 }

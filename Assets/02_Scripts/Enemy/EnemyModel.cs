@@ -56,7 +56,7 @@ public class EnemyModel : MonoBehaviour
         _damage = _damage * multiplier;
         _maxHp = _maxHp * multiplier;
         _currentHp = _maxHp;
-        Debug.Log($"[EnemyModel] Initialize: Damage={_damage}, MaxHp={_maxHp}, PlayTime={playTimeInt}");
+        //Debug.Log($"[EnemyModel] Initialize: Damage={_damage}, MaxHp={_maxHp}, PlayTime={playTimeInt}");
     }
 
     /// <summary>
