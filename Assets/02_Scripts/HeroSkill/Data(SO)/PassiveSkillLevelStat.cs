@@ -1,9 +1,9 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 /// <summary>
-/// ÆÐ½Ãºê ½ºÅ³ÀÇ ·¹º§º° ½ºÅÈ Á¤º¸¸¦ ´ã´Â Å¬·¡½º
-/// ·¹º§ 0ºÎÅÍ ·¹º§ 4±îÁöÀÇ º¸³Ê½º ½ºÅÈ °ªÀ» ´ã°í ÀÖ´Ù.
+/// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì˜ ë ˆë²¨ë³„ ìŠ¤íƒ¯ ì •ë³´ë¥¼ ë‹´ëŠ” í´ëž˜ìŠ¤
+/// ë ˆë²¨ 0ë¶€í„° ë ˆë²¨ 4ê¹Œì§€ì˜ ë³´ë„ˆìŠ¤ ìŠ¤íƒ¯ ê°’ì„ ë‹´ê³  ìžˆë‹¤.
 /// </summary>
 [Serializable]
 public class PassiveSkillLevelStat
@@ -13,11 +13,11 @@ public class PassiveSkillLevelStat
 
     public StatName StatName => _statName;
     public float[] LevelValues => _levelValues;
-    public int MaxLevel => _levelValues.Length - 1; // ÃÖ´ë ·¹º§Àº ¹è¿­ ±æÀÌ - 1
+    public int MaxLevel => _levelValues.Length - 1; // ìµœëŒ€ ë ˆë²¨ì€ ë°°ì—´ ê¸¸ì´ - 1
 
     /// <summary>
-    /// Æ¯Á¤ ·¹º§¿¡ ÇØ´çÇÏ´Â °ªÀ» ¹ÝÈ¯ÇÏ´Â ÇÔ¼ö
-    /// À½¼ö ·¹º§ÀÌ¸é 0, ÃÖ´ë·¹º§À» ÃÊ°úÇÏ´Â ·¹º§ÀÌ¸é ÃÖ´ë ·¹º§ÀÇ °ªÀ» ¹ÝÈ¯ÇÑ´Ù.
+    /// íŠ¹ì • ë ˆë²¨ì— í•´ë‹¹í•˜ëŠ” ê°’ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+    /// ìŒìˆ˜ ë ˆë²¨ì´ë©´ 0, ìµœëŒ€ë ˆë²¨ì„ ì´ˆê³¼í•˜ëŠ” ë ˆë²¨ì´ë©´ ìµœëŒ€ ë ˆë²¨ì˜ ê°’ì„ ë°˜í™˜í•œë‹¤.
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
@@ -25,18 +25,18 @@ public class PassiveSkillLevelStat
     {
         if (level < 0)
         {
-            // À½¼ö ·¹º§ÀÌ¸é 0 ¹ÝÈ¯
+            // ìŒìˆ˜ ë ˆë²¨ì´ë©´ 0 ë°˜í™˜
             return 0f;
         }
-        // ·¹º§ÀÌ ÃÖ´ë ·¹º§À» ÃÊ°úÇÏ¸é ¹è¿­ ¹üÀ§ ³¡¹øÈ£·Î ÇÑÁ¤
+        // ë ˆë²¨ì´ ìµœëŒ€ ë ˆë²¨ì„ ì´ˆê³¼í•˜ë©´ ë°°ì—´ ë²”ìœ„ ëë²ˆí˜¸ë¡œ í•œì •
         if (level >= _levelValues.Length)
         {
-            level = _levelValues.Length - 1; // ÃÖ´ë ·¹º§·Î Á¶Á¤
-            // ÃÖ´ë ·¹º§À» ÃÊ°úÇÏ´Â ·¹º§ÀÌ¸é ÃÖ´ë ·¹º§ÀÇ °ªÀ» ¹ÝÈ¯
+            level = _levelValues.Length - 1; // ìµœëŒ€ ë ˆë²¨ë¡œ ì¡°ì •
+            // ìµœëŒ€ ë ˆë²¨ì„ ì´ˆê³¼í•˜ëŠ” ë ˆë²¨ì´ë©´ ìµœëŒ€ ë ˆë²¨ì˜ ê°’ì„ ë°˜í™˜
             return _levelValues[level];
         }
 
-        // ÇØ´ç ·¹º§ÀÇ ¼öÄ¡ ¹ÝÈ¯
+        // í•´ë‹¹ ë ˆë²¨ì˜ ìˆ˜ì¹˜ ë°˜í™˜
         return _levelValues[level];
     }
 }
