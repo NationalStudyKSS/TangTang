@@ -22,4 +22,6 @@ public class SceneLoadManager : MonoBehaviour
     {
         SceneManager.LoadScene("02_Play_Boss");
     }
+
+    
 }
