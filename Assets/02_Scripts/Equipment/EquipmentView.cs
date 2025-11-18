@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EquipmentView : MonoBehaviour, IPointerClickHandler
 {
     [Header("----- 컴포넌트 참조 -----")]
-    [SerializeField] Image _iconImage;
+    [SerializeField] Image _iconImage;  // 아이콘 이미지
     [SerializeField] EquipSlotType _slotType;
     
     EquipmentModel _model;
@@ -38,7 +38,8 @@ public class EquipmentView : MonoBehaviour, IPointerClickHandler
         if (model == null)
         {
             _iconImage.sprite = null;
-            _iconImage.enabled = false;
+            // Todo : 슬롯별 기본 스프라이트로 설정하기
+
             return;
         }
 
