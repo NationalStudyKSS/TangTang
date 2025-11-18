@@ -10,10 +10,20 @@ public class EquipmentView : MonoBehaviour, IPointerClickHandler
     [SerializeField] EquipSlotType _slotType;
     
     EquipmentModel _model;
+    Sprite _basicSprite; // 장비창이 비어있을 때의 기본 스프라이트
 
     public EquipSlotType SlotType => _slotType;
 
     public event Action<EquipmentModel, Vector2> OnClicked;  
+
+    void Awake()
+    {
+        _basicSprite = _iconImage.sprite;
+        if(_basicSprite == null)
+        {
+            Debug.LogWarning($"{gameObject.name}의 기본 스프라이트가 설정되지 않았습니다.");
+        }
+    }
 
     /// <summary>
     /// 초기화 함수.
