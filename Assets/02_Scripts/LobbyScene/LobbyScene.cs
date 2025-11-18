@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 인트로 씬을 관리하는 클래스
+/// 로비씬을 관리하는 클래스
 /// </summary>
-public class IntroScene : MonoBehaviour
+public class LobbyScene : MonoBehaviour
 {
     
     [SerializeField] HeroSelectController _heroSelectController;
-    [SerializeField] IntroSceneView _introView;
+    [SerializeField] LobbySceneView _introView;
     [SerializeField] EquipmentShopController _equipmentShopController;
     [SerializeField] InventoryManager _inventoryManager;
 

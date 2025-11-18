@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 인트로씬의 UI를 담당하는 역할
+/// 로비씬의 UI를 담당하는 역할
 /// </summary>
-public class IntroSceneView : MonoBehaviour
+public class LobbySceneView : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _goldText;
     [SerializeField] Button _goldCheatButton;
