@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerInputHandler : InputHandler
 {
-    [SerializeField] private FixedJoystick _joystick;
+    [SerializeField] private Joystick _joystick;
 
     public override event UnityAction<Vector2> OnMoveInput;
 
